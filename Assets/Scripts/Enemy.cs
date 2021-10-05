@@ -61,9 +61,12 @@ public class Enemy : MonoBehaviour
 
     public void damageBadGuy(float damage)
     {
-        //activate damage animation
-        health -= damage;
-        healthBar.gameObject.GetComponent<Image>().fillAmount = health / 200;
+        if (true)       //IF ENEMY NOT IN BLOCK STATE
+        {
+            //activate damage animation
+            health -= damage;
+            healthBar.gameObject.GetComponent<Image>().fillAmount = health / 200;
+        }
     }
 
 

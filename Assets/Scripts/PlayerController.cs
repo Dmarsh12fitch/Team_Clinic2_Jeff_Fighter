@@ -15,7 +15,6 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] float punchesTillSuperPowerPunch = 8;
 
-
     public Enemy badGuyScript;
 
 
@@ -33,6 +32,7 @@ public class PlayerController : MonoBehaviour
         {
             getPlayerMovementInputs();
             getplayerhitInputs();
+            getPlayerblockInputs();
         }
 
 
@@ -99,7 +99,7 @@ public class PlayerController : MonoBehaviour
                 {
                     //regular punch
                     //do animation for hit
-                    punchesTillSuperPowerPunch--;                           //first time it only wait 7 for some reason...
+                    punchesTillSuperPowerPunch--;                             //first time it only wait 7 for some reason...
                     if (currentPosition + 1 == badGuyScript.currentPosition)
                     {
                         punch(baseDmg);
@@ -110,14 +110,26 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-
+    void getPlayerblockInputs()
+    {
+        if (true)       //IF in Idle ONLY
+        {
+            if (Input.GetKeyDown(KeyCode.LeftShift))
+            {
+                //do block stuff....yeah
+            }
+        }
+    }
 
 
     public void damagePlayer(float damage)
     {
-        //activate damage animation
-        health -= damage;
-        healthBar.gameObject.GetComponent<Image>().fillAmount = health / 200;
+        if (true)   //IF PLAYER NOT IN BLOCK STATE
+        {
+            //activate damage animation
+            health -= damage;
+            healthBar.gameObject.GetComponent<Image>().fillAmount = health / 200;
+        }
     }
 
     void movePlayer(float movementX)

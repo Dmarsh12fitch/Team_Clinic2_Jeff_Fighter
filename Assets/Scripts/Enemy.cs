@@ -16,6 +16,17 @@ public class Enemy : MonoBehaviour
     public PlayerController playerScript;
 
 
+    public enum enemyAction
+    {
+        MoveLeft,
+        MoveRight,
+        Block,
+        RegularAttack,
+        SuperAttack
+    }
+    private enemyAction newEnemyActionNode;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -25,24 +36,74 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
-    void doAction()
+    void spawnEnemyAttackNode()
     {
-        //if far away
-            //(order of likelihood) move Left, block, regular attack, super attack, move Right
-        
-        //if close
-            //(order of likelihood) regular attack, block, move Right, super attack, move Left
+        //gameobject go = instantiate(prefab enemyattack node, at right location + rotation)
+        //set the enemyActionToDo inside the script of go to newEnemyActionNode
+    }
 
-
-
-        //the result of this ends up with an action thing being spawned and going across the screen, and when it hits then the enemy executes it
+    void excecuteEnemyAttackNode(enemyAction actionToDo)
+    {
+        //perhaps do the other job here? or not...
     }
 
 
-    void moveLeft()
+    void makeNewEnemyActionNode()
+    {
+        if(currentPosition - 1 != playerScript.currentPosition)
+        {
+            //must be far away
+            int weightedRandAction = Random.Range(0, 25);     //move Left (0-10), block (11-15), regular attack (16-20), super attack (21-23), move Right (24+25)
+            if(0 <= weightedRandAction && weightedRandAction <= 10)
+            {
+                newEnemyActionNode = enemyAction.MoveLeft;
+            } else if(11 <= weightedRandAction && weightedRandAction <= 15)
+            {
+                newEnemyActionNode = enemyAction.Block;
+            } else if(16 <= weightedRandAction && weightedRandAction <= 20)
+            {
+                newEnemyActionNode = enemyAction.RegularAttack;
+            } else if(21 <= weightedRandAction && weightedRandAction <= 23)
+            {
+                newEnemyActionNode = enemyAction.SuperAttack;
+            } else
+            {
+                newEnemyActionNode = enemyAction.MoveRight;
+            }
+
+        } else
+        {
+            //must be within reaching distnace
+            int weightedRandAction = Random.Range(0, 25);     //ragular attack (0-10), block (11-15), move Right (16-20), super attack (21-23), move Left (24+25)
+            if (0 <= weightedRandAction && weightedRandAction <= 10)
+            {
+                newEnemyActionNode = enemyAction.RegularAttack;
+            }
+            else if (11 <= weightedRandAction && weightedRandAction <= 15)
+            {
+                newEnemyActionNode = enemyAction.Block;
+            }
+            else if (16 <= weightedRandAction && weightedRandAction <= 20)
+            {
+                newEnemyActionNode = enemyAction.MoveRight;
+            }
+            else if (21 <= weightedRandAction && weightedRandAction <= 23)
+            {
+                newEnemyActionNode = enemyAction.SuperAttack;
+            }
+            else
+            {
+                newEnemyActionNode = enemyAction.MoveLeft;
+            }
+
+        }
+    }
+
+
+    public void moveLeft()
     {
         if (currentPosition - 1 != playerScript.currentPosition && currentPosition > -movementRange)
         {
@@ -58,7 +119,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    void moveRight()
+    public void moveRight()
     {
         if (currentPosition + 1 != playerScript.currentPosition && currentPosition < movementRange)
         {
@@ -82,10 +143,23 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    public void regularAttack()
+    {
+        //program this
+        Debug.Log("enemy regular Attacksshsihh");
+    }
 
+    public void superAttack()
+    {
+        //program this
+        Debug.Log("enemy superAtaccksish");
+    }
 
-
-
+    public void block()
+    {
+        //program this
+        Debug.Log("enemy blockssssish");
+    }
 
     public void damageBadGuy(float damage)
     {
@@ -96,8 +170,6 @@ public class Enemy : MonoBehaviour
             healthBar.gameObject.GetComponent<Image>().fillAmount = health / 200;
         }
     }
-
-
 
 
 

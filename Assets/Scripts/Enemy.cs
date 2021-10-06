@@ -11,6 +11,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] float health = 200f;
     public GameObject healthBar;
     [SerializeField] float baseDmg = 5f;
+    [SerializeField] float specialAttackDmg = 20f;
 
     public PlayerController playerScript;
 
@@ -27,9 +28,23 @@ public class Enemy : MonoBehaviour
         
     }
 
+    void doAction()
+    {
+        //if far away
+            //(order of likelihood) move Left, block, regular attack, super attack, move Right
+        
+        //if close
+            //(order of likelihood) regular attack, block, move Right, super attack, move Left
+
+
+
+        //the result of this ends up with an action thing being spawned and going across the screen, and when it hits then the enemy executes it
+    }
+
+
     void moveLeft()
     {
-        if (currentPosition - 1 != playerScript.currentPosition)
+        if (currentPosition - 1 != playerScript.currentPosition && currentPosition > -movementRange)
         {
             currentPosition -= 1f;
             transform.position = new Vector3(currentPosition, 0, 0);
@@ -39,12 +54,13 @@ public class Enemy : MonoBehaviour
         {
             //do something bc it tried to move into your space?? or nothing
             Debug.Log("Hey! I'm here! (Player speaking)");
+            damageBadGuy(5);
         }
     }
 
     void moveRight()
     {
-        if (currentPosition + 1 != playerScript.currentPosition)
+        if (currentPosition + 1 != playerScript.currentPosition && currentPosition < movementRange)
         {
             currentPosition += 1f;
             transform.position = new Vector3(currentPosition, 0, 0);
@@ -54,8 +70,20 @@ public class Enemy : MonoBehaviour
         {
             //do something bc you tried to move into your space?? or nothing
             Debug.Log("Hey! I'm here! (Player Speaking)");
+            damageBadGuy(5);
         }
     }
+
+    void punch(float damage)
+    {
+        if (currentPosition - 1 == playerScript.currentPosition)
+        {
+            playerScript.damagePlayer(damage);
+        }
+    }
+
+
+
 
 
 

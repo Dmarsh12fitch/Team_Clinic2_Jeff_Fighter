@@ -11,9 +11,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float health = 200f;
     public GameObject healthBar;
     [SerializeField] float baseDmg = 5f;
-    [SerializeField] float specialAttackDmg = 15f;
+    [SerializeField] float superAttackDmg = 25f;
 
-    [SerializeField] float punchesTillSuperPowerPunch = 8;
+    [SerializeField] float punchesTillSuperAttackPunch = 7f;
+    public GameObject superAttackBar;
+    public GameObject ReadyForSuperAttackImage;
 
     public Enemy badGuyScript;
 
@@ -84,27 +86,20 @@ public class PlayerController : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                if (punchesTillSuperPowerPunch <= 0)
+                if (punchesTillSuperAttackPunch <= 0)
                 {
-                    //super power bunch
+                    //super power punch
                     //do animation for super power hit
-                    punchesTillSuperPowerPunch = 8f;
-                    if (currentPosition + 1 == badGuyScript.currentPosition)
-                    {
-                        punch(specialAttackDmg);
-                        Debug.Log("SUPER ATTACK!!!");
-                    }
+                    punchesTillSuperAttackPunch = 7f;
+                    superAttackBar.gameObject.GetComponent<Image>().fillAmount = 0f;
+                    ReadyForSuperAttackImage.gameObject.SetActive(false);
+                    punch(superAttackDmg);
                 }
                 else
                 {
                     //regular punch
                     //do animation for hit
-                    punchesTillSuperPowerPunch--;                             //first time it only wait 7 for some reason...
-                    if (currentPosition + 1 == badGuyScript.currentPosition)
-                    {
-                        punch(baseDmg);
-                        Debug.Log("attack");
-                    }
+                    punch(baseDmg);
                 }
             }
         }
@@ -120,6 +115,11 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
+
+
+
+
+
 
 
     public void damagePlayer(float damage)
@@ -141,7 +141,23 @@ public class PlayerController : MonoBehaviour
 
     void punch(float damage)
     {
-        badGuyScript.damageBadGuy(damage);
+        if (currentPosition + 1 == badGuyScript.currentPosition)
+        {
+            if (damage == superAttackDmg)
+            {
+                badGuyScript.damageBadGuy(damage);
+            }
+            else
+            {
+                punchesTillSuperAttackPunch--;
+                superAttackBar.gameObject.GetComponent<Image>().fillAmount = 1 - ((punchesTillSuperAttackPunch) / 7);
+                if (superAttackBar.gameObject.GetComponent<Image>().fillAmount == 1)
+                {
+                    ReadyForSuperAttackImage.gameObject.SetActive(true);
+                }
+                badGuyScript.damageBadGuy(damage);
+            }
+        }
     }
 
 }

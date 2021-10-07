@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class enemyAttackNodeScr : MonoBehaviour
 {
+
     public enum enemyAction
     {
         MoveLeft,
@@ -13,6 +14,8 @@ public class enemyAttackNodeScr : MonoBehaviour
         SuperAttack
     }
     public enemyAction enemyActionToDo;
+
+    
 
     public Enemy badGuyScript;
     public GameObject display;

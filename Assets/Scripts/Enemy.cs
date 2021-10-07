@@ -13,6 +13,9 @@ public class Enemy : MonoBehaviour
     [SerializeField] float baseDmg = 5f;
     [SerializeField] float specialAttackDmg = 20f;
 
+    public GameObject enemyActionNodePrefab;
+    private float actionSpawnTimer = 10f;
+
     public PlayerController playerScript;
 
 
@@ -24,8 +27,8 @@ public class Enemy : MonoBehaviour
         RegularAttack,
         SuperAttack
     }
-    private enemyAction newEnemyActionNode;
-
+    private enemyAction newEnemyActionNodeType;
+    
 
     // Start is called before the first frame update
     void Start()
@@ -36,20 +39,35 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        actionSpawnTimer -= Time.deltaTime;
+        if(actionSpawnTimer <= 0)
+        {
+            actionSpawnTimer = 10f;
+            makeNewEnemyActionNode();
+            spawnEnemyAttackNode();
+        }
     }
 
     void spawnEnemyAttackNode()
     {
-        //gameobject go = instantiate(prefab enemyattack node, at right location + rotation)
-        //set the enemyActionToDo inside the script of go to newEnemyActionNode
+        GameObject go = Instantiate(enemyActionNodePrefab);         //spawn it in the bar on the top the screen not wherever this is
+        if(newEnemyActionNodeType == enemyAction.MoveLeft)
+        {
+            go.gameObject.GetComponent<enemyAttackNodeScr>().enemyActionToDo = enemyAttackNodeScr.enemyAction.MoveLeft;
+        } else if(newEnemyActionNodeType == enemyAction.MoveRight)
+        {
+            go.gameObject.GetComponent<enemyAttackNodeScr>().enemyActionToDo = enemyAttackNodeScr.enemyAction.MoveRight;
+        } else if(newEnemyActionNodeType == enemyAction.Block)
+        {
+            go.gameObject.GetComponent<enemyAttackNodeScr>().enemyActionToDo = enemyAttackNodeScr.enemyAction.Block;
+        } else if(newEnemyActionNodeType == enemyAction.RegularAttack)
+        {
+            go.gameObject.GetComponent<enemyAttackNodeScr>().enemyActionToDo = enemyAttackNodeScr.enemyAction.RegularAttack;
+        } else
+        {
+            go.gameObject.GetComponent<enemyAttackNodeScr>().enemyActionToDo = enemyAttackNodeScr.enemyAction.SuperAttack;
+        }
     }
-
-    void excecuteEnemyAttackNode(enemyAction actionToDo)
-    {
-        //perhaps do the other job here? or not...
-    }
-
 
     void makeNewEnemyActionNode()
     {
@@ -59,19 +77,19 @@ public class Enemy : MonoBehaviour
             int weightedRandAction = Random.Range(0, 25);     //move Left (0-10), block (11-15), regular attack (16-20), super attack (21-23), move Right (24+25)
             if(0 <= weightedRandAction && weightedRandAction <= 10)
             {
-                newEnemyActionNode = enemyAction.MoveLeft;
+                newEnemyActionNodeType = enemyAction.MoveLeft;
             } else if(11 <= weightedRandAction && weightedRandAction <= 15)
             {
-                newEnemyActionNode = enemyAction.Block;
+                newEnemyActionNodeType = enemyAction.Block;
             } else if(16 <= weightedRandAction && weightedRandAction <= 20)
             {
-                newEnemyActionNode = enemyAction.RegularAttack;
+                newEnemyActionNodeType = enemyAction.RegularAttack;
             } else if(21 <= weightedRandAction && weightedRandAction <= 23)
             {
-                newEnemyActionNode = enemyAction.SuperAttack;
+                newEnemyActionNodeType = enemyAction.SuperAttack;
             } else
             {
-                newEnemyActionNode = enemyAction.MoveRight;
+                newEnemyActionNodeType = enemyAction.MoveRight;
             }
 
         } else
@@ -80,23 +98,23 @@ public class Enemy : MonoBehaviour
             int weightedRandAction = Random.Range(0, 25);     //ragular attack (0-10), block (11-15), move Right (16-20), super attack (21-23), move Left (24+25)
             if (0 <= weightedRandAction && weightedRandAction <= 10)
             {
-                newEnemyActionNode = enemyAction.RegularAttack;
+                newEnemyActionNodeType = enemyAction.RegularAttack;
             }
             else if (11 <= weightedRandAction && weightedRandAction <= 15)
             {
-                newEnemyActionNode = enemyAction.Block;
+                newEnemyActionNodeType = enemyAction.Block;
             }
             else if (16 <= weightedRandAction && weightedRandAction <= 20)
             {
-                newEnemyActionNode = enemyAction.MoveRight;
+                newEnemyActionNodeType = enemyAction.MoveRight;
             }
             else if (21 <= weightedRandAction && weightedRandAction <= 23)
             {
-                newEnemyActionNode = enemyAction.SuperAttack;
+                newEnemyActionNodeType = enemyAction.SuperAttack;
             }
             else
             {
-                newEnemyActionNode = enemyAction.MoveLeft;
+                newEnemyActionNodeType = enemyAction.MoveLeft;
             }
 
         }

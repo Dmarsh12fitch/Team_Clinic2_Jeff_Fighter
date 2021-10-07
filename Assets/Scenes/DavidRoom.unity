@@ -1544,6 +1544,7 @@ MonoBehaviour:
   healthBar: {fileID: 232522649}
   baseDmg: 5
   specialAttackDmg: 20
+  enemyActionNodePrefab: {fileID: 1201249535464580149, guid: 006095dd682588a4aa8bdffe49e87a6b, type: 3}
   playerScript: {fileID: 0}
 --- !u!1001 &1201249536462056540
 PrefabInstance:
@@ -1555,6 +1556,10 @@ PrefabInstance:
     - target: {fileID: 1201249535464580149, guid: 006095dd682588a4aa8bdffe49e87a6b, type: 3}
       propertyPath: m_Name
       value: EnemyAttackNode
+      objectReference: {fileID: 0}
+    - target: {fileID: 1201249535464580149, guid: 006095dd682588a4aa8bdffe49e87a6b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1201249535464580150, guid: 006095dd682588a4aa8bdffe49e87a6b, type: 3}
       propertyPath: m_Pivot.x

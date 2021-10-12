@@ -12,11 +12,13 @@ public class Enemy : MonoBehaviour
     public GameObject healthBar;
     [SerializeField] float baseDmg = 5f;
     [SerializeField] float specialAttackDmg = 20f;
+    private bool isBlocking;
 
     public GameObject enemyActionNodePrefab;
     private float actionSpawnTimer = 10f;
 
     public PlayerController playerScript;
+    public Transform spawnLocoOfenemyAttackNodes;
 
 
     public enum enemyAction
@@ -50,7 +52,8 @@ public class Enemy : MonoBehaviour
 
     void spawnEnemyAttackNode()
     {
-        GameObject go = Instantiate(enemyActionNodePrefab);         //spawn it in the bar on the top the screen not wherever this is
+        GameObject go = Instantiate(enemyActionNodePrefab, spawnLocoOfenemyAttackNodes);         //spawn it in the bar on the top the screen not wherever this is
+        go.gameObject.transform.SetParent(GameObject.Find("Canvas").transform, false);
         if(newEnemyActionNodeType == enemyAction.MoveLeft)
         {
             go.gameObject.GetComponent<enemyAttackNodeScr>().enemyActionToDo = enemyAttackNodeScr.enemyAction.MoveLeft;
@@ -163,25 +166,27 @@ public class Enemy : MonoBehaviour
 
     public void regularAttack()
     {
-        //program this
-        Debug.Log("enemy regular Attacksshsihh");
+        //do regular attack anim here
+        punch(baseDmg);
     }
 
     public void superAttack()
     {
-        //program this
-        Debug.Log("enemy superAtaccksish");
+        //do super Attack Enemy anim here
+        punch(specialAttackDmg);
     }
 
     public void block()
     {
         //program this
         Debug.Log("enemy blockssssish");
+        //do block anim
+        //set "is blocking" to true for a certain amount of time, then back to false
     }
 
     public void damageBadGuy(float damage)
     {
-        if (true)       //IF ENEMY NOT IN BLOCK STATE
+        if (!isBlocking)
         {
             //activate damage animation
             health -= damage;

@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     public GameObject healthBar;
     [SerializeField] float baseDmg = 5f;
     [SerializeField] float superAttackDmg = 25f;
+    private bool isBlocking;
 
     [SerializeField] float punchesTillSuperAttackPunch = 7f;
     public GameObject superAttackBar;
@@ -112,6 +113,9 @@ public class PlayerController : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.LeftShift))
             {
                 //do block stuff....yeah
+                Debug.Log("BLOck de Enemy!!!");
+                //do block anim
+                //set isBlocking to true while this button is being held down, but back if not
             }
         }
     }
@@ -124,7 +128,7 @@ public class PlayerController : MonoBehaviour
 
     public void damagePlayer(float damage)
     {
-        if (true)   //IF PLAYER NOT IN BLOCK STATE
+        if (!isBlocking)
         {
             //activate damage animation
             health -= damage;

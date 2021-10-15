@@ -15,7 +15,7 @@ public class Enemy : MonoBehaviour
     private bool isBlocking;
 
     public GameObject enemyActionNodePrefab;
-    private float actionSpawnTimer = 10f;
+    private float actionSpawnTimer = 2f;
 
     public PlayerController playerScript;
     public Transform spawnLocoOfenemyAttackNodes;
@@ -41,10 +41,18 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //Quit case
+        if (Input.GetKey("escape"))
+        {
+            Application.Quit();
+        }
+
         actionSpawnTimer -= Time.deltaTime;
         if(actionSpawnTimer <= 0)
         {
-            actionSpawnTimer = 10f;
+            actionSpawnTimer = Random.Range(1f, 2f);
+            //Debug.Log(" " + actionSpawnTimer);
+            //actionSpawnTimer = 1.5f;
             makeNewEnemyActionNode();
             spawnEnemyAttackNode();
         }
@@ -74,20 +82,20 @@ public class Enemy : MonoBehaviour
 
     void makeNewEnemyActionNode()
     {
-        if(currentPosition - 1 != playerScript.currentPosition)
+        if (currentPosition - 2 != playerScript.currentPosition)
         {
             //must be far away
             int weightedRandAction = Random.Range(0, 25);     //move Left (0-10), block (11-15), regular attack (16-20), super attack (21-23), move Right (24+25)
-            if(0 <= weightedRandAction && weightedRandAction <= 10)
+            if (0 <= weightedRandAction && weightedRandAction <= 10)
             {
                 newEnemyActionNodeType = enemyAction.MoveLeft;
-            } else if(11 <= weightedRandAction && weightedRandAction <= 15)
+            } else if (11 <= weightedRandAction && weightedRandAction <= 15)
             {
                 newEnemyActionNodeType = enemyAction.Block;
-            } else if(16 <= weightedRandAction && weightedRandAction <= 20)
+            } else if (16 <= weightedRandAction && weightedRandAction <= 20)
             {
                 newEnemyActionNodeType = enemyAction.RegularAttack;
-            } else if(21 <= weightedRandAction && weightedRandAction <= 23)
+            } else if (21 <= weightedRandAction && weightedRandAction <= 23)
             {
                 newEnemyActionNodeType = enemyAction.SuperAttack;
             } else
@@ -95,6 +103,30 @@ public class Enemy : MonoBehaviour
                 newEnemyActionNodeType = enemyAction.MoveRight;
             }
 
+        } else if (currentPosition - 1 != playerScript.currentPosition)
+        {
+            //must be 2 away
+            int weightedRandAction = Random.Range(0, 25);     //block (0-10), regular attack (11-15), move right (16-20), super attack (21-23), move left (24+25)
+            if (0 <= weightedRandAction && weightedRandAction <= 10)
+            {
+                newEnemyActionNodeType = enemyAction.Block;
+            }
+            else if (11 <= weightedRandAction && weightedRandAction <= 15)
+            {
+                newEnemyActionNodeType = enemyAction.RegularAttack;
+            }
+            else if (16 <= weightedRandAction && weightedRandAction <= 20)
+            {
+                newEnemyActionNodeType = enemyAction.MoveRight;
+            }
+            else if (21 <= weightedRandAction && weightedRandAction <= 23)
+            {
+                newEnemyActionNodeType = enemyAction.SuperAttack;
+            }
+            else
+            {
+                newEnemyActionNodeType = enemyAction.MoveLeft;
+            }
         } else
         {
             //must be within reaching distnace
@@ -128,6 +160,7 @@ public class Enemy : MonoBehaviour
     {
         if (currentPosition - 1 != playerScript.currentPosition && currentPosition > -movementRange)
         {
+            Debug.Log("Enemy Moved Left.");
             currentPosition -= 1f;
             transform.position = new Vector3(currentPosition, 0, 0);
             //Instead of previous line, trigger the animation and then make it actually move (not teleport) with the animation
@@ -144,6 +177,7 @@ public class Enemy : MonoBehaviour
     {
         if (currentPosition + 1 != playerScript.currentPosition && currentPosition < movementRange)
         {
+            Debug.Log("Enemy Moved Right.");
             currentPosition += 1f;
             transform.position = new Vector3(currentPosition, 0, 0);
             //Instead of previous line, trigger the animation and then make it actually move (not teleport) with the animation
@@ -161,6 +195,7 @@ public class Enemy : MonoBehaviour
         if (currentPosition - 1 == playerScript.currentPosition)
         {
             playerScript.damagePlayer(damage);
+            Debug.Log("Enemy Hits Player.");
         }
     }
 
@@ -168,12 +203,14 @@ public class Enemy : MonoBehaviour
     {
         //do regular attack anim here
         punch(baseDmg);
+        Debug.Log("Enemy Attack Regular.");
     }
 
     public void superAttack()
     {
         //do super Attack Enemy anim here
         punch(specialAttackDmg);
+        Debug.Log("Enemy Attack Super.");
     }
 
     public void block()

@@ -5,6 +5,9 @@ using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
+    public CameraController CameraControllerScript;
+
+
     public float currentPosition = -4f;
     [SerializeField] float movementRange = 4f;
 
@@ -25,6 +28,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         badGuyScript = GameObject.Find("BadGuy").GetComponent<Enemy>();
+        CameraControllerScript = GameObject.Find("Camera").GetComponent<CameraController>();
     }
 
     // Update is called once per frame
@@ -40,9 +44,12 @@ public class PlayerController : MonoBehaviour
 
 
 
-
-
-
+        if (Input.GetMouseButtonDown(0))
+        {
+            Debug.Log("Should shake the camera");
+            CameraControllerScript.shakeTheCam();
+            //StartCoroutine(CameraControllerScript.Shake(0.15f));
+        }
 
 
     }

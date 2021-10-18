@@ -19,30 +19,22 @@ public class CameraController : MonoBehaviour
 
     public void shakeTheCam()
     {
-        Debug.Log("shakeit");
         StartCoroutine(Shake(0.15f));
     }
 
 
-
-
-
-
-
-
-    public IEnumerator Shake (float duration)
+    public IEnumerator Shake (float timeToShake)
     {
-        Debug.Log("I got the message to shake");
 
         Vector3 originalPos = transform.localPosition;
         Quaternion originalRot = transform.localRotation;
 
         float timeElaspled = 0f;
 
-        while(timeElaspled < duration)
+        while(timeElaspled < timeToShake)
         {
-            float xShake = Random.Range(-0.25f, 0.25f);
-            float yShake = Random.Range(-0.25f, 0.25f);
+            float xShake = Random.Range(-0.03f, 0.03f);
+            float yShake = Random.Range(-0.03f, 0.03f);
             float xRot = Random.Range(-5f, 5f);
             float yRot = Random.Range(-5f, 5f);
 
@@ -57,6 +49,8 @@ public class CameraController : MonoBehaviour
 
         transform.localPosition = originalPos;
         transform.localRotation = originalRot;
+
+
     }
 
 

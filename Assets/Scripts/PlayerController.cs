@@ -8,8 +8,8 @@ public class PlayerController : MonoBehaviour
     public CameraController CameraControllerScript;
 
 
-    public float currentPosition = -4f;
-    [SerializeField] float movementRange = 4f;
+    public float currentPosition = -6f;
+    [SerializeField] float movementRange = 6f;
 
     [SerializeField] float health = 200f;
     public GameObject healthBar;
@@ -50,21 +50,11 @@ public class PlayerController : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.A) && currentPosition > -movementRange)
             {
-                if (currentPosition - 1 != badGuyScript.currentPosition)
-                {
-                    movePlayer(-1);
-                }
-                else
-                {
-                    //do something bc you tried to move into the bad-guy's space
-                    Debug.Log("Hey! I'm here! (Enemy Speaking)");
-                    damagePlayer(5);
-                }
-
+                movePlayer(-1);
             }
-            else if (Input.GetKeyDown(KeyCode.D) && currentPosition < movementRange)
+            else if (Input.GetKeyDown(KeyCode.D))
             {
-                if (currentPosition + 1 != badGuyScript.currentPosition)
+                if (currentPosition < badGuyScript.currentPosition - 2)
                 {
                     movePlayer(1f);
                 }
@@ -125,7 +115,7 @@ public class PlayerController : MonoBehaviour
 
     public void damagePlayer(float damage)
     {
-        CameraControllerScript.StartCoroutine(CameraControllerScript.Shake(0.15f));
+        CameraControllerScript.StartCoroutine(CameraControllerScript.Shake(0.15f, damage));
         if (!isBlocking)
         {
             //activate damage animation
@@ -143,7 +133,7 @@ public class PlayerController : MonoBehaviour
 
     void punch(float damage)
     {
-        if (currentPosition + 1 == badGuyScript.currentPosition)
+        if (currentPosition + 2 == badGuyScript.currentPosition)
         {
             if (damage == superAttackDmg)
             {

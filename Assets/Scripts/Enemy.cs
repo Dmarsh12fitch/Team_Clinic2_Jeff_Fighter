@@ -7,8 +7,8 @@ public class Enemy : MonoBehaviour
 {
     public CameraController CameraControllerScript;
 
-    public float currentPosition = 4f;
-    [SerializeField] float movementRange = 4f;
+    public float currentPosition = 6f;
+    [SerializeField] float movementRange = 6f;
 
     [SerializeField] float health = 200f;
     public GameObject healthBar;
@@ -161,12 +161,12 @@ public class Enemy : MonoBehaviour
 
     public void moveLeft()
     {
-        if (currentPosition - 1 != playerScript.currentPosition && currentPosition > -movementRange)
+        if (currentPosition > playerScript.currentPosition + 2)
         {
             Debug.Log("Enemy Moved Left.");
             currentPosition -= 1f;
             transform.position = new Vector3(currentPosition, 0, 0);
-            //Instead of previous line, trigger the animation and then make it actually move (not teleport) with the animation
+            //Instead of previous line, trigger the animation and then make it actually move (not teleport) with the animation          
         }
         else
         {
@@ -178,24 +178,18 @@ public class Enemy : MonoBehaviour
 
     public void moveRight()
     {
-        if (currentPosition + 1 != playerScript.currentPosition && currentPosition < movementRange)
+        if (currentPosition < movementRange)     //only needed for movmeent range
         {
             Debug.Log("Enemy Moved Right.");
             currentPosition += 1f;
             transform.position = new Vector3(currentPosition, 0, 0);
             //Instead of previous line, trigger the animation and then make it actually move (not teleport) with the animation
         }
-        else
-        {
-            //do something bc you tried to move into your space?? or nothing
-            Debug.Log("Hey! I'm here! (Player Speaking)");
-            damageBadGuy(5);
-        }
     }
 
     void punch(float damage)
     {
-        if (currentPosition - 1 == playerScript.currentPosition)
+        if (currentPosition - 2 == playerScript.currentPosition)
         {
             playerScript.damagePlayer(damage);
             Debug.Log("Enemy Hits Player.");
@@ -226,7 +220,7 @@ public class Enemy : MonoBehaviour
 
     public void damageBadGuy(float damage)
     {
-        CameraControllerScript.StartCoroutine(CameraControllerScript.Shake(0.15f));
+        CameraControllerScript.StartCoroutine(CameraControllerScript.Shake(0.15f, damage));
         if (!isBlocking)
         {
             //activate damage animation

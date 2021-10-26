@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour
 {
+    public CameraController CameraControllerScript;
+
     public float currentPosition = 4f;
     [SerializeField] float movementRange = 4f;
 
@@ -36,6 +38,7 @@ public class Enemy : MonoBehaviour
     void Start()
     {
         playerScript = GameObject.Find("Player").GetComponent<PlayerController>();
+        CameraControllerScript = GameObject.Find("Main Camera").GetComponent<CameraController>();
     }
 
     // Update is called once per frame
@@ -223,6 +226,7 @@ public class Enemy : MonoBehaviour
 
     public void damageBadGuy(float damage)
     {
+        CameraControllerScript.StartCoroutine(CameraControllerScript.Shake(0.15f));
         if (!isBlocking)
         {
             //activate damage animation

@@ -64,7 +64,7 @@ public class enemyAttackNodeScr : MonoBehaviour
                     badGuyScript.superAttack();
                 }
                 //maybe do some effect quick before dying?
-                Destroy(gameObject, 0.1f);
+                Destroy(gameObject, 0.05f);
             }
         }
 

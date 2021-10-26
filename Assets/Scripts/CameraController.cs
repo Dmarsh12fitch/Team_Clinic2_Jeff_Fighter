@@ -33,8 +33,8 @@ public class CameraController : MonoBehaviour
 
         while(timeElaspled < timeToShake)
         {
-            float xShake = Random.Range(-0.03f, 0.03f);
-            float yShake = Random.Range(-0.03f, 0.03f);
+            float xShake = Random.Range(-0.04f, 0.04f);
+            float yShake = Random.Range(-0.04f, 0.04f);
             float xRot = Random.Range(-5f, 5f);
             float yRot = Random.Range(-5f, 5f);
 

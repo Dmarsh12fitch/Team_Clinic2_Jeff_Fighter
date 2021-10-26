@@ -42,14 +42,6 @@ public class PlayerController : MonoBehaviour
             getPlayerblockInputs();
         }
 
-
-
-        if (Input.GetMouseButtonDown(0))
-        {
-            CameraControllerScript.StartCoroutine(CameraControllerScript.Shake(0.15f));         //now just have this happen when a punch hits
-        }
-
-
     }
 
     void getPlayerMovementInputs()
@@ -133,6 +125,7 @@ public class PlayerController : MonoBehaviour
 
     public void damagePlayer(float damage)
     {
+        CameraControllerScript.StartCoroutine(CameraControllerScript.Shake(0.15f));
         if (!isBlocking)
         {
             //activate damage animation

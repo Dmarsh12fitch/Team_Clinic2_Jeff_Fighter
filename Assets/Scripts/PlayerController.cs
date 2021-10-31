@@ -6,6 +6,18 @@ using UnityEngine.UI;
 public class PlayerController : MonoBehaviour
 {
     public CameraController CameraControllerScript;
+    public Animator animator;
+
+    public bool idle = true;
+    public bool tiredIdle;
+    public bool moveForward;
+    public bool moveBackward;
+    public bool attack;
+    public bool superAttack;
+    public bool block;
+    public bool damaged;
+
+
 
 
     public float currentPosition = -6f;
@@ -35,7 +47,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         //inputs
-        if(health > 0)  //AND ONLY while in IDLE!!!
+        if(health > 0 && idle)
         {
             getPlayerMovementInputs();
             getplayerhitInputs();
@@ -46,7 +58,7 @@ public class PlayerController : MonoBehaviour
 
     void getPlayerMovementInputs()
     {
-        if (true)   //IF in IDLE ONLY
+        if (idle)
         {
             if (Input.GetKeyDown(KeyCode.A) && currentPosition > -movementRange)
             {
@@ -70,7 +82,7 @@ public class PlayerController : MonoBehaviour
 
     void getplayerhitInputs()
     {
-        if (true) //IF in IDLE ONLY
+        if (idle) //IF in IDLE ONLY
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
@@ -86,6 +98,7 @@ public class PlayerController : MonoBehaviour
                 else
                 {
                     //regular punch
+                    animator.SetBool("attackRegular", true);
                     //do animation for hit
                     punch(baseDmg);
                 }
@@ -95,7 +108,7 @@ public class PlayerController : MonoBehaviour
 
     void getPlayerblockInputs()
     {
-        if (true)       //IF in Idle ONLY
+        if (idle)
         {
             if (Input.GetKeyDown(KeyCode.LeftShift))
             {
@@ -121,13 +134,26 @@ public class PlayerController : MonoBehaviour
             //activate damage animation
             health -= damage;
             healthBar.gameObject.GetComponent<Image>().fillAmount = health / 200;
+            if(health <= 0)
+            {
+                //do death stuffs
+            }
         }
     }
 
     void movePlayer(float movementX)
     {
         currentPosition += movementX;
-        transform.position = new Vector3(currentPosition, 0, 0);
+        //transform.position = new Vector3(currentPosition, 0, 0);        //this just teleports, make it slowly move to location
+        idle = false;
+        if(movementX > 0)
+        {
+            animator.SetBool("moveForward", true);
+        } else
+        {
+            animator.SetBool("moveBackward", true);
+
+        }
         //Instead of previous line, trigger the animation and then make it actually move (not teleport) with the animation
     }
 
@@ -152,6 +178,20 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+
+    public void physicallyMove(float direction)
+    {
+        if(direction > 0)
+        {
+            //move it + OVER TIME
+            //after done delete the physical move from before
+        } else
+        {
+            //move it - OVER TIME
+        }
+    }
+
+    /*
     void kick()
     {
         //VERSION IF ANIM BLENDING
@@ -168,5 +208,5 @@ public class PlayerController : MonoBehaviour
         //if enemy is in idle
             //call enemy's "fall back" function
     }
-
+    */
 }

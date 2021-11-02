@@ -19,7 +19,7 @@ namespace Jeffu_Fighter
         override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
 
-            getPlayerController(animator).transform.Translate(-0.0029f, 0, 0);
+            getPlayerController(animator).transform.Translate(-0.0068f, 0, 0);
 
             if (animator.GetCurrentAnimatorStateInfo(0).IsName("WalkBackward") && animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.5f)
             {

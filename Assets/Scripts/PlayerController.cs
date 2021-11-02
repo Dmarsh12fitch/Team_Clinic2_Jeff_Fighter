@@ -52,7 +52,11 @@ public class PlayerController : MonoBehaviour
             getPlayerMovementInputs();
             getplayerhitInputs();
             getPlayerblockInputs();
-        }
+            if(health <= 150)
+            {
+                animator.SetBool("tiredNow", true);
+            }
+        } 
 
     }
 
@@ -130,6 +134,7 @@ public class PlayerController : MonoBehaviour
         if (!isBlocking)
         {
             //activate damage animation
+            animator.SetBool("gettingHit", true);
             health -= damage;
             healthBar.gameObject.GetComponent<Image>().fillAmount = health / 200;
             if(health <= 0)
@@ -176,18 +181,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-
-    public void physicallyMove(float direction)
-    {
-        if(direction > 0)
-        {
-            //move it + OVER TIME
-            //after done delete the physical move from before
-        } else
-        {
-            //move it - OVER TIME
-        }
-    }
 
     /*
     void kick()

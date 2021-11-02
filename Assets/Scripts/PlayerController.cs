@@ -25,9 +25,9 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] float health = 200f;
     public GameObject healthBar;
-    [SerializeField] float baseDmg = 5f;
-    [SerializeField] float superAttackDmg = 25f;
-    private bool isBlocking;
+    public float baseDmg = 5f;
+    public float superAttackDmg = 25f;
+    public bool isBlocking;
 
     [SerializeField] float punchesTillSuperAttackPunch = 7f;
     public GameObject superAttackBar;
@@ -90,10 +90,11 @@ public class PlayerController : MonoBehaviour
                 {
                     //super power punch
                     //do animation for super power hit
+                    animator.SetBool("superPunch", true);
                     punchesTillSuperAttackPunch = 7f;
                     superAttackBar.gameObject.GetComponent<Image>().fillAmount = 0f;
                     ReadyForSuperAttackImage.gameObject.SetActive(false);
-                    punch(superAttackDmg);
+                    
                 }
                 else
                 {
@@ -115,7 +116,7 @@ public class PlayerController : MonoBehaviour
                 //do block stuff....yeah
                 Debug.Log("BLOck de Enemy!!!");
                 //do block anim
-                //set isBlocking to true while this button is being held down, but back if not
+                isBlocking = true;  //make sure to set this back!!!!
             }
         }
     }
@@ -157,7 +158,7 @@ public class PlayerController : MonoBehaviour
         //Instead of previous line, trigger the animation and then make it actually move (not teleport) with the animation
     }
 
-    void punch(float damage)
+    public void punch(float damage)
     {
         if (currentPosition + 2 == badGuyScript.currentPosition)
         {

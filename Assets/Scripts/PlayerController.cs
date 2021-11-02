@@ -113,10 +113,7 @@ public class PlayerController : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.LeftShift))
             {
-                //do block stuff....yeah
-                Debug.Log("BLOck de Enemy!!!");
-                //do block anim
-                isBlocking = true;  //make sure to set this back!!!!
+                animator.SetBool("block", true);
             }
         }
     }

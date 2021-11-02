@@ -105,7 +105,7 @@ public class PlayerController : MonoBehaviour
                     //regular punch
                     animator.SetBool("attackRegular", true);
                     //do animation for hit
-                    punch(baseDmg);
+                    //punch(baseDmg);
                 }
             }
         }
@@ -139,7 +139,7 @@ public class PlayerController : MonoBehaviour
             healthBar.gameObject.GetComponent<Image>().fillAmount = health / 200;
             if(health <= 0)
             {
-                //do death stuffs
+                animator.SetBool("dead", true);
             }
         }
     }

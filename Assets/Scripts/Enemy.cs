@@ -53,7 +53,7 @@ public class Enemy : MonoBehaviour
         actionSpawnTimer -= Time.deltaTime;
         if(actionSpawnTimer <= 0)
         {
-            actionSpawnTimer = Random.Range(1f, 2f);
+            actionSpawnTimer = Random.Range(3f, 4f);
             //Debug.Log(" " + actionSpawnTimer);
             //actionSpawnTimer = 1.5f;
             makeNewEnemyActionNode();

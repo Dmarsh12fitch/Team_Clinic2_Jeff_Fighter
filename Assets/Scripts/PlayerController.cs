@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
+
+    
     public CameraController CameraControllerScript;
     public Animator animator;
 
@@ -36,6 +38,28 @@ public class PlayerController : MonoBehaviour
     public Enemy badGuyScript;
 
 
+
+    //NEW
+
+    public int playerNum;       //make sure to set this for p1 and p2!
+
+    /*
+    public enum playerActionType
+    {
+        Idle,
+        MoveBackwards,
+        MoveForwards,
+        Block,
+        RegularAttack,
+        SuperAttack,
+        GotHit
+    }
+    private playerActionType currentPlayerAction;
+    private playerActionType upNextPlayerAction;
+    */
+
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -43,9 +67,22 @@ public class PlayerController : MonoBehaviour
         CameraControllerScript = GameObject.Find("Main Camera").GetComponent<CameraController>();
     }
 
+
     // Update is called once per frame
     void Update()
     {
+        //get player movementinputs
+        //getPlayerMovementInputs();
+        //get player attack/block inputs
+
+        //call player action (attacks and blocks override movement and idle, but NOT getting hit etc.
+        //callPlayerAction();
+
+
+
+        //have an inputmanager for all the inputs
+
+        /*
         //inputs
         if(health > 0 && idle)
         {
@@ -57,11 +94,51 @@ public class PlayerController : MonoBehaviour
                 animator.SetBool("tiredNow", true);
             }
         } 
-
+        */
     }
+
+
+
+
+    /*
+
+    void callPlayerAction()
+    {
+        if (!currentPlayerAction.Equals(playerActionType.GotHit))
+        {
+            if((currentPlayerAction.Equals(playerActionType.Idle) || currentPlayerAction.Equals(playerActionType.MoveBackwards) || currentPlayerAction.Equals(playerActionType.MoveForwards))
+                && (upNextPlayerAction.Equals(playerActionType.RegularAttack) || upNextPlayerAction.Equals(playerActionType.SuperAttack) || upNextPlayerAction.Equals(playerActionType.Block)))
+            {
+                //this means we should replace current action with a new action right now
+            }
+            
+
+
+        }
+    }
+
+
+
+    */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     void getPlayerMovementInputs()
     {
+
+        /*
         if (idle)
         {
             if (Input.GetKeyDown(KeyCode.A) && currentPosition > -movementRange)
@@ -82,6 +159,7 @@ public class PlayerController : MonoBehaviour
                 }
             }
         }
+        */
     }
 
     void getplayerhitInputs()

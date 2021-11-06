@@ -19,11 +19,17 @@ public class InputManager : MonoBehaviour
         }
     }
     //END Making this a singleton _________________________________
+    /*
+    //Player1 button states
+    private bool player1MoveBackwardButtonDown;
+    private bool player1MoveForwardButtonDown;
+    private bool player1BlockButtonDown;
 
-
-
-
-
+    //Player2 button states
+    private bool player2MoveBackwardButtonDown;
+    private bool player2MoveForwardButtonDown;
+    private bool player2BlockButtonDown;
+    */
     //checks for all the keys pressed
     void Update()
     {
@@ -37,8 +43,13 @@ public class InputManager : MonoBehaviour
             Player1And2Manager.Instance.controlKeyDown(1, Player1And2Manager.playerActionType.MoveBackwards);
         } else
         {
-            //send a control key request to disable movebackwards
-            Player1And2Manager.Instance.controlKeyUp(1, Player1And2Manager.playerActionType.MoveBackwards);
+            //when button is let up
+            if (Input.GetKeyUp(KeyCode.A))
+            {
+                //send a control key request to disable movebackwards
+                Player1And2Manager.Instance.controlKeyUp(1, Player1And2Manager.playerActionType.MoveBackwards);
+            }
+
 
 
             //Get MoveForwards
@@ -48,8 +59,13 @@ public class InputManager : MonoBehaviour
                 Player1And2Manager.Instance.controlKeyDown(1, Player1And2Manager.playerActionType.MoveForwards);
             } else
             {
-                //send a control key request to disable moveforwards
-                Player1And2Manager.Instance.controlKeyUp(1, Player1And2Manager.playerActionType.MoveForwards);
+                //when button is let up
+                if (Input.GetKeyUp(KeyCode.D))
+                {
+                    //send a control key request to disable moveforwards
+                    Player1And2Manager.Instance.controlKeyUp(1, Player1And2Manager.playerActionType.MoveForwards);
+                }
+
 
 
                 //Get Block
@@ -59,8 +75,13 @@ public class InputManager : MonoBehaviour
                     Player1And2Manager.Instance.controlKeyDown(1, Player1And2Manager.playerActionType.Block);
                 } else
                 {
-                    //send a control key request to disable block
-                    Player1And2Manager.Instance.controlKeyUp(1, Player1And2Manager.playerActionType.Block);
+                    //when button is let up
+                    if (Input.GetKeyUp(KeyCode.S))
+                    {
+                        //send a control key request to disable block
+                        Player1And2Manager.Instance.controlKeyUp(1, Player1And2Manager.playerActionType.Block);
+                    }
+
 
 
                     //Get RegularAttack

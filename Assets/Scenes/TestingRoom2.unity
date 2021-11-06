@@ -553,6 +553,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player1And2ManagerObj
       objectReference: {fileID: 0}
+    - target: {fileID: 3030483441516315562, guid: e9a79e6671f47c14db2f738e8879c4bd, type: 3}
+      propertyPath: player1NextAction
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3030483441516315562, guid: e9a79e6671f47c14db2f738e8879c4bd, type: 3}
+      propertyPath: player2NextAction
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3030483441516315562, guid: e9a79e6671f47c14db2f738e8879c4bd, type: 3}
+      propertyPath: player1CurrentAction
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3030483441516315562, guid: e9a79e6671f47c14db2f738e8879c4bd, type: 3}
+      propertyPath: player2CurrentAction
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 3387300623801212845, guid: e9a79e6671f47c14db2f738e8879c4bd, type: 3}
       propertyPath: m_RootOrder
       value: 4

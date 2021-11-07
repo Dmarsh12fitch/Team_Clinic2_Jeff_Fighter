@@ -40,14 +40,14 @@ public class InputManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.A))
         {
             //send a control key request to enable movebackwards
-            Player1And2Manager.Instance.controlKeyDown(1, Player1And2Manager.playerActionType.MoveBackwards);
+            Player1And2Manager.Instance.ControlKeyDown(1, Player1And2Manager.playerActionType.MoveBackwards);
         } else
         {
             //when button is let up
             if (Input.GetKeyUp(KeyCode.A))
             {
                 //send a control key request to disable movebackwards
-                Player1And2Manager.Instance.controlKeyUp(1, Player1And2Manager.playerActionType.MoveBackwards);
+                Player1And2Manager.Instance.ControlKeyUp(1, Player1And2Manager.playerActionType.MoveBackwards);
             }
 
 
@@ -56,14 +56,14 @@ public class InputManager : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.D))
             {
                 //send a control key request to enable moveforwards
-                Player1And2Manager.Instance.controlKeyDown(1, Player1And2Manager.playerActionType.MoveForwards);
+                Player1And2Manager.Instance.ControlKeyDown(1, Player1And2Manager.playerActionType.MoveForwards);
             } else
             {
                 //when button is let up
                 if (Input.GetKeyUp(KeyCode.D))
                 {
                     //send a control key request to disable moveforwards
-                    Player1And2Manager.Instance.controlKeyUp(1, Player1And2Manager.playerActionType.MoveForwards);
+                    Player1And2Manager.Instance.ControlKeyUp(1, Player1And2Manager.playerActionType.MoveForwards);
                 }
 
 
@@ -72,14 +72,14 @@ public class InputManager : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.S))
                 {
                     //send a control key request to enable block
-                    Player1And2Manager.Instance.controlKeyDown(1, Player1And2Manager.playerActionType.Block);
+                    Player1And2Manager.Instance.ControlKeyDown(1, Player1And2Manager.playerActionType.Block);
                 } else
                 {
                     //when button is let up
                     if (Input.GetKeyUp(KeyCode.S))
                     {
                         //send a control key request to disable block
-                        Player1And2Manager.Instance.controlKeyUp(1, Player1And2Manager.playerActionType.Block);
+                        Player1And2Manager.Instance.ControlKeyUp(1, Player1And2Manager.playerActionType.Block);
                     }
 
 
@@ -88,7 +88,7 @@ public class InputManager : MonoBehaviour
                     if (Input.GetKeyDown(KeyCode.Space))
                     {
                         //send a control key request to enable regular attack
-                        Player1And2Manager.Instance.controlKeyDown(1, Player1And2Manager.playerActionType.RegularAttack);
+                        Player1And2Manager.Instance.ControlKeyDown(1, Player1And2Manager.playerActionType.RegularAttack);
                     } else
                     {
                         //no way to disable attack once launched
@@ -98,7 +98,7 @@ public class InputManager : MonoBehaviour
                         if (Input.GetKeyDown(KeyCode.Z))
                         {
                             //send a control key request to enable super attack
-                            Player1And2Manager.Instance.controlKeyDown(1, Player1And2Manager.playerActionType.SuperAttack);
+                            Player1And2Manager.Instance.ControlKeyDown(1, Player1And2Manager.playerActionType.SuperAttack);
                             //no way to disable super attack once launched
                         }
                     }

@@ -36,6 +36,10 @@ public class Player1And2Manager : MonoBehaviour
 
 
     //Player1 Variables
+    private GameObject Player1Obj;
+
+    private Animator player1Animator;
+
     private playerActionType player1CurrentAction = playerActionType.Idle;
     private playerActionType player1NextAction = playerActionType.Idle;
 
@@ -44,6 +48,10 @@ public class Player1And2Manager : MonoBehaviour
 
 
     //Player2 Variables
+    private GameObject Player2Obj;
+
+    private Animator player2Animator;
+
     private playerActionType player2CurrentAction = playerActionType.Idle;
     private playerActionType player2NextAction = playerActionType.Idle;
 
@@ -51,7 +59,11 @@ public class Player1And2Manager : MonoBehaviour
     private float player2SuperBarFillAmount = 0;    //from 0 - 1
 
 
-
+    private void Start()
+    {
+        Player1Obj = GameObject.Find("Player1");
+        Player2Obj = GameObject.Find("Player2");
+    }
 
 
 
@@ -71,7 +83,7 @@ public class Player1And2Manager : MonoBehaviour
 
 
     //is called when a control key is pressed
-    public void controlKeyDown(int whichPlayer, playerActionType player1And2Input)
+    public void ControlKeyDown(int whichPlayer, playerActionType player1And2Input)
     {
         //see whether or not this action can be implemented and if so implement it
         //Debug.Log("COMMDAND START : " + player1And2Input.ToString()); //test
@@ -91,7 +103,7 @@ public class Player1And2Manager : MonoBehaviour
                     {
                         //when doing block you have to start blockstart
                         player1NextAction = playerActionType.BlockSTART;
-                        tryForceStateChange(1);
+                        TryForceStateChange(1);
                     }
                     else if (player1And2Input.Equals(playerActionType.SuperAttack))
                     {
@@ -99,24 +111,13 @@ public class Player1And2Manager : MonoBehaviour
                         if(player1SuperBarFillAmount == 1)
                         {
                             player1NextAction = player1And2Input;
-                            tryForceStateChange(1);
+                            TryForceStateChange(1);
                         }
                     } else
                     {
                         player1NextAction = player1And2Input;
-                        tryForceStateChange(1);
+                        TryForceStateChange(1);
                     }
-                    
-                    
-
-                    /*
-                    //IF Block, RegularAttack, or SuperAttack, launch right now
-                    if (player1And2Input.Equals(playerActionType.Block) || player1And2Input.Equals(playerActionType.RegularAttack)
-                        || (player1And2Input.Equals(playerActionType.SuperAttack) && player1SuperBarFillAmount == 1))
-                    {
-                        //call the function that makes next action current action, switch animation, and makes next Idle
-                    }
-                    */
                 }
             }
         } else
@@ -143,7 +144,7 @@ public class Player1And2Manager : MonoBehaviour
 
 
     //is called when a control key is released
-    public void controlKeyUp(int whichPlayer, playerActionType player1And2Input)
+    public void ControlKeyUp(int whichPlayer, playerActionType player1And2Input)
     {
         //see what should be done with the particular action and kill it (if it isn't already killed)
         //Debug.Log("COMMDAND STOP : " + player1And2Input.ToString());  //test
@@ -164,7 +165,7 @@ public class Player1And2Manager : MonoBehaviour
                     player1NextAction = playerActionType.Idle;
                 }
 
-                tryForceStateChange(1);
+                TryForceStateChange(1);
             }
         }
         else
@@ -178,7 +179,7 @@ public class Player1And2Manager : MonoBehaviour
 
 
     //is called when it is requested to force the state to change right now
-    void tryForceStateChange(float whichPlayer)
+    void TryForceStateChange(float whichPlayer)
     {
 
 
@@ -202,7 +203,7 @@ public class Player1And2Manager : MonoBehaviour
             else if ((!player1CurrentAction.Equals(playerActionType.GotHit))
                 && !(player1CurrentAction.Equals(playerActionType.RegularAttack) || player1CurrentAction.Equals(playerActionType.SuperAttack)
                 || player1CurrentAction.Equals(playerActionType.Block) || player1CurrentAction.Equals(playerActionType.BlockSTART)
-                || player1CurrentAction.Equals(playerActionType.BlockSTOP)))
+                || player1CurrentAction.Equals(playerActionType.BlockSTOP)))        //THIS needs to be edited probably
             {
                 //change current to next state, next state to idle
                 player1CurrentAction = player1NextAction;
@@ -214,22 +215,25 @@ public class Player1And2Manager : MonoBehaviour
                 //call appropriate state for current!
                 if (player1CurrentAction.Equals(playerActionType.MoveBackwards))
                 {
-                    p1MoveBackwards();
+                    P1MoveBackwards();
                 } else if (player1CurrentAction.Equals(playerActionType.MoveForwards))
                 {
-                    p1MoveForwards();
+                    P1MoveForwards();
                 } else if (player1CurrentAction.Equals(playerActionType.BlockSTART))
                 {
-                    p1BlockSTART();
+                    P1BlockSTART();
                 } else if (player1CurrentAction.Equals(playerActionType.BlockSTOP))
                 {
-                    p1BlockSTOP();
+                    P1BlockSTOP();
                 } else if (player1CurrentAction.Equals(playerActionType.RegularAttack))
                 {
-                    p1RegularAttack();
+                    P1RegularAttack();
                 } else if (player1CurrentAction.Equals(playerActionType.SuperAttack))
                 {
-                    p1SuperAttack();
+                    P1SuperAttack();
+                } else if (player1CurrentAction.Equals(playerActionType.Idle))
+                {
+                    //Idle
                 }
             }
         }
@@ -249,9 +253,9 @@ public class Player1And2Manager : MonoBehaviour
 
 
     //this is called once the current animation ends and calls the next animation
-    void defaultStateChange(float whichPlayer)
+    void DefaultStateChange(float whichPlayer)
     {
-        
+
 
     }
 
@@ -263,42 +267,57 @@ public class Player1And2Manager : MonoBehaviour
     //Player1 Action Calls START -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
 
+        //ARE THESE EVEN ACCURATE??? HOW AM I SUPPOSED TO MAKE THINGS SNAP???
 
-        
-    void p1MoveForwards()
+    void P1MoveForwards()
     {
-        new WaitForSeconds(2.0f);
-
+        //setbool move forwards to true
+        //that should be it bc when you let the key up it should snap to idle
     }
 
-    void p1MoveBackwards()
+    void P1MoveBackwards()
     {
-
+        //setbool move forwards to true
+        //that should be it bc when you let the key up it should snap to idle
     }
 
-    void p1BlockSTART()
+    void P1BlockSTART()
     {
-
+        //setbool blockingstart to true     //(should make it do the blocking start anim)
+        //wait
+        //setbool blocking to true          //(should make it stay in block) (this should be the bool to see if you actually block something or not)
+        //set blockingstart to false
     }
 
-    void p1BlockSTOP()
+    void P1BlockSTOP()
     {
-
+        //setbool blockingstop to true      //(should make it do the blocking stop anim)
+        //setbool blocking to false         //(this should be the bool to see if you actually block something or not)^^
+        //wait
+        //setbool blockingstop to false
+        //wait
+        //IF blockSTOP is still the current, then call the DefaultStateChange
     }
 
-    void p1RegularAttack()
+    void P1RegularAttack()
     {
-
+        //setbool regularAttack to true
+        //wait                              //(in here somewhere is damage + shake if in range, shake if in range + blocking, nothing if not in range)
+        //setbool regularAttack to false
+        //If regularAttack is still the current, then call the DefaultStateChange
     }
 
-    void p1SuperAttack()
+    void P1SuperAttack()
     {
-
+        //setbool superAttack to true
+        //wait                              //(in here somewhere is damage + shake if in range, shake if in range + blocking, nothing if not in range)
+        //setbool superAttack to false
+        //IF superAttack is still the current, then call the DefaultStateChange
     }
 
     void p1GotHit()
     {
-
+        
     }
 
     //Player2 Action Calls STOPP -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-

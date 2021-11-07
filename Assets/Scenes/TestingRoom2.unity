@@ -194,6 +194,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 352739263}
+  - component: {fileID: 352739264}
   m_Layer: 0
   m_Name: Player1
   m_TagString: Untagged
@@ -216,6 +217,25 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &352739264
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 352739262}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &692269337
 GameObject:
   m_ObjectHideFlags: 0
@@ -474,9 +494,73 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7594077028999122691, guid: 908b81edf1b7dfa41bc7ad73b68b6629, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -7474343032721250509, guid: 908b81edf1b7dfa41bc7ad73b68b6629, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -6577867526914515876, guid: 908b81edf1b7dfa41bc7ad73b68b6629, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -3403155128824885820, guid: 908b81edf1b7dfa41bc7ad73b68b6629, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -2509730119719524873, guid: 908b81edf1b7dfa41bc7ad73b68b6629, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -2184270436634694258, guid: 908b81edf1b7dfa41bc7ad73b68b6629, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -820929162222590094, guid: 908b81edf1b7dfa41bc7ad73b68b6629, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -384251247427882252, guid: 908b81edf1b7dfa41bc7ad73b68b6629, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 656882779864163744, guid: 908b81edf1b7dfa41bc7ad73b68b6629, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 908b81edf1b7dfa41bc7ad73b68b6629, type: 3}
       propertyPath: m_Name
       value: Player1_TempDisplay
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 908b81edf1b7dfa41bc7ad73b68b6629, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1658904785829586306, guid: 908b81edf1b7dfa41bc7ad73b68b6629, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2252955306752952866, guid: 908b81edf1b7dfa41bc7ad73b68b6629, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2954748101641367972, guid: 908b81edf1b7dfa41bc7ad73b68b6629, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5090062054982439474, guid: 908b81edf1b7dfa41bc7ad73b68b6629, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5772604989225000782, guid: 908b81edf1b7dfa41bc7ad73b68b6629, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8152927876048264207, guid: 908b81edf1b7dfa41bc7ad73b68b6629, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 908b81edf1b7dfa41bc7ad73b68b6629, type: 3}

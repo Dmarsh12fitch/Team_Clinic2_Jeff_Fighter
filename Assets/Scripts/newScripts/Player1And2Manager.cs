@@ -63,6 +63,8 @@ public class Player1And2Manager : MonoBehaviour
     {
         Player1Obj = GameObject.Find("Player1");
         Player2Obj = GameObject.Find("Player2");
+        player1Animator = GameObject.Find("Player1_Display").GetComponent<Animator>();
+        //player2Animator = GameObject.Find("Player2_Display").GetComponent<Animator>();
     }
 
 
@@ -271,7 +273,7 @@ public class Player1And2Manager : MonoBehaviour
 
     void P1MoveForwards()
     {
-        //setbool move forwards to true
+        player1Animator.SetBool("MoveForwardState", true);
         //that should be it bc when you let the key up it should snap to idle
     }
 

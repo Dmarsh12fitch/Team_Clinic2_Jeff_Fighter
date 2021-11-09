@@ -15,6 +15,7 @@ namespace Jeffu_Fighter
         // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
         override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
+
             /*
             if (animator.GetCurrentAnimatorStateInfo(0).IsName("WalkBackward") && animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.5f)
             {

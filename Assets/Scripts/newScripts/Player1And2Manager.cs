@@ -44,7 +44,7 @@ public class Player1And2Manager : MonoBehaviour
     private playerActionType player1NextAction = playerActionType.Idle;
 
     private float player1HealthBarFillAmount = 0;   //from 0 - 1
-    private float player1SuperBarFillAmount = 0;    //from 0 - 1
+    private float player1SuperBarFillAmount = 1;    //from 0 - 1
 
 
     //Player2 Variables
@@ -61,8 +61,8 @@ public class Player1And2Manager : MonoBehaviour
 
     private void Start()
     {
-        Player1Obj = GameObject.Find("Player1");
-        Player2Obj = GameObject.Find("Player2");
+        Player1Obj = GameObject.Find("Player1");                                //ONLY DO THIS IN THE PLAYER1SCRIPT
+        Player2Obj = GameObject.Find("Player2");                                //same here
         player1Animator = GameObject.Find("Player1_Display").GetComponent<Animator>();
         //player2Animator = GameObject.Find("Player2_Display").GetComponent<Animator>();
     }
@@ -181,7 +181,7 @@ public class Player1And2Manager : MonoBehaviour
 
 
     //is called when it is requested to force the state to change right now
-    void TryForceStateChange(float whichPlayer)
+    public void TryForceStateChange(float whichPlayer)
     {
 
 
@@ -255,7 +255,7 @@ public class Player1And2Manager : MonoBehaviour
 
 
     //this is called once the current animation ends and calls the next animation
-    void DefaultStateChange(float whichPlayer)
+    public void DefaultStateChange(float whichPlayer)
     {
 
 
@@ -311,6 +311,7 @@ public class Player1And2Manager : MonoBehaviour
 
     void P1SuperAttack()
     {
+        player1Animator.SetBool("SuperAttackState", true);
         //setbool superAttack to true
         //wait                              //(in here somewhere is damage + shake if in range, shake if in range + blocking, nothing if not in range)
         //setbool superAttack to false
@@ -323,5 +324,32 @@ public class Player1And2Manager : MonoBehaviour
     }
 
     //Player2 Action Calls STOPP -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
+
+
+
+    //Player1 Functions START -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
+    public void Player1Damaged()
+    {
+
+    }
+
+
+    //Player1 Functions STOPP -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
 
 }

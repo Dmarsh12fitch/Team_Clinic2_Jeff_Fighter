@@ -36,19 +36,16 @@ public class Player1And2Manager : MonoBehaviour
 
 
     //Player1 Variables
-    private GameObject Player1Obj;
-
-    private Animator player1Animator;
+    private Player1Scr Player1Script;
 
     private playerActionType player1CurrentAction = playerActionType.Idle;
     private playerActionType player1NextAction = playerActionType.Idle;
 
-    private float player1HealthBarFillAmount = 0;   //from 0 - 1
-    private float player1SuperBarFillAmount = 1;    //from 0 - 1
+    
 
 
     //Player2 Variables
-    private GameObject Player2Obj;
+    private Player2Scr Player2Script;
 
     private Animator player2Animator;
 
@@ -61,10 +58,8 @@ public class Player1And2Manager : MonoBehaviour
 
     private void Start()
     {
-        Player1Obj = GameObject.Find("Player1");                                //ONLY DO THIS IN THE PLAYER1SCRIPT
-        Player2Obj = GameObject.Find("Player2");                                //same here
-        player1Animator = GameObject.Find("Player1_Display").GetComponent<Animator>();
-        //player2Animator = GameObject.Find("Player2_Display").GetComponent<Animator>();
+        Player1Script = GameObject.Find("Player1_Display").GetComponent<Player1Scr>();
+        Player2Script = GameObject.Find("Player2_Display").GetComponent<Player2Scr>();
     }
 
 
@@ -110,7 +105,7 @@ public class Player1And2Manager : MonoBehaviour
                     else if (player1And2Input.Equals(playerActionType.SuperAttack))
                     {
                         //only makes SuperAttack the next action if super bar is at max
-                        if(player1SuperBarFillAmount == 1)
+                        if(Player1Script.player1SuperBarFillAmount == 1)
                         {
                             player1NextAction = player1And2Input;
                             TryForceStateChange(1);
@@ -195,7 +190,7 @@ public class Player1And2Manager : MonoBehaviour
                 //change current to next state, next state to idle
                 player1CurrentAction = player1NextAction;
                 player1NextAction = playerActionType.Idle;
-                p1GotHit();
+                callTheCurrentState(1);
 
 
 
@@ -214,29 +209,7 @@ public class Player1And2Manager : MonoBehaviour
                 //say "forced ___ state in"
                 Debug.Log("FORCED to : " + player1CurrentAction.ToString());
 
-                //call appropriate state for current!
-                if (player1CurrentAction.Equals(playerActionType.MoveBackwards))
-                {
-                    P1MoveBackwards();
-                } else if (player1CurrentAction.Equals(playerActionType.MoveForwards))
-                {
-                    P1MoveForwards();
-                } else if (player1CurrentAction.Equals(playerActionType.BlockSTART))
-                {
-                    P1BlockSTART();
-                } else if (player1CurrentAction.Equals(playerActionType.BlockSTOP))
-                {
-                    P1BlockSTOP();
-                } else if (player1CurrentAction.Equals(playerActionType.RegularAttack))
-                {
-                    P1RegularAttack();
-                } else if (player1CurrentAction.Equals(playerActionType.SuperAttack))
-                {
-                    P1SuperAttack();
-                } else if (player1CurrentAction.Equals(playerActionType.Idle))
-                {
-                    //Idle
-                }
+                callTheCurrentState(1);
             }
         }
         else
@@ -257,74 +230,88 @@ public class Player1And2Manager : MonoBehaviour
     //this is called once the current animation ends and calls the next animation
     public void DefaultStateChange(float whichPlayer)
     {
+        if(whichPlayer == 1)
+        {
+            //for Player1
+            player1CurrentAction = player1NextAction;
+            player1NextAction = playerActionType.Idle;
+            Debug.Log("end?");
+            callTheCurrentState(1);
 
 
-    }
+        } else
+        {
+            //for Player2
+
+
+        }
 
 
 
 
 
 
-    //Player1 Action Calls START -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-
-
-        //ARE THESE EVEN ACCURATE??? HOW AM I SUPPOSED TO MAKE THINGS SNAP???
-
-    void P1MoveForwards()
-    {
-        player1Animator.SetBool("MoveForwardState", true);
-        //that should be it bc when you let the key up it should snap to idle
-    }
-
-    void P1MoveBackwards()
-    {
-        //setbool move forwards to true
-        //that should be it bc when you let the key up it should snap to idle
-    }
-
-    void P1BlockSTART()
-    {
-        //setbool blockingstart to true     //(should make it do the blocking start anim)
-        //wait
-        //setbool blocking to true          //(should make it stay in block) (this should be the bool to see if you actually block something or not)
-        //set blockingstart to false
-    }
-
-    void P1BlockSTOP()
-    {
-        //setbool blockingstop to true      //(should make it do the blocking stop anim)
-        //setbool blocking to false         //(this should be the bool to see if you actually block something or not)^^
-        //wait
-        //setbool blockingstop to false
-        //wait
-        //IF blockSTOP is still the current, then call the DefaultStateChange
-    }
-
-    void P1RegularAttack()
-    {
-        //setbool regularAttack to true
-        //wait                              //(in here somewhere is damage + shake if in range, shake if in range + blocking, nothing if not in range)
-        //setbool regularAttack to false
-        //If regularAttack is still the current, then call the DefaultStateChange
-    }
-
-    void P1SuperAttack()
-    {
-        player1Animator.SetBool("SuperAttackState", true);
-        //setbool superAttack to true
-        //wait                              //(in here somewhere is damage + shake if in range, shake if in range + blocking, nothing if not in range)
-        //setbool superAttack to false
-        //IF superAttack is still the current, then call the DefaultStateChange
-    }
-
-    void p1GotHit()
-    {
+        //do more than this obviously
         
+
     }
 
-    //Player2 Action Calls STOPP -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
+    void callTheCurrentState(int whichPlayer)
+    {
+        if(whichPlayer == 1)
+        {
+            //for Player1
+
+            Debug.Log("1");
+            //call appropriate state for current!
+            if (player1CurrentAction.Equals(playerActionType.GotHit))
+            {
+                Player1Script.P1GotHit();
+            }
+            else if (player1CurrentAction.Equals(playerActionType.MoveBackwards))
+            {
+                Player1Script.P1MoveBackwards();
+            }
+            else if (player1CurrentAction.Equals(playerActionType.MoveForwards))
+            {
+                Player1Script.P1MoveForwards();
+            }
+            else if (player1CurrentAction.Equals(playerActionType.BlockSTART))
+            {
+                Player1Script.P1BlockSTART();
+            }
+            else if (player1CurrentAction.Equals(playerActionType.BlockSTOP))
+            {
+                Player1Script.P1BlockSTOP();
+            }
+            else if (player1CurrentAction.Equals(playerActionType.RegularAttack))
+            {
+                Player1Script.P1RegularAttack();
+            }
+            else if (player1CurrentAction.Equals(playerActionType.SuperAttack))
+            {
+                Player1Script.P1SuperAttack();
+            }
+            else if (player1CurrentAction.Equals(playerActionType.Idle))
+            {
+                Player1Script.P1Idle();
+            }
+
+
+        } else
+        {
+            //for Player2
+
+
+        }
+
+
+    }
+
+
+
+    
 
 
 
@@ -332,7 +319,7 @@ public class Player1And2Manager : MonoBehaviour
 
     public void Player1Damaged()
     {
-
+        //do this in the other
     }
 
 

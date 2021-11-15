@@ -91,6 +91,16 @@ public class Player1And2Manager : MonoBehaviour
 
             if (!player1NextAction.Equals(playerActionType.GotHit) && !player1CurrentAction.Equals(playerActionType.GotHit))
             {
+                //if neither attack or superattack
+                if(!(player1CurrentAction.Equals(playerActionType.RegularAttack) || player1CurrentAction.Equals(playerActionType.SuperAttack)))
+                {
+                    player1NextAction = player1And2Input;
+                    TryForceStateChange(1);
+                }
+
+
+
+                /*
                 //For Launching Block, Super Attack, Regular Attack, MoveBackward, and MoveForward none of the first three can be active
                 if (!player1CurrentAction.Equals(playerActionType.Block) && !player1CurrentAction.Equals(playerActionType.RegularAttack)
                     && !player1CurrentAction.Equals(playerActionType.SuperAttack))
@@ -115,7 +125,7 @@ public class Player1And2Manager : MonoBehaviour
                         player1NextAction = player1And2Input;
                         TryForceStateChange(1);
                     }
-                }
+                }*/
             }
         } else
         {
@@ -150,9 +160,10 @@ public class Player1And2Manager : MonoBehaviour
         {
             //for player1
 
-            if (!player1NextAction.Equals(playerActionType.GotHit) && !player1CurrentAction.Equals(playerActionType.GotHit))
+            if (!player1NextAction.Equals(playerActionType.GotHit) && !player1CurrentAction.Equals(playerActionType.GotHit) && !player1CurrentAction.Equals(playerActionType.SuperAttack)
+                && !player1CurrentAction.Equals(playerActionType.RegularAttack))
             {
-                if (player1And2Input.Equals(playerActionType.Block))
+                if (player1And2Input.Equals(playerActionType.BlockSTOP))
                 {
                     //when stopping block you need to do blockstop
                     player1NextAction = playerActionType.BlockSTOP;
@@ -161,8 +172,9 @@ public class Player1And2Manager : MonoBehaviour
                 {
                     player1NextAction = playerActionType.Idle;
                 }
-
-                TryForceStateChange(1);
+                //temp
+                DefaultStateChange(1);
+                //TryForceStateChange(1);
             }
         }
         else
@@ -207,7 +219,7 @@ public class Player1And2Manager : MonoBehaviour
                 player1NextAction = playerActionType.Idle;
 
                 //say "forced ___ state in"
-                Debug.Log("FORCED to : " + player1CurrentAction.ToString());
+                //Debug.Log("FORCED to : " + player1CurrentAction.ToString());
 
                 callTheCurrentState(1);
             }
@@ -230,12 +242,16 @@ public class Player1And2Manager : MonoBehaviour
     //this is called once the current animation ends and calls the next animation
     public void DefaultStateChange(float whichPlayer)
     {
+
+
         if(whichPlayer == 1)
         {
             //for Player1
+            Debug.Log("Current : " + player1CurrentAction.ToString());
             player1CurrentAction = player1NextAction;
+            Debug.Log("After : " + player1CurrentAction.ToString());
             player1NextAction = playerActionType.Idle;
-            Debug.Log("end?");
+            //Debug.Log("end?");
             callTheCurrentState(1);
 
 
@@ -263,7 +279,7 @@ public class Player1And2Manager : MonoBehaviour
         {
             //for Player1
 
-            Debug.Log("1");
+
             //call appropriate state for current!
             if (player1CurrentAction.Equals(playerActionType.GotHit))
             {
@@ -309,21 +325,7 @@ public class Player1And2Manager : MonoBehaviour
 
     }
 
-
-
-    
-
-
-
-    //Player1 Functions START -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-
-    public void Player1Damaged()
-    {
-        //do this in the other
-    }
-
-
-    //Player1 Functions STOPP -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+   
 
     
 

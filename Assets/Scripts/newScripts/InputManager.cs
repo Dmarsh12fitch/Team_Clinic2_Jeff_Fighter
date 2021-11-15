@@ -72,14 +72,14 @@ public class InputManager : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.S))
                 {
                     //send a control key request to enable block
-                    Player1And2Manager.Instance.ControlKeyDown(1, Player1And2Manager.playerActionType.Block);
+                    Player1And2Manager.Instance.ControlKeyDown(1, Player1And2Manager.playerActionType.BlockSTART);
                 } else
                 {
                     //when button is let up
                     if (Input.GetKeyUp(KeyCode.S))
                     {
                         //send a control key request to disable block
-                        Player1And2Manager.Instance.ControlKeyUp(1, Player1And2Manager.playerActionType.Block);
+                        Player1And2Manager.Instance.ControlKeyUp(1, Player1And2Manager.playerActionType.BlockSTOP);
                     }
 
 

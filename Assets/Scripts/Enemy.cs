@@ -220,7 +220,7 @@ public class Enemy : MonoBehaviour
 
     public void damageBadGuy(float damage)
     {
-        CameraControllerScript.StartCoroutine(CameraControllerScript.Shake(0.15f, damage));
+        CameraControllerScript.StartCoroutine(CameraControllerScript.Shake(damage));
         if (!isBlocking)
         {
             //activate damage animation

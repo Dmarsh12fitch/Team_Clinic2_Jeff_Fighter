@@ -4,10 +4,15 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
+    private Player1Scr Player1Script;
+    private Player2Scr Player2Script;
+
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        Player1Script = GameObject.Find("Player1_Display").GetComponent<Player1Scr>();
+        Player2Script = GameObject.Find("Player2_Display").GetComponent<Player2Scr>();
     }
 
     // Update is called once per frame
@@ -16,20 +21,15 @@ public class CameraController : MonoBehaviour
         
     }
 
-    /*
-    public void shakeTheCam()
-    {
-        StartCoroutine(Shake(0.15f, 0.08f));
-    }
-    */
-
-    public IEnumerator Shake (float timeToShake, float damage)
+    public IEnumerator Shake (float damage)
     {
 
         float intensity;
-        if(damage == 5)
+        float timeToShake;
+        if(Player1Script.regularDamage == damage)
         {
             intensity = 0.08f;
+            timeToShake = 0.15f;
         } else
         {
             intensity = 0.5f;

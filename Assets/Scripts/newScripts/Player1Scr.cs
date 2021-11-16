@@ -16,9 +16,14 @@ public class Player1Scr : MonoBehaviour
                                         ,"StartBlockState","EndBlockState","BlockState","GotHitState", "IdleState"};
 
     public float player1HealthBarFillAmount = 0;   //from 0 - 1
-    public float player1SuperBarFillAmount = 1;    //from 0 - 1
+    public float player1SuperBarFillAmount = 0;    //from 0 - 1
     public float player1Moving = 0;
     public bool isBlocking;
+
+    public float regularDamage = 5;
+    public float superDamage = 15;
+
+
 
     // Start is called before the first frame update
     void Start()
@@ -41,9 +46,6 @@ public class Player1Scr : MonoBehaviour
     }
 
     //Player1 Action Calls START -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-
-
-    //ARE THESE EVEN ACCURATE??? HOW AM I SUPPOSED TO MAKE THINGS SNAP???
 
     public void P1MoveForwards()
     {
@@ -119,9 +121,6 @@ public class Player1Scr : MonoBehaviour
         Player1Animator.SetBool("IdleState", true);
     }
 
-    //Player1 Action Calls STOPP -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-
-
     void setAllToFalseBut(string thisStateString)
     {
         Player1MoveMeSet(0);
@@ -133,6 +132,11 @@ public class Player1Scr : MonoBehaviour
             }
         }
     }
+
+    //Player1 Action Calls STOPP -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
+
+
 
 
 
@@ -172,23 +176,35 @@ public class Player1Scr : MonoBehaviour
 
     public void Player1SuperAttackHitAttempt()
     {
-        //Debug.Log("SuperAttackDamage!");
-        //dmgother player
-        CameraControllerScript.StartCoroutine(CameraControllerScript.Shake(0.15f, 15));      //edit the damage here to the correct variables
+        if(transform.position.x + 7 > PLAYER2.position.x)      //distance to hit
+        {
+            CameraControllerScript.StartCoroutine(CameraControllerScript.Shake(15));
+            player1SuperBarFillAmount = 0f;
+            updateSuperBarDisplay();
+            //call to damage function of the other player
+        }
     }
 
 
     public void Player1RegularAttackHitAttempt()
     {
-        //Debug.Log("RegularAttackDamage!");        //TIMING needs to be changed!!!
-        //dmgother player IF in range
-        //shake camera
+        if(transform.position.x + 7 > PLAYER2.position.x)       //distance to hit
+        {
+            CameraControllerScript.StartCoroutine(CameraControllerScript.Shake(15));
+            if(player1SuperBarFillAmount >= 1)
+            {
+                player1SuperBarFillAmount = 1;
+            } else
+            {
+                player1SuperBarFillAmount += 0.2f;
+            }
+            updateSuperBarDisplay();
+            //call the damage function of the other player
+        }
     }
 
     public void Player1HasFinishedAnim()
     {
-        //TEMPORARY
-        //Debug.Log("End this anim");
         Player1And2Manager.Instance.DefaultStateChange(1);
     }
 
@@ -204,6 +220,29 @@ public class Player1Scr : MonoBehaviour
         Player1Animator.SetBool("IdleState", true);
     }
 
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    
+
+    public void Player1TakeDamage(float damage)
+    {
+        if (!isBlocking)
+        {
+            Player1TakeDamage(damage);
+            updateHealthBarDisplay();
+            P1GotHit();                     //make sure to add this anim!
+        }
+    }
+
+
+    void updateHealthBarDisplay()
+    {
+        //update the health display here
+    }
+
+    void updateSuperBarDisplay()
+    {
+        //update the super display here
+    }
 
     //take damage function
     //take damage if not blocking

@@ -89,13 +89,24 @@ public class Player1And2Manager : MonoBehaviour
         {
             //for player1
 
+            //if not about to get hit or being hit
             if (!player1NextAction.Equals(playerActionType.GotHit) && !player1CurrentAction.Equals(playerActionType.GotHit))
             {
                 //if neither attack or superattack
                 if(!(player1CurrentAction.Equals(playerActionType.RegularAttack) || player1CurrentAction.Equals(playerActionType.SuperAttack)))
                 {
-                    player1NextAction = player1And2Input;
-                    TryForceStateChange(1);
+                    if (player1And2Input.Equals(playerActionType.SuperAttack))
+                    {
+                        if(Player1Script.player1SuperBarFillAmount >= 1)
+                        {
+                            player1NextAction = player1And2Input;
+                            TryForceStateChange(1);
+                        }
+                    } else
+                    {
+                        player1NextAction = player1And2Input;
+                        TryForceStateChange(1);
+                    }
                 }
 
 

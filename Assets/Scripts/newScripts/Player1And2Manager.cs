@@ -64,10 +64,6 @@ public class Player1And2Manager : MonoBehaviour
 
 
 
-    private void Update()
-    {
-        Debug.Log("Current : " + player1CurrentAction);
-    }
 
 
 
@@ -92,8 +88,19 @@ public class Player1And2Manager : MonoBehaviour
             if (!player1NextAction.Equals(playerActionType.GotHit) && !player1CurrentAction.Equals(playerActionType.GotHit))
             {
                 //if neither attack or superattack
-                if (!(player1CurrentAction.Equals(playerActionType.RegularAttack) || player1CurrentAction.Equals(playerActionType.SuperAttack)))
+                if (!(player1CurrentAction.Equals(playerActionType.RegularAttack) || player1CurrentAction.Equals(playerActionType.SuperAttack)
+                    || player1CurrentAction.Equals(playerActionType.BlockSTART) || player1CurrentAction.Equals(playerActionType.Block)
+                    || player1CurrentAction.Equals(playerActionType.BlockSTOP)))
                 {
+                    //testing
+                    if (player1CurrentAction.Equals(playerActionType.RegularAttack))
+                    {
+                        Debug.Log("ATTTTTTACK ERRRRRORR");
+                    }
+
+
+
+
                     if (player1And2Input.Equals(playerActionType.SuperAttack))
                     {
                         if (Player1Script.player1SuperBarFillAmount >= 1)
@@ -171,8 +178,16 @@ public class Player1And2Manager : MonoBehaviour
             //for player1
 
             if (!player1NextAction.Equals(playerActionType.GotHit) && !player1CurrentAction.Equals(playerActionType.GotHit) && !player1CurrentAction.Equals(playerActionType.SuperAttack)
-                && !player1CurrentAction.Equals(playerActionType.RegularAttack))
+                && !player1CurrentAction.Equals(playerActionType.RegularAttack) && !player1CurrentAction.Equals(playerActionType.BlockSTART) && !player1CurrentAction.Equals(playerActionType.Block)
+                    && !player1CurrentAction.Equals(playerActionType.BlockSTOP))
             {
+
+                //testing
+                if (player1CurrentAction.Equals(playerActionType.RegularAttack))
+                {
+                    Debug.Log("ATTACK ERROR UPPP");
+                }
+
                 if (player1And2Input.Equals(playerActionType.BlockSTOP))
                 {
                     //when stopping block you need to do blockstop
@@ -185,6 +200,11 @@ public class Player1And2Manager : MonoBehaviour
                 //temp
                 DefaultStateChange(1);
                 //TryForceStateChange(1);
+            }
+            if (player1CurrentAction.Equals(playerActionType.BlockSTART) && player1And2Input.Equals(playerActionType.BlockSTOP))
+            {
+                player1NextAction = playerActionType.BlockSTOP;
+                DefaultStateChange(1);
             }
         }
         else

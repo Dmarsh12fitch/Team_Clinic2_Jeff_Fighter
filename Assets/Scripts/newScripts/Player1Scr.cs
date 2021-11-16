@@ -53,7 +53,6 @@ public class Player1Scr : MonoBehaviour
         setAllToFalseBut("MoveForwardState");
         Player1Animator.SetBool("MoveForwardState", true);
         Player1MoveMeSet(1);
-        //that should be it bc when you let the key up it should snap to idle
     }
 
     public void P1MoveBackwards()
@@ -61,8 +60,6 @@ public class Player1Scr : MonoBehaviour
         setAllToFalseBut("MoveBackwardState");
         Player1Animator.SetBool("MoveBackwardState", true);
         Player1MoveMeSet(-1);
-        //setbool move forwards to true
-        //that should be it bc when you let the key up it should snap to idle
     }
 
     public void P1BlockSTART()
@@ -70,42 +67,24 @@ public class Player1Scr : MonoBehaviour
         isBlocking = true;
         setAllToFalseBut("StartBlockState");
         Player1Animator.SetBool("StartBlockState", true);
-        //setbool blockingstart to true     //(should make it do the blocking start anim)
-        //wait
-        //setbool blocking to true          //(should make it stay in block) (this should be the bool to see if you actually block something or not)
-        //set blockingstart to false
     }
 
     public void P1BlockSTOP()
     {
         setAllToFalseBut("EndBlockState");
         Player1Animator.SetBool("EndBlockState", true);
-        //setbool blockingstop to true      //(should make it do the blocking stop anim)
-        //setbool blocking to false         //(this should be the bool to see if you actually block something or not)^^
-        //wait
-        //setbool blockingstop to false
-        //wait
-        //IF blockSTOP is still the current, then call the DefaultStateChange
     }
 
     public void P1RegularAttack()
     {
         setAllToFalseBut("RegularAttackState");
         Player1Animator.SetBool("RegularAttackState", true);
-        //setbool regularAttack to true
-        //wait                              //(in here somewhere is damage + shake if in range, shake if in range + blocking, nothing if not in range)
-        //setbool regularAttack to false
-        //If regularAttack is still the current, then call the DefaultStateChange
     }
 
     public void P1SuperAttack()
     {
         setAllToFalseBut("SuperAttackState");
         Player1Animator.SetBool("SuperAttackState", true);
-        //setbool superAttack to true
-        //wait                              //(in here somewhere is damage + shake if in range, shake if in range + blocking, nothing if not in range)
-        //setbool superAttack to false
-        //IF superAttack is still the current, then call the DefaultStateChange
     }
 
     public void P1GotHit()
@@ -227,9 +206,12 @@ public class Player1Scr : MonoBehaviour
         if (!isBlocking)
         {
             Player1TakeDamage(damage);
-            updateHealthBarDisplay();
-            P1GotHit();                     //make sure to add this anim!
+        } else
+        {
+            Player1TakeDamage(damage / 2);
         }
+        updateHealthBarDisplay();
+        P1GotHit();                                          //make sure to add this anim!
     }
 
 

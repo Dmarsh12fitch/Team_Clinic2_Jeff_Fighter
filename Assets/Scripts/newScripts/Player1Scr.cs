@@ -5,7 +5,7 @@ using UnityEngine;
 public class Player1Scr : MonoBehaviour
 {
     private CameraController CameraControllerScript;
-
+    
 
     private Animator Player1Animator;
     private Transform PLAYER1;
@@ -25,7 +25,6 @@ public class Player1Scr : MonoBehaviour
     public float superDamage = 15;
 
 
-
     // Start is called before the first frame update
     void Start()
     {
@@ -33,17 +32,7 @@ public class Player1Scr : MonoBehaviour
         PLAYER1 = GameObject.Find("Player1").GetComponent<Transform>();
         PLAYER2 = GameObject.Find("Player2").GetComponent<Transform>();
         CameraControllerScript = GameObject.Find("Main Camera").GetComponent<CameraController>();
-    }
-
-    private void FixedUpdate()
-    {
-        if (player1Moving == 1 && PLAYER1.position.x + 6 < PLAYER2.position.x)
-        {
-            PLAYER1.Translate(0.07f, 0, 0);                                     //this is gitching..make it move move in slowly
-        } else if(player1Moving == -1 && PLAYER1.position.x - 6 > -25)
-        {
-            PLAYER1.Translate(-0.07f, 0, 0);
-        }
+        InvokeRepeating("Player1Move", 0.008f, .008f);
     }
 
     //Player1 Action Calls START -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
@@ -158,10 +147,10 @@ public class Player1Scr : MonoBehaviour
         if(transform.position.x + 7 > PLAYER2.position.x)      //distance to hit
         {
             CameraControllerScript.StartCoroutine(CameraControllerScript.Shake(15));
-            player1SuperBarFillAmount = 0f;
-            updateSuperBarDisplay();
             //call to damage function of the other player
         }
+        player1SuperBarFillAmount = 0f;
+        updateSuperBarDisplay();
     }
 
 
@@ -205,13 +194,13 @@ public class Player1Scr : MonoBehaviour
     {
         if (!isBlocking)
         {
-            Player1TakeDamage(damage);
+            Player1TakeDamage(damage);                                         //make sure to add this anim!
+            P1GotHit();
         } else
         {
             Player1TakeDamage(damage / 2);
         }
         updateHealthBarDisplay();
-        P1GotHit();                                          //make sure to add this anim!
     }
 
 
@@ -225,8 +214,15 @@ public class Player1Scr : MonoBehaviour
         //update the super display here
     }
 
-    //take damage function
-    //take damage if not blocking
-    //if you take damage force got hit animation
+    private void Player1Move()
+    {
+        if (player1Moving == 1 && PLAYER1.position.x + 6 < PLAYER2.position.x)
+        {
+            PLAYER1.Translate(0.05f, 0, 0);                                     //this is gitching..make it move move in slowly
+        } else if(player1Moving == -1 && PLAYER1.position.x - 6 > -25)
+        {
+            PLAYER1.Translate(-0.05f, 0, 0);
+        }
+    }
 
 }

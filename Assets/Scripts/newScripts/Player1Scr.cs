@@ -12,6 +12,7 @@ public class Player1Scr : MonoBehaviour
     private Transform PLAYER2;
 
 
+
     private string[] statesStrings = { "MoveForwardState", "MoveBackwardState","RegularAttackState","SuperAttackState"
                                         ,"StartBlockState","EndBlockState","BlockState","GotHitState", "IdleState"};
 
@@ -116,14 +117,13 @@ public class Player1Scr : MonoBehaviour
     public void P1Idle()
     {
         isBlocking = false;
-        //MAKE SURE THIS IS DONE RIHGT (disable ALL the other currents)
         setAllToFalseBut("IdleState");
         Player1Animator.SetBool("IdleState", true);
     }
 
     void setAllToFalseBut(string thisStateString)
     {
-        Player1MoveMeSet(0);
+        Player1MoveMeSet(0);                                 //revisit
         foreach (string compareString in statesStrings)
         {
             if (!thisStateString.Equals(compareString))
@@ -216,8 +216,7 @@ public class Player1Scr : MonoBehaviour
 
     public void PlayerFinishedBlockStop()
     {
-        setAllToFalseBut("IdleState");
-        Player1Animator.SetBool("IdleState", true);
+        Player1And2Manager.Instance.DefaultStateChange(1);
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

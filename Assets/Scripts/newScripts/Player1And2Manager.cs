@@ -20,7 +20,7 @@ public class Player1And2Manager : MonoBehaviour
     }
     //END Making this a singleton _________________________________
 
-    
+
     public enum playerActionType
     {
         GotHit,
@@ -41,7 +41,7 @@ public class Player1And2Manager : MonoBehaviour
     private playerActionType player1CurrentAction = playerActionType.Idle;
     private playerActionType player1NextAction = playerActionType.Idle;
 
-    
+
 
 
     //Player2 Variables
@@ -64,11 +64,10 @@ public class Player1And2Manager : MonoBehaviour
 
 
 
-
-
-
-
-
+    private void Update()
+    {
+        Debug.Log("Current : " + player1CurrentAction);
+    }
 
 
 
@@ -93,11 +92,11 @@ public class Player1And2Manager : MonoBehaviour
             if (!player1NextAction.Equals(playerActionType.GotHit) && !player1CurrentAction.Equals(playerActionType.GotHit))
             {
                 //if neither attack or superattack
-                if(!(player1CurrentAction.Equals(playerActionType.RegularAttack) || player1CurrentAction.Equals(playerActionType.SuperAttack)))
+                if (!(player1CurrentAction.Equals(playerActionType.RegularAttack) || player1CurrentAction.Equals(playerActionType.SuperAttack)))
                 {
                     if (player1And2Input.Equals(playerActionType.SuperAttack))
                     {
-                        if(Player1Script.player1SuperBarFillAmount >= 1)
+                        if (Player1Script.player1SuperBarFillAmount >= 1)
                         {
                             player1NextAction = player1And2Input;
                             TryForceStateChange(1);
@@ -203,7 +202,7 @@ public class Player1And2Manager : MonoBehaviour
     {
 
 
-        if(whichPlayer == 1)
+        if (whichPlayer == 1)
         {
             //for player1
 
@@ -255,7 +254,7 @@ public class Player1And2Manager : MonoBehaviour
     {
 
 
-        if(whichPlayer == 1)
+        if (whichPlayer == 1)
         {
             //for Player1
             Debug.Log("Current : " + player1CurrentAction.ToString());
@@ -279,14 +278,14 @@ public class Player1And2Manager : MonoBehaviour
 
 
         //do more than this obviously
-        
+
 
     }
 
 
     void callTheCurrentState(int whichPlayer)
     {
-        if(whichPlayer == 1)
+        if (whichPlayer == 1)
         {
             //for Player1
 
@@ -335,15 +334,6 @@ public class Player1And2Manager : MonoBehaviour
 
 
     }
-
-   
-
-    
-
-
-
-
-
 
 
 

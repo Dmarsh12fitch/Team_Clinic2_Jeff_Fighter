@@ -270,11 +270,10 @@ public class Player1And2Manager : MonoBehaviour
         if (whichPlayer == 1)
         {
             //for Player1
-            Debug.Log("Current p1 : " + player1CurrentAction.ToString());
+            //Debug.Log("Current p1 : " + player1CurrentAction.ToString());
             player1CurrentAction = player1NextAction;
-            Debug.Log("After p1 : " + player1CurrentAction.ToString());
+            //Debug.Log("After p1 : " + player1CurrentAction.ToString());
             player1NextAction = playerActionType.Idle;
-            //Debug.Log("end?");
             CallTheCurrentState(1);
 
 
@@ -282,14 +281,11 @@ public class Player1And2Manager : MonoBehaviour
         {
             //for Player2
 
-            Debug.Log("Current p2 : " + player2CurrentAction.ToString());
+            //Debug.Log("Current p2 : " + player2CurrentAction.ToString());
             player2CurrentAction = player2NextAction;
-            Debug.Log("After p2 : " + player2CurrentAction.ToString());
+            //Debug.Log("After p2 : " + player2CurrentAction.ToString());
             player2NextAction = playerActionType.Idle;
             CallTheCurrentState(2);
-
-
-
         }
     }
 

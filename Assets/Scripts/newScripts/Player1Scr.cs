@@ -11,7 +11,7 @@ public class Player1Scr : MonoBehaviour
     private Transform PLAYER1;
     private Transform PLAYER2;
 
-
+    private Player2Scr Player2Script;
 
     private string[] statesStrings = { "MoveForwardState", "MoveBackwardState","RegularAttackState","SuperAttackState"
                                         ,"StartBlockState","EndBlockState","BlockState","GotHitState", "IdleState"};
@@ -28,6 +28,7 @@ public class Player1Scr : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Player2Script = GameObject.Find("Player2_Display").GetComponent<Player2Scr>();
         Player1Animator = GameObject.Find("Player1_Display").GetComponent<Animator>();
         PLAYER1 = GameObject.Find("Player1").GetComponent<Transform>();
         PLAYER2 = GameObject.Find("Player2").GetComponent<Transform>();
@@ -40,14 +41,14 @@ public class Player1Scr : MonoBehaviour
     public void P1MoveForwards()
     {
         setAllToFalseBut("MoveForwardState");
-        Player1Animator.SetBool("MoveForwardState", true);
+        //Player1Animator.SetBool("MoveForwardState", true);
         Player1MoveMeSet(1);
     }
 
     public void P1MoveBackwards()
     {
         setAllToFalseBut("MoveBackwardState");
-        Player1Animator.SetBool("MoveBackwardState", true);
+        //Player1Animator.SetBool("MoveBackwardState", true);
         Player1MoveMeSet(-1);
     }
 
@@ -56,38 +57,38 @@ public class Player1Scr : MonoBehaviour
         
         isBlocking = true;
         setAllToFalseBut("StartBlockState");
-        Player1Animator.SetBool("StartBlockState", true);
+        //Player1Animator.SetBool("StartBlockState", true);
     }
 
     public void P1BlockSTOP()
     {
         setAllToFalseBut("EndBlockState");
-        Player1Animator.SetBool("EndBlockState", true);
+        //Player1Animator.SetBool("EndBlockState", true);
     }
 
     public void P1RegularAttack()
     {
         setAllToFalseBut("RegularAttackState");
-        Player1Animator.SetBool("RegularAttackState", true);
+        //Player1Animator.SetBool("RegularAttackState", true);
     }
 
     public void P1SuperAttack()
     {
         setAllToFalseBut("SuperAttackState");
-        Player1Animator.SetBool("SuperAttackState", true);
+        //Player1Animator.SetBool("SuperAttackState", true);
     }
 
     public void P1GotHit()
     {
         setAllToFalseBut("GotHitState");
-        Player1Animator.SetBool("GotHitState", true);
+        //Player1Animator.SetBool("GotHitState", true);
     }
 
     public void P1Idle()
     {
         isBlocking = false;
         setAllToFalseBut("IdleState");
-        Player1Animator.SetBool("IdleState", true);
+        //Player1Animator.SetBool("IdleState", true);
     }
 
     void setAllToFalseBut(string thisStateString)
@@ -98,6 +99,10 @@ public class Player1Scr : MonoBehaviour
             if (!thisStateString.Equals(compareString))
             {
                 Player1Animator.SetBool(compareString, false);
+            }
+            else
+            {
+                Player1Animator.SetBool(compareString, true);
             }
         }
     }
@@ -167,8 +172,8 @@ public class Player1Scr : MonoBehaviour
             {
                 player1SuperBarFillAmount += 0.2f;
             }
+            Player2Script.Player2TakeDamage(regularDamage);
             updateSuperBarDisplay();
-            //call the damage function of the other player
         }
     }
 
@@ -193,12 +198,13 @@ public class Player1Scr : MonoBehaviour
     {
         if (!isBlocking)
         {
-            Player1TakeDamage(damage);
+            //Player1TakeDamage(damage);                //NOT RECURSIVE, JUSt edits tthe fillamount
             Player1And2Manager.Instance.Player1SetNextTo(Player1And2Manager.playerActionType.GotHit);
             P1GotHit();
         } else
         {
-            Player1TakeDamage(damage / 2);
+            //Player1TakeDamage(damage / 2);
+            Player2Script.P2GotHit();
         }
         updateHealthBarDisplay();
     }

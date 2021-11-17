@@ -25940,7 +25940,7 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 1
-    functionName: Player1HasFinishedAnim
+    functionName: PlayerHasFinishedAnim
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

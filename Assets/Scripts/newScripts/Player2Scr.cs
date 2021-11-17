@@ -11,6 +11,8 @@ public class Player2Scr : MonoBehaviour
     private Transform PLAYER1;
     private Transform PLAYER2;
 
+    private Player1Scr Player1Script;
+
     private string[] statesStrings = { "MoveForwardState", "MoveBackwardState","RegularAttackState","SuperAttackState"
                                         ,"StartBlockState","EndBlockState","BlockState","GotHitState", "IdleState"};
 
@@ -29,6 +31,7 @@ public class Player2Scr : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Player1Script = GameObject.Find("Player1_Display").GetComponent<Player1Scr>();
         Player2Animator = GameObject.Find("Player2_Display").GetComponent<Animator>();
         PLAYER1 = GameObject.Find("Player1").GetComponent<Transform>();
         PLAYER2 = GameObject.Find("Player2").GetComponent<Transform>();
@@ -158,8 +161,8 @@ public class Player2Scr : MonoBehaviour
             {
                 player2SuperBarFillAmount += 0.2f;
             }
+            Player1Script.Player1TakeDamage(regularDamage);
             updateSuperBarDisplay();
-            //call the damage function of the other player
         }
     }
 
@@ -179,17 +182,18 @@ public class Player2Scr : MonoBehaviour
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    public void Player1TakeDamage(float damage)
+    public void Player2TakeDamage(float damage)
     {
         if (!isBlocking)
         {
-            Player1TakeDamage(damage);
+            //Player2TakeDamage(damage);        //NOT RECURSIVE, just edit the fillamount
             Player1And2Manager.Instance.Player1SetNextTo(Player1And2Manager.playerActionType.GotHit);
             P2GotHit();
         }
         else
         {
-            Player1TakeDamage(damage / 2);
+            //Player2TakeDamage(damage / 2);
+            Player1Script.P1GotHit();
         }
         updateHealthBarDisplay();
     }

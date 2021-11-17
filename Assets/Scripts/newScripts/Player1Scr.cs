@@ -16,8 +16,8 @@ public class Player1Scr : MonoBehaviour
     private string[] statesStrings = { "MoveForwardState", "MoveBackwardState","RegularAttackState","SuperAttackState"
                                         ,"StartBlockState","EndBlockState","BlockState","GotHitState", "IdleState"};
 
-    public float player1HealthBarFillAmount = 0;   //from 0 - 1
-    public float player1SuperBarFillAmount = 0;    //from 0 - 1
+    private float player1HealthBarFillAmount = 1;   //from 0 - 1
+    private float player1SuperBarFillAmount = 0;    //from 0 - 1
     public float player1Moving = 0;
     public bool isBlocking;
 
@@ -41,59 +41,50 @@ public class Player1Scr : MonoBehaviour
     public void P1MoveForwards()
     {
         setAllToFalseBut("MoveForwardState");
-        //Player1Animator.SetBool("MoveForwardState", true);
         Player1MoveMeSet(1);
     }
 
     public void P1MoveBackwards()
     {
         setAllToFalseBut("MoveBackwardState");
-        //Player1Animator.SetBool("MoveBackwardState", true);
         Player1MoveMeSet(-1);
     }
 
     public void P1BlockSTART()
     {
-        
         isBlocking = true;
         setAllToFalseBut("StartBlockState");
-        //Player1Animator.SetBool("StartBlockState", true);
     }
 
     public void P1BlockSTOP()
     {
         setAllToFalseBut("EndBlockState");
-        //Player1Animator.SetBool("EndBlockState", true);
     }
 
     public void P1RegularAttack()
     {
         setAllToFalseBut("RegularAttackState");
-        //Player1Animator.SetBool("RegularAttackState", true);
     }
 
     public void P1SuperAttack()
     {
         setAllToFalseBut("SuperAttackState");
-        //Player1Animator.SetBool("SuperAttackState", true);
     }
 
     public void P1GotHit()
     {
         setAllToFalseBut("GotHitState");
-        //Player1Animator.SetBool("GotHitState", true);
     }
 
     public void P1Idle()
     {
         isBlocking = false;
         setAllToFalseBut("IdleState");
-        //Player1Animator.SetBool("IdleState", true);
     }
 
     void setAllToFalseBut(string thisStateString)
     {
-        Player1MoveMeSet(0);                                 //revisit
+        Player1MoveMeSet(0);
         foreach (string compareString in statesStrings)
         {
             if (!thisStateString.Equals(compareString))
@@ -147,13 +138,24 @@ public class Player1Scr : MonoBehaviour
         player1Moving = dir;
     }
 
+    private void Player1Move()
+    {
+        if (player1Moving == 1 && PLAYER1.position.x + 6 < PLAYER2.position.x)
+        {
+            PLAYER1.Translate(0.05f, 0, 0);
+        }
+        else if (player1Moving == -1 && PLAYER1.position.x - 6 > -25)
+        {
+            PLAYER1.Translate(-0.05f, 0, 0);
+        }
+    }
 
     public void PlayerSuperAttackHitAttempt()
     {
         if(transform.position.x + 7 > PLAYER2.position.x)      //distance to hit
         {
             CameraControllerScript.StartCoroutine(CameraControllerScript.Shake(15));
-            //call to damage function of the other player
+            Player2Script.Player2TakeDamage(superDamage);
         }
         player1SuperBarFillAmount = 0f;
         updateSuperBarDisplay();
@@ -162,6 +164,7 @@ public class Player1Scr : MonoBehaviour
 
     public void PlayerRegularAttackHitAttempt()
     {
+        Debug.Log("P1RegAttackHit");
         if(transform.position.x + 7 > PLAYER2.position.x)       //distance to hit
         {
             CameraControllerScript.StartCoroutine(CameraControllerScript.Shake(15));
@@ -175,6 +178,34 @@ public class Player1Scr : MonoBehaviour
             Player2Script.Player2TakeDamage(regularDamage);
             updateSuperBarDisplay();
         }
+    }
+
+    public void Player1TakeDamage(float damage)
+    {
+        if (damage == superDamage)
+        {
+            if (!isBlocking)
+            {
+                Player1And2Manager.Instance.Player1SetNextTo(Player1And2Manager.playerActionType.GotHit);
+                player1HealthBarFillAmount -= damage / 100;
+            }
+            else
+            {
+                player1HealthBarFillAmount -= (int) (damage / 200);
+            }
+        }
+        else
+        {
+            if (!isBlocking)
+            {
+                player1HealthBarFillAmount -= damage / 100;
+            }
+            else
+            {
+                player1HealthBarFillAmount -= (int) (damage / 200);
+            }
+        }
+        updateHealthBarDisplay();
     }
 
     public void PlayerHasFinishedAnim(Player1And2Manager.playerActionType type)
@@ -191,27 +222,26 @@ public class Player1Scr : MonoBehaviour
         Player1Animator.SetBool("StartBlockState", false);
     }
 
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    
-
-    public void Player1TakeDamage(float damage)
+    public float GetPlayer1SuperFillAmount()
     {
-        if (!isBlocking)
-        {
-            //Player1TakeDamage(damage);                //NOT RECURSIVE, JUSt edits tthe fillamount
-            Player1And2Manager.Instance.Player1SetNextTo(Player1And2Manager.playerActionType.GotHit);
-            P1GotHit();
-        } else
-        {
-            //Player1TakeDamage(damage / 2);
-            Player2Script.P2GotHit();
-        }
-        updateHealthBarDisplay();
+        return player1SuperBarFillAmount;
     }
+
+    public float GetPlayer1HealthFillAmount()
+    {
+        return player1HealthBarFillAmount;
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
 
 
     void updateHealthBarDisplay()
     {
+        //Temp
+        Debug.Log("PLAYER 1 Heath = " + player1HealthBarFillAmount);
         //update the health display here
     }
 
@@ -220,15 +250,6 @@ public class Player1Scr : MonoBehaviour
         //update the super display here
     }
 
-    private void Player1Move()
-    {
-        if (player1Moving == 1 && PLAYER1.position.x + 6 < PLAYER2.position.x)
-        {
-            PLAYER1.Translate(0.05f, 0, 0);                                     //this is gitching..make it move move in slowly
-        } else if(player1Moving == -1 && PLAYER1.position.x - 6 > -25)
-        {
-            PLAYER1.Translate(-0.05f, 0, 0);
-        }
-    }
+
 
 }

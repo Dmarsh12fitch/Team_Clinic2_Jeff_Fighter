@@ -16,8 +16,8 @@ public class Player2Scr : MonoBehaviour
     private string[] statesStrings = { "MoveForwardState", "MoveBackwardState","RegularAttackState","SuperAttackState"
                                         ,"StartBlockState","EndBlockState","BlockState","GotHitState", "IdleState"};
 
-    public float player2HealthBarFillAmount = 0;   //from 0 - 1
-    public float player2SuperBarFillAmount = 1;    //from 0 - 1
+    private float player2HealthBarFillAmount = 1;   //from 0 - 1
+    private float player2SuperBarFillAmount = 0;    //from 0 - 1
     public float player2Moving = 0;
     public bool isBlocking;
 
@@ -46,54 +46,45 @@ public class Player2Scr : MonoBehaviour
     public void P2MoveForwards()
     {
         setAllToFalseBut("MoveForwardState");
-        //Player1Animator.SetBool("MoveForwardState", true);
         Player2MoveMeSet(-1);
     }
 
     public void P2MoveBackwards()
     {
         setAllToFalseBut("MoveBackwardState");
-        //Player1Animator.SetBool("MoveBackwardState", true);
         Player2MoveMeSet(1);
     }
 
     public void P2BlockSTART()
     {
-
         isBlocking = true;
         setAllToFalseBut("StartBlockState");
-        //Player1Animator.SetBool("StartBlockState", true);
     }
 
     public void P2BlockSTOP()
     {
         setAllToFalseBut("EndBlockState");
-        //Player1Animator.SetBool("EndBlockState", true);
     }
 
     public void P2RegularAttack()
     {
         setAllToFalseBut("RegularAttackState");
-        //Player1Animator.SetBool("RegularAttackState", true);
     }
 
     public void P2SuperAttack()
     {
         setAllToFalseBut("SuperAttackState");
-        //Player1Animator.SetBool("SuperAttackState", true);
     }
 
     public void P2GotHit()
     {
         setAllToFalseBut("GotHitState");
-        //Player1Animator.SetBool("GotHitState", true);
     }
 
     public void P2Idle()
     {
         isBlocking = false;
         setAllToFalseBut("IdleState");
-        //Player2Animator.SetBool("IdleState", true);
     }
 
     void setAllToFalseBut(string thisStateString)
@@ -142,14 +133,15 @@ public class Player2Scr : MonoBehaviour
         {
             CameraControllerScript.StartCoroutine(CameraControllerScript.Shake(15));
             //call to damage function of the other player
+            Player1Script.Player1TakeDamage(superDamage);
         }
         player2SuperBarFillAmount = 0f;
         updateSuperBarDisplay();
     }
 
-
     public void PlayerRegularAttackHitAttempt()
     {
+        Debug.Log("P2RegAttackHit");
         if (transform.position.x - 7 < PLAYER1.position.x)       //distance to hit
         {
             CameraControllerScript.StartCoroutine(CameraControllerScript.Shake(15));
@@ -166,6 +158,31 @@ public class Player2Scr : MonoBehaviour
         }
     }
 
+    public void Player2TakeDamage(float damage)
+    {
+        if(damage == superDamage)
+        {
+            if (!isBlocking)
+            {
+                Player1And2Manager.Instance.Player2SetNextTo(Player1And2Manager.playerActionType.GotHit);
+                player2HealthBarFillAmount -= damage / 100;
+            } else
+            {
+                player2HealthBarFillAmount -= (int) (damage / 200);
+            }
+        } else
+        {
+            if (!isBlocking)
+            {
+                player2HealthBarFillAmount -= damage / 100;
+            } else
+            {
+                player2HealthBarFillAmount -= (int) (damage / 200);
+            }
+        }
+        updateHealthBarDisplay();
+    }
+
     public void PlayerHasFinishedAnim(Player1And2Manager.playerActionType type)
     {
         if (!(type.Equals(Player1And2Manager.playerActionType.BlockSTOP) && !Player1And2Manager.Instance.Player2GetCurrent().Equals(Player1And2Manager.playerActionType.BlockSTOP)))
@@ -180,27 +197,24 @@ public class Player2Scr : MonoBehaviour
         Player2Animator.SetBool("StartBlockState", false);
     }
 
+    public float GetPlayer2SuperFillAmount()
+    {
+        return player2SuperBarFillAmount;
+    }
+
+    public float GetPlayer2HealthFillAmount()
+    {
+        return player2HealthBarFillAmount;
+    }
+
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    public void Player2TakeDamage(float damage)
-    {
-        if (!isBlocking)
-        {
-            //Player2TakeDamage(damage);        //NOT RECURSIVE, just edit the fillamount
-            Player1And2Manager.Instance.Player1SetNextTo(Player1And2Manager.playerActionType.GotHit);
-            P2GotHit();
-        }
-        else
-        {
-            //Player2TakeDamage(damage / 2);
-            Player1Script.P1GotHit();
-        }
-        updateHealthBarDisplay();
-    }
 
 
     void updateHealthBarDisplay()
     {
+        //Temp
+        Debug.Log("PLAYER 2 Heath = " + player2HealthBarFillAmount);
         //update the health display here
     }
 

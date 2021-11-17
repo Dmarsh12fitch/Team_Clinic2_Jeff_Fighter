@@ -73,7 +73,7 @@ public class Player1And2Manager : MonoBehaviour
             //for player1
 
             //if not about to get hit or being hit
-            if (!player1NextAction.Equals(playerActionType.GotHit) && !player1CurrentAction.Equals(playerActionType.GotHit))
+            if (!player1NextAction.Equals(playerActionType.GotHit) /*&& !player1CurrentAction.Equals(playerActionType.GotHit)*/)
             {
                 //if neither attack or superattack
                 if (!(player1CurrentAction.Equals(playerActionType.RegularAttack) || player1CurrentAction.Equals(playerActionType.SuperAttack)
@@ -83,7 +83,7 @@ public class Player1And2Manager : MonoBehaviour
 
                     if (player1And2Input.Equals(playerActionType.SuperAttack))
                     {
-                        if (Player1Script.player1SuperBarFillAmount >= 1)
+                        if (Player1Script.GetPlayer1SuperFillAmount() >= 1)
                         {
                             player1NextAction = player1And2Input;
                             TryForceStateChange(1);
@@ -108,7 +108,7 @@ public class Player1And2Manager : MonoBehaviour
                 {
                     if (player1And2Input.Equals(playerActionType.SuperAttack))
                     {
-                        if (Player2Script.player2SuperBarFillAmount >= 1)
+                        if (Player2Script.GetPlayer2SuperFillAmount() >= 1)
                         {
                             player2NextAction = player1And2Input;
                             TryForceStateChange(2);
@@ -201,8 +201,6 @@ public class Player1And2Manager : MonoBehaviour
     //is called when it is requested to force the state to change right now
     public void TryForceStateChange(float whichPlayer)
     {
-
-
         if (whichPlayer == 1)
         {
             //for player1
@@ -270,9 +268,7 @@ public class Player1And2Manager : MonoBehaviour
         if (whichPlayer == 1)
         {
             //for Player1
-            //Debug.Log("Current p1 : " + player1CurrentAction.ToString());
             player1CurrentAction = player1NextAction;
-            //Debug.Log("After p1 : " + player1CurrentAction.ToString());
             player1NextAction = playerActionType.Idle;
             CallTheCurrentState(1);
 
@@ -280,15 +276,11 @@ public class Player1And2Manager : MonoBehaviour
         } else
         {
             //for Player2
-
-            //Debug.Log("Current p2 : " + player2CurrentAction.ToString());
             player2CurrentAction = player2NextAction;
-            //Debug.Log("After p2 : " + player2CurrentAction.ToString());
             player2NextAction = playerActionType.Idle;
             CallTheCurrentState(2);
         }
     }
-
 
     void CallTheCurrentState(int whichPlayer)
     {
@@ -370,8 +362,6 @@ public class Player1And2Manager : MonoBehaviour
         }
     }
 
-
-
     public void Player1SetNextTo(playerActionType setTo)
     {
         player1NextAction = setTo;
@@ -382,7 +372,6 @@ public class Player1And2Manager : MonoBehaviour
     {
         return player1CurrentAction;
     }
-
 
     public void Player2SetNextTo(playerActionType setTo)
     {

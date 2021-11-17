@@ -127,15 +127,83 @@ public class Player2Scr : MonoBehaviour
         if (player2Moving == 1 && PLAYER2.position.x + 6 < 25)
         {
             PLAYER2.Translate(0.05f, 0, 0);
-        } else if(player2Moving == -1 && PLAYER2.position.x - 6 > PLAYER2.position.x)
+        } else if(player2Moving == -1 && PLAYER2.position.x - 6 > PLAYER1.position.x)
         {
             PLAYER2.Translate(-0.05f, 0, 0);
         }
     }
 
+    public void PlayerSuperAttackHitAttempt()
+    {
+        if (transform.position.x - 7 < PLAYER1.position.x)      //distance to hit
+        {
+            CameraControllerScript.StartCoroutine(CameraControllerScript.Shake(15));
+            //call to damage function of the other player
+        }
+        player2SuperBarFillAmount = 0f;
+        updateSuperBarDisplay();
+    }
+
+
+    public void PlayerRegularAttackHitAttempt()
+    {
+        if (transform.position.x - 7 < PLAYER1.position.x)       //distance to hit
+        {
+            CameraControllerScript.StartCoroutine(CameraControllerScript.Shake(15));
+            if (player2SuperBarFillAmount >= 1)
+            {
+                player2SuperBarFillAmount = 1;
+            }
+            else
+            {
+                player2SuperBarFillAmount += 0.2f;
+            }
+            updateSuperBarDisplay();
+            //call the damage function of the other player
+        }
+    }
+
+    public void PlayerHasFinishedAnim(Player1And2Manager.playerActionType type)
+    {
+        if (!(type.Equals(Player1And2Manager.playerActionType.BlockSTOP) && !Player1And2Manager.Instance.Player2GetCurrent().Equals(Player1And2Manager.playerActionType.BlockSTOP)))
+        {
+            Player1And2Manager.Instance.DefaultStateChange(2);
+        }
+    }
+
+    public void PlayerFinishedBlockStart()
+    {
+        Player2Animator.SetBool("BlockState", true);
+        Player2Animator.SetBool("StartBlockState", false);
+    }
+
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    public void Player1TakeDamage(float damage)
+    {
+        if (!isBlocking)
+        {
+            Player1TakeDamage(damage);
+            Player1And2Manager.Instance.Player1SetNextTo(Player1And2Manager.playerActionType.GotHit);
+            P2GotHit();
+        }
+        else
+        {
+            Player1TakeDamage(damage / 2);
+        }
+        updateHealthBarDisplay();
+    }
 
+
+    void updateHealthBarDisplay()
+    {
+        //update the health display here
+    }
+
+    void updateSuperBarDisplay()
+    {
+        //update the super display here
+    }
 
 
 

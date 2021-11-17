@@ -143,7 +143,7 @@ public class Player1Scr : MonoBehaviour
     }
 
 
-    public void Player1SuperAttackHitAttempt()
+    public void PlayerSuperAttackHitAttempt()
     {
         if(transform.position.x + 7 > PLAYER2.position.x)      //distance to hit
         {
@@ -155,7 +155,7 @@ public class Player1Scr : MonoBehaviour
     }
 
 
-    public void Player1RegularAttackHitAttempt()
+    public void PlayerRegularAttackHitAttempt()
     {
         if(transform.position.x + 7 > PLAYER2.position.x)       //distance to hit
         {
@@ -172,7 +172,7 @@ public class Player1Scr : MonoBehaviour
         }
     }
 
-    public void Player1HasFinishedAnim(Player1And2Manager.playerActionType type)
+    public void PlayerHasFinishedAnim(Player1And2Manager.playerActionType type)
     {
         if (!(type.Equals(Player1And2Manager.playerActionType.BlockSTOP) && !Player1And2Manager.Instance.Player1GetCurrent().Equals(Player1And2Manager.playerActionType.BlockSTOP)))
         {

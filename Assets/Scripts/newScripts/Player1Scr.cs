@@ -79,7 +79,7 @@ public class Player1Scr : MonoBehaviour
     public void P1GotHit()
     {
         setAllToFalseBut("GotHitState");
-        //MORE
+        Player1Animator.SetBool("GotHitState", true);
     }
 
     public void P1Idle()
@@ -182,11 +182,6 @@ public class Player1Scr : MonoBehaviour
         Player1Animator.SetBool("StartBlockState", false);
     }
 
-    public void PlayerFinishedBlockStop()
-    {
-        Player1And2Manager.Instance.DefaultStateChange(1);
-    }
-
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
 
@@ -194,7 +189,8 @@ public class Player1Scr : MonoBehaviour
     {
         if (!isBlocking)
         {
-            Player1TakeDamage(damage);                                         //make sure to add this anim!
+            Player1TakeDamage(damage);
+            Player1And2Manager.Instance.Player1SetNextTo(Player1And2Manager.playerActionType.GotHit);
             P1GotHit();
         } else
         {

@@ -23,7 +23,6 @@ public class CameraController : MonoBehaviour
 
     public IEnumerator Shake (float damage)
     {
-
         float intensity;
         float timeToShake;
         if(Player1Script.regularDamage == damage)

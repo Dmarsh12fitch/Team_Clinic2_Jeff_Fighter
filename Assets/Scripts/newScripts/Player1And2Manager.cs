@@ -34,9 +34,6 @@ public class Player1And2Manager : MonoBehaviour
         Idle
     }
 
-    //Global Variables
-    public float timeLeft;
-
 
     //Player1 Variables
     private Player1Scr Player1Script;
@@ -65,13 +62,12 @@ public class Player1And2Manager : MonoBehaviour
         Player2Script = GameObject.Find("Player2_Display").GetComponent<Player2Scr>();
     }
 
-    private void Update()
+
+    public void Utt()
     {
-        timeLeft -= Time.deltaTime;
+        player1NextAction = playerActionType.GotHit;
+        TryForceStateChange(1);
     }
-
-
-
 
 
 
@@ -363,9 +359,17 @@ public class Player1And2Manager : MonoBehaviour
 
 
 
+    public void Player1SetNextTo(playerActionType setTo)
+    {
+        player1NextAction = playerActionType.GotHit;
+        TryForceStateChange(1);
+    }
 
-
-
+    public void Player2SetNextTo(playerActionType setTo)
+    {
+        player2NextAction = playerActionType.GotHit;
+        TryForceStateChange(2);
+    }
 
 
 }

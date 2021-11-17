@@ -35,7 +35,6 @@ public class InputManager : MonoBehaviour
     {
         //PLAYER1 INPUTS BEGIN -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
-
         //get MoveBackwards
         if (Input.GetKeyDown(KeyCode.A))
         {

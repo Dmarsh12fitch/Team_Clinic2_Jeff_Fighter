@@ -105,35 +105,91 @@ public class InputManager : MonoBehaviour
             }
         }
 
-
-        /*
-        else if (Input.GetKeyDown(KeyCode.D))
-        {
-            Player1And2Manager.Instance.controlKeyDown(1, Player1And2Manager.playerActionType.MoveForwards);
-        } else if (Input.GetKeyDown(KeyCode.S))
-        {
-            Player1And2Manager.Instance.controlKeyDown(1, Player1And2Manager.playerActionType.Block);
-        } else
-        {
-            //state that the player should not be doing this anymore
-
-
-        }
-
-    */
         //PLAYER1 INPUTS ENDSS -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
 
-        /*
-        //player2 inputs
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
+
+        //PLAYER2 INPUTS START -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+        //get MoveBackwards
+        if (Input.GetKeyDown(KeyCode.RightArrow))
         {
-            Player1And2Manager.Instance.aControlKeyIsDown(2, Player1And2Manager.playerActionType.MoveForwards);
-        } else if (Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            Player1And2Manager.Instance.aControlKeyIsDown(2, Player1And2Manager.playerActionType.MoveBackwards);
+            //send a control key request to enable movebackwards
+            Player1And2Manager.Instance.ControlKeyDown(2, Player1And2Manager.playerActionType.MoveBackwards);
         }
-        */
+        else
+        {
+            //when button is let up
+            if (Input.GetKeyUp(KeyCode.RightArrow))
+            {
+                //send a control key request to disable movebackwards
+                Player1And2Manager.Instance.ControlKeyUp(2, Player1And2Manager.playerActionType.MoveBackwards);
+            }
+
+
+
+            //Get MoveForwards
+            if (Input.GetKeyDown(KeyCode.LeftArrow))
+            {
+                //send a control key request to enable moveforwards
+                Player1And2Manager.Instance.ControlKeyDown(2, Player1And2Manager.playerActionType.MoveForwards);
+            }
+            else
+            {
+                //when button is let up
+                if (Input.GetKeyUp(KeyCode.LeftArrow))
+                {
+                    //send a control key request to disable moveforwards
+                    Player1And2Manager.Instance.ControlKeyUp(2, Player1And2Manager.playerActionType.MoveForwards);
+                }
+
+
+
+                //Get Block
+                if (Input.GetKeyDown(KeyCode.DownArrow))
+                {
+                    //send a control key request to enable block
+                    Player1And2Manager.Instance.ControlKeyDown(2, Player1And2Manager.playerActionType.BlockSTART);
+                }
+                else
+                {
+                    //when button is let up
+                    if (Input.GetKeyUp(KeyCode.DownArrow))
+                    {
+                        //send a control key request to disable block
+                        Player1And2Manager.Instance.ControlKeyUp(2, Player1And2Manager.playerActionType.BlockSTOP);
+                    }
+
+
+
+                    //Get RegularAttack
+                    if (Input.GetKeyDown(KeyCode.RightControl))                                                            //CHANGE THIS FOR THE ARCADE!!!
+                    {
+                        //send a control key request to enable regular attack
+                        Player1And2Manager.Instance.ControlKeyDown(2, Player1And2Manager.playerActionType.RegularAttack);
+                    }
+                    else
+                    {
+                        //no way to disable attack once launched
+
+
+                        //Get SuperAttack
+                        if (Input.GetKeyDown(KeyCode.RightAlt))                                                             //CHANGE THIS FOR THE ARCADE!!!
+                        {
+                            //send a control key request to enable super attack
+                            Player1And2Manager.Instance.ControlKeyDown(2, Player1And2Manager.playerActionType.SuperAttack);
+                            //no way to disable super attack once launched
+                        }
+                    }
+                }
+            }
+        }
+
+
+
+
+
+        //PLAYER2 INPUTS ENDSS -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     }
 
 

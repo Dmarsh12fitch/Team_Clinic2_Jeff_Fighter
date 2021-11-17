@@ -53,6 +53,7 @@ public class Player1Scr : MonoBehaviour
 
     public void P1BlockSTART()
     {
+        
         isBlocking = true;
         setAllToFalseBut("StartBlockState");
         Player1Animator.SetBool("StartBlockState", true);
@@ -173,15 +174,9 @@ public class Player1Scr : MonoBehaviour
 
     public void Player1HasFinishedAnim(Player1And2Manager.playerActionType type)
     {
-        if (!type.Equals(Player1And2Manager.Instance.Player1GetCurrent()))      //idk how to fix this but I have to AAAAAAAAAAAAHHHHHHHHHHHHHHHHHHHHH
+        if (!(type.Equals(Player1And2Manager.playerActionType.BlockSTOP) && !Player1And2Manager.Instance.Player1GetCurrent().Equals(Player1And2Manager.playerActionType.BlockSTOP)))
         {
-            Player1And2Manager.Instance.Player1SetNextTo(type);
-            Player1And2Manager.Instance.DefaultStateChange(1);                  //nope this blocks everything loool
-        } else
-        {
-            
             Player1And2Manager.Instance.DefaultStateChange(1);
-            //if in the block thing....
         }
     }
 

@@ -233,6 +233,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b89181eb0527ba94ca6614c4f8dfce99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player2HealthBarFillAmount: 0
+  player2SuperBarFillAmount: 1
+  player2Moving: 0
+  isBlocking: 0
+  regularDamage: 5
+  superDamage: 15
+--- !u!95 &290902739
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 290902737}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 72a0f8654d12182478987413ffd21fc8, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &352739262
 GameObject:
   m_ObjectHideFlags: 0
@@ -894,6 +919,8 @@ MonoBehaviour:
   player1SuperBarFillAmount: 1
   player1Moving: 0
   isBlocking: 0
+  regularDamage: 5
+  superDamage: 15
 --- !u!1001 &937148571541382185
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -41,19 +41,11 @@ public class Player1And2Manager : MonoBehaviour
     private playerActionType player1CurrentAction = playerActionType.Idle;
     private playerActionType player1NextAction = playerActionType.Idle;
 
-
-
-
     //Player2 Variables
     private Player2Scr Player2Script;
 
-    private Animator player2Animator;
-
     private playerActionType player2CurrentAction = playerActionType.Idle;
     private playerActionType player2NextAction = playerActionType.Idle;
-
-    private float player2HealthBarFillAmount = 0;   //from 0 - 1
-    private float player2SuperBarFillAmount = 0;    //from 0 - 1
 
 
     private void Start()
@@ -62,12 +54,6 @@ public class Player1And2Manager : MonoBehaviour
         Player2Script = GameObject.Find("Player2_Display").GetComponent<Player2Scr>();
     }
 
-
-    public void Utt()
-    {
-        player1NextAction = playerActionType.GotHit;
-        TryForceStateChange(1);
-    }
 
 
 
@@ -91,12 +77,9 @@ public class Player1And2Manager : MonoBehaviour
             {
                 //if neither attack or superattack
                 if (!(player1CurrentAction.Equals(playerActionType.RegularAttack) || player1CurrentAction.Equals(playerActionType.SuperAttack)
-                    || player1CurrentAction.Equals(playerActionType.BlockSTART) || player1CurrentAction.Equals(playerActionType.Block)
+                    || player1CurrentAction.Equals(playerActionType.BlockSTART) /*|| player1CurrentAction.Equals(playerActionType.Block)*/
                     /*|| player1CurrentAction.Equals(playerActionType.BlockSTOP)*/))
                 {
-
-
-
 
                     if (player1And2Input.Equals(playerActionType.SuperAttack))
                     {
@@ -116,11 +99,29 @@ public class Player1And2Manager : MonoBehaviour
         {
             //for player2
 
-
-
+            //if not about to get hit or being hit
+            if (!player2NextAction.Equals(playerActionType.GotHit) && !player2CurrentAction.Equals(playerActionType.GotHit))
+            {
+                //if neither attack or superattack
+                if (!(player2CurrentAction.Equals(playerActionType.RegularAttack) || player2CurrentAction.Equals(playerActionType.SuperAttack)
+                    || player2CurrentAction.Equals(playerActionType.BlockSTART)))
+                {
+                    if (player1And2Input.Equals(playerActionType.SuperAttack))
+                    {
+                        if (Player2Script.player2SuperBarFillAmount >= 1)
+                        {
+                            player2NextAction = player1And2Input;
+                            TryForceStateChange(2);
+                        }
+                    }
+                    else
+                    {
+                        player2NextAction = player1And2Input;
+                        TryForceStateChange(2);
+                    }
+                }
+            }
         }
-
-
     }
 
 
@@ -147,7 +148,7 @@ public class Player1And2Manager : MonoBehaviour
 
             if (!player1NextAction.Equals(playerActionType.GotHit) && !player1CurrentAction.Equals(playerActionType.GotHit) && !player1CurrentAction.Equals(playerActionType.SuperAttack)
                 && !player1CurrentAction.Equals(playerActionType.RegularAttack) && !player1CurrentAction.Equals(playerActionType.BlockSTART) && !player1CurrentAction.Equals(playerActionType.Block)
-                    && !player1CurrentAction.Equals(playerActionType.BlockSTOP))
+                    /*&& !player1CurrentAction.Equals(playerActionType.BlockSTOP)*/)
             {
                 if (player1And2Input.Equals(playerActionType.BlockSTOP))
                 {
@@ -173,8 +174,27 @@ public class Player1And2Manager : MonoBehaviour
             //for player2
 
 
+            if (!player2NextAction.Equals(playerActionType.GotHit) && !player2CurrentAction.Equals(playerActionType.GotHit)
+                && !player2CurrentAction.Equals(playerActionType.SuperAttack) && !player2CurrentAction.Equals(playerActionType.RegularAttack) 
+                && !player2CurrentAction.Equals(playerActionType.BlockSTART) && !player2CurrentAction.Equals(playerActionType.Block))
+            {
+                if (player1And2Input.Equals(playerActionType.BlockSTOP))
+                {
+                    //when stopping block you need to do blockstop
+                    player2NextAction = playerActionType.BlockSTOP;
+                }
+                else
+                {
+                    player2NextAction = playerActionType.Idle;
+                }
+                DefaultStateChange(2);
+            }
+            if (player2CurrentAction.Equals(playerActionType.BlockSTART) && player1And2Input.Equals(playerActionType.BlockSTOP))
+            {
+                player2NextAction = playerActionType.BlockSTOP;
+                DefaultStateChange(2);
+            }
         }
-
     }
 
 
@@ -193,7 +213,7 @@ public class Player1And2Manager : MonoBehaviour
                 //change current to next state, next state to idle
                 player1CurrentAction = player1NextAction;
                 player1NextAction = playerActionType.Idle;
-                callTheCurrentState(1);
+                CallTheCurrentState(1);
 
 
 
@@ -208,24 +228,36 @@ public class Player1And2Manager : MonoBehaviour
                 //change current to next state, next state to idle
                 player1CurrentAction = player1NextAction;
                 player1NextAction = playerActionType.Idle;
-
-                //say "forced ___ state in"
-                //Debug.Log("FORCED to : " + player1CurrentAction.ToString());
-
-                callTheCurrentState(1);
+                CallTheCurrentState(1);
             }
         }
         else
         {
             //for player2
 
+            //if got hit is next action, stop the current action right away and start gothit
+            if (player2NextAction.Equals(playerActionType.GotHit))
+            {
+                //change current to next state, next state to idle
+                player2CurrentAction = player2NextAction;
+                player2NextAction = playerActionType.Idle;
+                CallTheCurrentState(2);
 
 
 
+
+                //if the current state can be replaced (and it isn't GotHit)
+            }
+            else if ((!player2CurrentAction.Equals(playerActionType.GotHit))
+                && !(player2CurrentAction.Equals(playerActionType.RegularAttack) || player2CurrentAction.Equals(playerActionType.SuperAttack)
+                || player2CurrentAction.Equals(playerActionType.Block) || player2CurrentAction.Equals(playerActionType.BlockSTART)))
+            {
+                //change current to next state, next state to idle
+                player2CurrentAction = player2NextAction;
+                player2NextAction = playerActionType.Idle;
+                CallTheCurrentState(2);
+            }
         }
-
-
-
     }
 
 
@@ -238,33 +270,31 @@ public class Player1And2Manager : MonoBehaviour
         if (whichPlayer == 1)
         {
             //for Player1
-            Debug.Log("Current : " + player1CurrentAction.ToString());
+            Debug.Log("Current p1 : " + player1CurrentAction.ToString());
             player1CurrentAction = player1NextAction;
-            Debug.Log("After : " + player1CurrentAction.ToString());
+            Debug.Log("After p1 : " + player1CurrentAction.ToString());
             player1NextAction = playerActionType.Idle;
             //Debug.Log("end?");
-            callTheCurrentState(1);
+            CallTheCurrentState(1);
 
 
         } else
         {
             //for Player2
 
+            Debug.Log("Current p2 : " + player2CurrentAction.ToString());
+            player2CurrentAction = player2NextAction;
+            Debug.Log("After p2 : " + player2CurrentAction.ToString());
+            player2NextAction = playerActionType.Idle;
+            CallTheCurrentState(2);
+
+
 
         }
-
-
-
-
-
-
-        //do more than this obviously
-
-
     }
 
 
-    void callTheCurrentState(int whichPlayer)
+    void CallTheCurrentState(int whichPlayer)
     {
         if (whichPlayer == 1)
         {
@@ -304,16 +334,44 @@ public class Player1And2Manager : MonoBehaviour
             {
                 Player1Script.P1Idle();
             }
-
-
         } else
         {
             //for Player2
-
-
+            
+            //call appropriate state for current!
+            if (player2CurrentAction.Equals(playerActionType.GotHit))
+            {
+                Player2Script.P2GotHit();
+            }
+            else if (player2CurrentAction.Equals(playerActionType.MoveBackwards))
+            {
+                Player2Script.P2MoveBackwards();
+            }
+            else if (player2CurrentAction.Equals(playerActionType.MoveForwards))
+            {
+                Player2Script.P2MoveForwards();
+            }
+            else if (player2CurrentAction.Equals(playerActionType.BlockSTART))
+            {
+                Player2Script.P2BlockSTART();
+            }
+            else if (player2CurrentAction.Equals(playerActionType.BlockSTOP))
+            {
+                Player2Script.P2BlockSTOP();
+            }
+            else if (player2CurrentAction.Equals(playerActionType.RegularAttack))
+            {
+                Player2Script.P2RegularAttack();
+            }
+            else if (player2CurrentAction.Equals(playerActionType.SuperAttack))
+            {
+                Player2Script.P2SuperAttack();
+            }
+            else if (player2CurrentAction.Equals(playerActionType.Idle))
+            {
+                Player2Script.P2Idle();
+            }
         }
-
-
     }
 
 

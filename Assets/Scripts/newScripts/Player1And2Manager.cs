@@ -92,13 +92,8 @@ public class Player1And2Manager : MonoBehaviour
                 //if neither attack or superattack
                 if (!(player1CurrentAction.Equals(playerActionType.RegularAttack) || player1CurrentAction.Equals(playerActionType.SuperAttack)
                     || player1CurrentAction.Equals(playerActionType.BlockSTART) || player1CurrentAction.Equals(playerActionType.Block)
-                    || player1CurrentAction.Equals(playerActionType.BlockSTOP)))
+                    /*|| player1CurrentAction.Equals(playerActionType.BlockSTOP)*/))
                 {
-                    //testing
-                    if (player1CurrentAction.Equals(playerActionType.RegularAttack))
-                    {
-                        Debug.Log("ATTTTTTACK ERRRRRORR");
-                    }
 
 
 
@@ -116,35 +111,6 @@ public class Player1And2Manager : MonoBehaviour
                         TryForceStateChange(1);
                     }
                 }
-
-
-
-                /*
-                //For Launching Block, Super Attack, Regular Attack, MoveBackward, and MoveForward none of the first three can be active
-                if (!player1CurrentAction.Equals(playerActionType.Block) && !player1CurrentAction.Equals(playerActionType.RegularAttack)
-                    && !player1CurrentAction.Equals(playerActionType.SuperAttack))
-                {
-                    //set input action to next action
-                    if (player1And2Input.Equals(playerActionType.Block))
-                    {
-                        //when doing block you have to start blockstart
-                        player1NextAction = playerActionType.BlockSTART;
-                        TryForceStateChange(1);
-                    }
-                    else if (player1And2Input.Equals(playerActionType.SuperAttack))
-                    {
-                        //only makes SuperAttack the next action if super bar is at max
-                        if(Player1Script.player1SuperBarFillAmount == 1)
-                        {
-                            player1NextAction = player1And2Input;
-                            TryForceStateChange(1);
-                        }
-                    } else
-                    {
-                        player1NextAction = player1And2Input;
-                        TryForceStateChange(1);
-                    }
-                }*/
             }
         } else
         {
@@ -183,13 +149,6 @@ public class Player1And2Manager : MonoBehaviour
                 && !player1CurrentAction.Equals(playerActionType.RegularAttack) && !player1CurrentAction.Equals(playerActionType.BlockSTART) && !player1CurrentAction.Equals(playerActionType.Block)
                     && !player1CurrentAction.Equals(playerActionType.BlockSTOP))
             {
-
-                //testing
-                if (player1CurrentAction.Equals(playerActionType.RegularAttack))
-                {
-                    Debug.Log("ATTACK ERROR UPPP");
-                }
-
                 if (player1And2Input.Equals(playerActionType.BlockSTOP))
                 {
                     //when stopping block you need to do blockstop
@@ -244,7 +203,7 @@ public class Player1And2Manager : MonoBehaviour
             else if ((!player1CurrentAction.Equals(playerActionType.GotHit))
                 && !(player1CurrentAction.Equals(playerActionType.RegularAttack) || player1CurrentAction.Equals(playerActionType.SuperAttack)
                 || player1CurrentAction.Equals(playerActionType.Block) || player1CurrentAction.Equals(playerActionType.BlockSTART)
-                || player1CurrentAction.Equals(playerActionType.BlockSTOP)))        //THIS needs to be edited probably
+                /*|| player1CurrentAction.Equals(playerActionType.BlockSTOP)*/))        //THIS needs to be edited probably
             {
                 //change current to next state, next state to idle
                 player1CurrentAction = player1NextAction;
@@ -361,15 +320,24 @@ public class Player1And2Manager : MonoBehaviour
 
     public void Player1SetNextTo(playerActionType setTo)
     {
-        player1NextAction = playerActionType.GotHit;
+        player1NextAction = setTo;
         TryForceStateChange(1);
     }
 
-    public void Player2SetNextTo(playerActionType setTo)
+    public playerActionType Player1GetCurrent()
     {
-        player2NextAction = playerActionType.GotHit;
-        TryForceStateChange(2);
+        return player1CurrentAction;
     }
 
 
+    public void Player2SetNextTo(playerActionType setTo)
+    {
+        player2NextAction = setTo;
+        TryForceStateChange(2);
+    }
+
+    public playerActionType Player2GetCurrent()
+    {
+        return player2CurrentAction;
+    }
 }

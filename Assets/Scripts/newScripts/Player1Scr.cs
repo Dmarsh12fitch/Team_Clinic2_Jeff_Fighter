@@ -171,9 +171,18 @@ public class Player1Scr : MonoBehaviour
         }
     }
 
-    public void Player1HasFinishedAnim()
+    public void Player1HasFinishedAnim(Player1And2Manager.playerActionType type)
     {
-        Player1And2Manager.Instance.DefaultStateChange(1);
+        if (!type.Equals(Player1And2Manager.Instance.Player1GetCurrent()))      //idk how to fix this but I have to AAAAAAAAAAAAHHHHHHHHHHHHHHHHHHHHH
+        {
+            Player1And2Manager.Instance.Player1SetNextTo(type);
+            Player1And2Manager.Instance.DefaultStateChange(1);                  //nope this blocks everything loool
+        } else
+        {
+            
+            Player1And2Manager.Instance.DefaultStateChange(1);
+            //if in the block thing....
+        }
     }
 
     public void PlayerFinishedBlockStart()

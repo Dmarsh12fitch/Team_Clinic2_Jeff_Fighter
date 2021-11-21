@@ -11,6 +11,8 @@ public class Player1Scr : MonoBehaviour
     private Transform PLAYER1;
     private Transform PLAYER2;
 
+    private PlayerUIController Player1UIController;
+
     private Player2Scr Player2Script;
 
     private string[] statesStrings = { "MoveForwardState", "MoveBackwardState","RegularAttackState","SuperAttackState"
@@ -33,6 +35,8 @@ public class Player1Scr : MonoBehaviour
         PLAYER1 = GameObject.Find("Player1").GetComponent<Transform>();
         PLAYER2 = GameObject.Find("Player2").GetComponent<Transform>();
         CameraControllerScript = GameObject.Find("Main Camera").GetComponent<CameraController>();
+        Player1UIController = GameObject.Find("Player1UI").GetComponent<PlayerUIController>();
+
         InvokeRepeating("Player1Move", 0.008f, .008f);
     }
 
@@ -240,14 +244,14 @@ public class Player1Scr : MonoBehaviour
 
     void updateHealthBarDisplay()
     {
-        //Temp
-        Debug.Log("PLAYER 1 Heath = " + player1HealthBarFillAmount);
         //update the health display here
+        Player1UIController.PlayerHealthChange(player1HealthBarFillAmount);
     }
 
     void updateSuperBarDisplay()
     {
         //update the super display here
+        Player1UIController.PlayerSuperChange(player1SuperBarFillAmount);
     }
 
 

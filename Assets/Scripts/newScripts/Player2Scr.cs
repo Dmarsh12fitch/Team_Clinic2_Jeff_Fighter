@@ -13,6 +13,8 @@ public class Player2Scr : MonoBehaviour
 
     private Player1Scr Player1Script;
 
+    private PlayerUIController Player2UIController;
+
     private string[] statesStrings = { "MoveForwardState", "MoveBackwardState","RegularAttackState","SuperAttackState"
                                         ,"StartBlockState","EndBlockState","BlockState","GotHitState", "IdleState"};
 
@@ -36,6 +38,8 @@ public class Player2Scr : MonoBehaviour
         PLAYER1 = GameObject.Find("Player1").GetComponent<Transform>();
         PLAYER2 = GameObject.Find("Player2").GetComponent<Transform>();
         CameraControllerScript = GameObject.Find("Main Camera").GetComponent<CameraController>();
+        Player2UIController = GameObject.Find("Player2UI").GetComponent<PlayerUIController>();
+
         InvokeRepeating("Player2Move", 0.008f, .008f);                                                //do this later
     }
 
@@ -213,14 +217,14 @@ public class Player2Scr : MonoBehaviour
 
     void updateHealthBarDisplay()
     {
-        //Temp
-        Debug.Log("PLAYER 2 Heath = " + player2HealthBarFillAmount);
         //update the health display here
+        Player2UIController.PlayerHealthChange(player2HealthBarFillAmount);
     }
 
     void updateSuperBarDisplay()
     {
         //update the super display here
+        Player2UIController.PlayerSuperChange(player2SuperBarFillAmount);
     }
 
 

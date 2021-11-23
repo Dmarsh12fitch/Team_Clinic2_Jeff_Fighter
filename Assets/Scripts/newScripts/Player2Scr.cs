@@ -177,8 +177,8 @@ public class Player2Scr : MonoBehaviour
                 player2HealthBarFillAmount -= damage / 100;
             } else
             {
-                player2HealthBarFillAmount -= (int) (damage / 200);
-                //trigger the stunned anim in player1
+                player2HealthBarFillAmount -= damage / 200;
+                //trigger the stunned anim in player2 (THIS SCRIPT!)
             }
         } else
         {
@@ -187,7 +187,8 @@ public class Player2Scr : MonoBehaviour
                 player2HealthBarFillAmount -= damage / 100;
             } else
             {
-                player2HealthBarFillAmount -= (int) (damage / 200);
+                Debug.Log("Got here");
+                player2HealthBarFillAmount -= damage / 200;
                 //trigger the stunned anim in player1
             }
         }

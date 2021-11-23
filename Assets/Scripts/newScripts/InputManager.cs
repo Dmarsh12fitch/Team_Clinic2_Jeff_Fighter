@@ -37,6 +37,13 @@ public class InputManager : MonoBehaviour
     //checks for all the keys pressed
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
+
+
+
         if (!StopFightingInputs)
         {
             //PLAYER1 INPUTS BEGIN -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -104,7 +111,7 @@ public class InputManager : MonoBehaviour
 
 
                             //Get SuperAttack
-                            if (Input.GetKeyDown(KeyCode.Z))
+                            if (Input.GetKeyDown(KeyCode.V))
                             {
                                 //send a control key request to enable super attack
                                 Player1And2Manager.Instance.ControlKeyDown(1, Player1And2Manager.playerActionType.SuperAttack);
@@ -173,7 +180,7 @@ public class InputManager : MonoBehaviour
 
 
                         //Get RegularAttack
-                        if (Input.GetKeyDown(KeyCode.RightControl))                                                            //CHANGE THIS FOR THE ARCADE!!!
+                        if (Input.GetKeyDown(KeyCode.Alpha4))                                                            //CHANGE THIS FOR THE ARCADE!!!
                         {
                             //send a control key request to enable regular attack
                             Player1And2Manager.Instance.ControlKeyDown(2, Player1And2Manager.playerActionType.RegularAttack);
@@ -184,7 +191,7 @@ public class InputManager : MonoBehaviour
 
 
                             //Get SuperAttack
-                            if (Input.GetKeyDown(KeyCode.RightAlt))                                                             //CHANGE THIS FOR THE ARCADE!!!
+                            if (Input.GetKeyDown(KeyCode.Alpha5))                                                             //CHANGE THIS FOR THE ARCADE!!!
                             {
                                 //send a control key request to enable super attack
                                 Player1And2Manager.Instance.ControlKeyDown(2, Player1And2Manager.playerActionType.SuperAttack);

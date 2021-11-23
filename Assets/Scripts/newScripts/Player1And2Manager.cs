@@ -292,7 +292,14 @@ public class Player1And2Manager : MonoBehaviour
             //call appropriate state for current!
             if (player1CurrentAction.Equals(playerActionType.GotHit))
             {
-                Player1Script.P1GotHit();
+              if(!(Player1Script.GetPlayer1HealthFillAmount() <= 0))
+                {
+                    Player1Script.P1GotHit();
+                } else
+                {
+                    Player1Script.P1Dies();
+                }
+                
             }
             else if (player1CurrentAction.Equals(playerActionType.MoveBackwards))
             {
@@ -329,7 +336,14 @@ public class Player1And2Manager : MonoBehaviour
             //call appropriate state for current!
             if (player2CurrentAction.Equals(playerActionType.GotHit))
             {
-                Player2Script.P2GotHit();
+                if(!(Player2Script.GetPlayer2HealthFillAmount() <= 0))
+                {
+                    Player2Script.P2GotHit();
+                } else
+                {
+                    Player2Script.P2Dies();
+                }
+                
             }
             else if (player2CurrentAction.Equals(playerActionType.MoveBackwards))
             {

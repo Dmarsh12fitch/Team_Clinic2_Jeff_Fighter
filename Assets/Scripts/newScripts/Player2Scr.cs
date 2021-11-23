@@ -6,7 +6,6 @@ public class Player2Scr : MonoBehaviour
 {
     private CameraController CameraControllerScript;
 
-
     private Animator Player2Animator;
     private Transform PLAYER1;
     private Transform PLAYER2;
@@ -16,7 +15,7 @@ public class Player2Scr : MonoBehaviour
     private PlayerUIController Player2UIController;
 
     private string[] statesStrings = { "MoveForwardState", "MoveBackwardState","RegularAttackState","SuperAttackState"
-                                        ,"StartBlockState","EndBlockState","BlockState","GotHitState", "IdleState"};
+                                        ,"StartBlockState","EndBlockState","BlockState","GotHitState", "IdleState", "DeadState"};
 
     private float player2HealthBarFillAmount = 1;   //from 0 - 1
     private float player2SuperBarFillAmount = 0;    //from 0 - 1
@@ -83,6 +82,12 @@ public class Player2Scr : MonoBehaviour
     public void P2GotHit()
     {
         setAllToFalseBut("GotHitState");
+    }
+
+    public void P2Dies()
+    {
+        InputManager.Instance.StopFightingInputs = true;
+        setAllToFalseBut("DeadState");
     }
 
     public void P2Idle()
@@ -173,6 +178,7 @@ public class Player2Scr : MonoBehaviour
             } else
             {
                 player2HealthBarFillAmount -= (int) (damage / 200);
+                //trigger the stunned anim in player1
             }
         } else
         {
@@ -182,9 +188,14 @@ public class Player2Scr : MonoBehaviour
             } else
             {
                 player2HealthBarFillAmount -= (int) (damage / 200);
+                //trigger the stunned anim in player1
             }
         }
         updateHealthBarDisplay();
+        if(player2HealthBarFillAmount <= 0)
+        {
+            P2Dies();
+        }
     }
 
     public void PlayerHasFinishedAnim(Player1And2Manager.playerActionType type)

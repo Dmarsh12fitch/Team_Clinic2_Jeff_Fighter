@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class timer : MonoBehaviour
 {
-    private int time = 12;
+    private int time = 99;
 
     private Text timer_Text;
 

@@ -12,6 +12,6 @@ EditorBuildSettings:
     path: Assets/Scenes/DavidRoom.unity
     guid: 37ee9858ac096164e80c7463e863893d
   - enabled: 1
-    path: Assets/Scenes/FightingRing.unity
+    path: Assets/Scenes/Final/FightingRing.unity
     guid: a3333956756154e4a9d99880b6e88694
   m_configObjects: {}

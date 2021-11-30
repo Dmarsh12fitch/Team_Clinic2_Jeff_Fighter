@@ -23,7 +23,7 @@ public class PlayerController : MonoBehaviour
 
 
     public float currentPosition = -6f;
-    [SerializeField] float movementRange = 6f;
+    //[SerializeField] float movementRange = 6f;
 
     [SerializeField] float health = 200f;
     public GameObject healthBar;

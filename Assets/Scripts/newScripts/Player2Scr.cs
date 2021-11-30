@@ -15,15 +15,16 @@ public class Player2Scr : MonoBehaviour
     private PlayerUIController Player2UIController;
 
     private string[] statesStrings = { "MoveForwardState", "MoveBackwardState","RegularAttackState","SuperAttackState"
-                                        ,"StartBlockState","EndBlockState","BlockState","GotHitState", "IdleState", "DeadState"};
+                                        ,"StartBlockState","EndBlockState","BlockState","StunnedState", "IdleState", "DeadState"
+                                        ,"GotHitSuperTypeAState","GotHitSuperTypeBState"};
 
     private float player2HealthBarFillAmount = 1;   //from 0 - 1
     private float player2SuperBarFillAmount = 0;    //from 0 - 1
     public float player2Moving = 0;
     public bool isBlocking;
 
-    public float regularDamage = 5;
-    public float superDamage = 15;
+    public float regularDamage = 1;
+    public float superDamage = 6;
 
 
 
@@ -79,9 +80,19 @@ public class Player2Scr : MonoBehaviour
         setAllToFalseBut("SuperAttackState");
     }
 
-    public void P2GotHit()
+    public void P2GotHitSuperTypeA()
     {
-        setAllToFalseBut("GotHitState");
+        setAllToFalseBut("GotHitSuperTypeAState");
+    }
+
+    public void P2GotHitSuperTypeB()
+    {
+        setAllToFalseBut("GotHitSuperTypeBState");
+    }
+
+    public void P2Stunned()
+    {
+        setAllToFalseBut("StunnedState");
     }
 
     public void P2Dies()
@@ -119,6 +130,21 @@ public class Player2Scr : MonoBehaviour
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    public void Player2DetermineSuperHitType()
+    {
+        if (transform.position.x + 10 < 25)
+        {
+            //inside the range
+            P2GotHitSuperTypeA();
+            //call some function to actually launch the character back!
+        }
+        else
+        {
+            //outside the range
+            P2GotHitSuperTypeB();
+            //call some function to actually launch the character to the edge of the wall and then stay there.
+        }
+    }
 
     public void Player2MoveMeSet(float dir)
     {
@@ -138,7 +164,7 @@ public class Player2Scr : MonoBehaviour
 
     public void PlayerSuperAttackHitAttempt()
     {
-        if (transform.position.x - 7 < PLAYER1.position.x)      //distance to hit
+        if (transform.position.x - 7 < PLAYER1.position.x)      //see if the player can hit them because they're on the ground!!!
         {
             CameraControllerScript.StartCoroutine(CameraControllerScript.Shake(15));
             //call to damage function of the other player
@@ -151,7 +177,7 @@ public class Player2Scr : MonoBehaviour
     public void PlayerRegularAttackHitAttempt()
     {
         Debug.Log("P2RegAttackHit");
-        if (transform.position.x - 7 < PLAYER1.position.x)       //distance to hit
+        if (transform.position.x - 7 < PLAYER1.position.x)       //see if the player can hit them because they're on the ground!!!
         {
             CameraControllerScript.StartCoroutine(CameraControllerScript.Shake(15));
             if (player2SuperBarFillAmount >= 1)
@@ -178,6 +204,7 @@ public class Player2Scr : MonoBehaviour
             } else
             {
                 player2HealthBarFillAmount -= damage / 200;
+                //STUNNED SHOULD BE CATEGORIZED AS GOTHIT (make sure that is set when calling it)
                 //trigger the stunned anim in player2 (THIS SCRIPT!)
             }
         } else
@@ -189,7 +216,6 @@ public class Player2Scr : MonoBehaviour
             {
                 Debug.Log("Got here");
                 player2HealthBarFillAmount -= damage / 200;
-                //trigger the stunned anim in player1
             }
         }
         updateHealthBarDisplay();

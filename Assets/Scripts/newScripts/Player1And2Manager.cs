@@ -72,54 +72,45 @@ public class Player1And2Manager : MonoBehaviour
         {
             //for player1
 
-            //if not about to get hit or being hit
-            if (!player1NextAction.Equals(playerActionType.GotHit) /*&& !player1CurrentAction.Equals(playerActionType.GotHit)*/)
+            //if not about to get hit nor about to block
+            if (!player1NextAction.Equals(playerActionType.GotHit) && !player1CurrentAction.Equals(playerActionType.BlockSTART))
             {
-                //if neither attack or superattack
-                if (!(player1CurrentAction.Equals(playerActionType.RegularAttack) || player1CurrentAction.Equals(playerActionType.SuperAttack)
-                    || player1CurrentAction.Equals(playerActionType.BlockSTART) /*|| player1CurrentAction.Equals(playerActionType.Block)*/
-                    /*|| player1CurrentAction.Equals(playerActionType.BlockSTOP)*/))
+                //it can be set but not run (for all of them at least) before the end of any animation
+                if (player1And2Input.Equals(playerActionType.SuperAttack))
                 {
-
-                    if (player1And2Input.Equals(playerActionType.SuperAttack))
-                    {
-                        if (Player1Script.GetPlayer1SuperFillAmount() >= 1)
-                        {
-                            player1NextAction = player1And2Input;
-                            TryForceStateChange(1);
-                        }
-                    } else
+                    if (Player1Script.GetPlayer1SuperFillAmount() >= 1)
                     {
                         player1NextAction = player1And2Input;
                         TryForceStateChange(1);
                     }
+                }
+                else
+                {
+                    player1NextAction = player1And2Input;
+                    TryForceStateChange(1);
                 }
             }
         } else
         {
             //for player2
 
-            //if not about to get hit or being hit
-            if (!player2NextAction.Equals(playerActionType.GotHit) && !player2CurrentAction.Equals(playerActionType.GotHit))
+            //if not about to get hit nor about to block
+            if (!player2NextAction.Equals(playerActionType.GotHit) && !player2CurrentAction.Equals(playerActionType.BlockSTART))
             {
-                //if neither attack or superattack
-                if (!(player2CurrentAction.Equals(playerActionType.RegularAttack) || player2CurrentAction.Equals(playerActionType.SuperAttack)
-                    || player2CurrentAction.Equals(playerActionType.BlockSTART)))
+                //it can be set but not run (for all of them at least) before the end of any animation
+                if (player1And2Input.Equals(playerActionType.SuperAttack))
                 {
-                    if (player1And2Input.Equals(playerActionType.SuperAttack))
-                    {
-                        if (Player2Script.GetPlayer2SuperFillAmount() >= 1)
-                        {
-                            player2NextAction = player1And2Input;
-                            TryForceStateChange(2);
-                        }
-                    }
-                    else
+                    if (Player2Script.GetPlayer2SuperFillAmount() >= 1)
                     {
                         player2NextAction = player1And2Input;
                         TryForceStateChange(2);
                     }
                 }
+                else
+                {
+                    player2NextAction = player1And2Input;
+                    TryForceStateChange(2);
+                }                
             }
         }
     }
@@ -294,7 +285,7 @@ public class Player1And2Manager : MonoBehaviour
             {
               if(!(Player1Script.GetPlayer1HealthFillAmount() <= 0))
                 {
-                    Player1Script.P1GotHit();
+                    Player1Script.Player1DetermineSuperHitType();
                 } else
                 {
                     Player1Script.P1Dies();
@@ -338,7 +329,7 @@ public class Player1And2Manager : MonoBehaviour
             {
                 if(!(Player2Script.GetPlayer2HealthFillAmount() <= 0))
                 {
-                    Player2Script.P2GotHit();
+                    Player2Script.Player2DetermineSuperHitType();
                 } else
                 {
                     Player2Script.P2Dies();

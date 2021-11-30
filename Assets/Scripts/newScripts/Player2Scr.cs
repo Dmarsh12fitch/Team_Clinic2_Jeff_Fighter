@@ -23,8 +23,8 @@ public class Player2Scr : MonoBehaviour
     public float player2Moving = 0;
     public bool isBlocking;
 
-    public float regularDamage = 1;
-    public float superDamage = 6;
+    public float regularDamage = 0.5f;
+    public float superDamage = 3f;
 
 
 
@@ -136,6 +136,7 @@ public class Player2Scr : MonoBehaviour
         {
             //inside the range
             P2GotHitSuperTypeA();
+            StartCoroutine(Player2FallingBack());
             //call some function to actually launch the character back!
         }
         else
@@ -151,22 +152,35 @@ public class Player2Scr : MonoBehaviour
         player2Moving = dir;
     }
 
+    IEnumerator Player2FallingBack()
+    {
+        yield return new WaitForSeconds(0.05f);
+        player2Moving = 2;
+        yield return new WaitForSeconds(0.25f);
+        player2Moving = 1;
+        yield return new WaitForSeconds(0.15f);
+        player2Moving = 0;
+    }
+
     private void Player2Move()
     {
-        if (player2Moving == 1 && PLAYER2.position.x + 6 < 25)
+        if (player2Moving == 1 && PLAYER2.position.x + 6.5f < 25)
         {
             PLAYER2.Translate(0.05f, 0, 0);
-        } else if(player2Moving == -1 && PLAYER2.position.x - 6 > PLAYER1.position.x)
+        } else if(player2Moving == -1 && PLAYER2.position.x - 6.5f > PLAYER1.position.x)
         {
             PLAYER2.Translate(-0.05f, 0, 0);
+        } else if(player2Moving == 2 && PLAYER2.position.x + 6.5f < 25)
+        {
+            PLAYER2.Translate(0.2f, 0, 0);
         }
     }
 
     public void PlayerSuperAttackHitAttempt()
     {
-        if (transform.position.x - 7 < PLAYER1.position.x)      //see if the player can hit them because they're on the ground!!!
+        if (transform.position.x - 7.5f < PLAYER1.position.x)      //see if the player can hit them because they're on the ground!!!
         {
-            CameraControllerScript.StartCoroutine(CameraControllerScript.Shake(15));
+            CameraControllerScript.StartCoroutine(CameraControllerScript.Shake(superDamage));
             //call to damage function of the other player
             Player1Script.Player1TakeDamage(superDamage);
         }
@@ -177,9 +191,9 @@ public class Player2Scr : MonoBehaviour
     public void PlayerRegularAttackHitAttempt()
     {
         Debug.Log("P2RegAttackHit");
-        if (transform.position.x - 7 < PLAYER1.position.x)       //see if the player can hit them because they're on the ground!!!
+        if (transform.position.x - 7.5f < PLAYER1.position.x)       //see if the player can hit them because they're on the ground!!!
         {
-            CameraControllerScript.StartCoroutine(CameraControllerScript.Shake(15));
+            CameraControllerScript.StartCoroutine(CameraControllerScript.Shake(regularDamage));
             if (player2SuperBarFillAmount >= 1)
             {
                 player2SuperBarFillAmount = 1;

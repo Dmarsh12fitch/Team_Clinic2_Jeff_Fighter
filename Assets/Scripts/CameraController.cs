@@ -7,18 +7,67 @@ public class CameraController : MonoBehaviour
     private Player1Scr Player1Script;
     private Player2Scr Player2Script;
 
+    private Transform PLAYER1Transform;
+    private Transform PLAYER2Transform;
+    private Transform CameraHolderTransform;
+
+    public Vector3 offset;
+    private Vector3 velocity;
+
+    private Camera cam;
+
+    private float smoothTime = 0.4f;
+
+    public float minZoom = 40f;
+    public float maxZoom = 10f;
+    public float zoomLimiter = 50f;
+
 
     // Start is called before the first frame update
     void Start()
     {
         Player1Script = GameObject.Find("Player1_Display").GetComponent<Player1Scr>();
         Player2Script = GameObject.Find("Player2_Display").GetComponent<Player2Scr>();
+        CameraHolderTransform = GameObject.Find("Camera Holder").GetComponent<Transform>();
+        PLAYER1Transform = GameObject.Find("Player1").GetComponent<Transform>();
+        PLAYER2Transform = GameObject.Find("Player2").GetComponent<Transform>();
+        cam = GetComponent<Camera>();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void LateUpdate()
     {
+        MoveCameraHolder();
+        ZoomCamera();
         
+    }
+
+
+    void ZoomCamera()
+    {
+        float newZoom = Mathf.Lerp(maxZoom, minZoom, DistanceBetweenPlayers() / zoomLimiter);
+        cam.fieldOfView = newZoom;
+    }
+
+    void MoveCameraHolder()
+    {
+        Vector3 centerPoint = GetCenterPoint();
+        Vector3 cameraToPosition = centerPoint + offset;
+        CameraHolderTransform.position = Vector3.SmoothDamp(CameraHolderTransform.position, cameraToPosition, ref velocity, smoothTime);
+    }
+
+
+    Vector3 GetCenterPoint()
+    {
+        var bounds = new Bounds(PLAYER1Transform.position, Vector3.zero);
+        bounds.Encapsulate(PLAYER2Transform.position);
+        return bounds.center;
+    }
+
+    float DistanceBetweenPlayers()
+    {
+        var bounds = new Bounds(PLAYER1Transform.position, Vector3.zero);
+        bounds.Encapsulate(PLAYER2Transform.position);
+        return bounds.size.x;
     }
 
     public IEnumerator Shake (float damage)

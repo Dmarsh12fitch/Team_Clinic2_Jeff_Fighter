@@ -24,8 +24,8 @@ public class Player1Scr : MonoBehaviour
     public float player1Moving = 0;
     public bool isBlocking;
 
-    public float regularDamage = 1;
-    public float superDamage = 6;
+    public float regularDamage = 0.5f;
+    public float superDamage = 3f;
 
 
     // Start is called before the first frame update
@@ -159,6 +159,7 @@ public class Player1Scr : MonoBehaviour
         {
             //inside the range
             P1GotHitSuperTypeA();
+            StartCoroutine(Player1FallingBack());
             //call some function to actually launch the character back!
         } else
         {
@@ -168,7 +169,15 @@ public class Player1Scr : MonoBehaviour
         }
     }
 
-
+    IEnumerator Player1FallingBack()
+    {
+        yield return new WaitForSeconds(0.05f);
+        player1Moving = -2;
+        yield return new WaitForSeconds(0.25f);
+        player1Moving = -1;
+        yield return new WaitForSeconds(0.15f);
+        player1Moving = 0;
+    }
 
     public void Player1MoveMeSet(float dir)
     {
@@ -177,21 +186,24 @@ public class Player1Scr : MonoBehaviour
 
     private void Player1Move()
     {
-        if (player1Moving == 1 && PLAYER1.position.x + 6 < PLAYER2.position.x)
+        if (player1Moving == 1 && PLAYER1.position.x + 6.5f < PLAYER2.position.x)
         {
             PLAYER1.Translate(0.05f, 0, 0);
         }
-        else if (player1Moving == -1 && PLAYER1.position.x - 6 > -25)
+        else if (player1Moving == -1 && PLAYER1.position.x - 6.5f > -25)
         {
             PLAYER1.Translate(-0.05f, 0, 0);
+        } else if(player1Moving == -2 && PLAYER1.position.x - 6.5f > -25)
+        {
+            PLAYER1.Translate(-0.2f, 0, 0);
         }
     }
 
     public void PlayerSuperAttackHitAttempt()
     {
-        if(transform.position.x + 7 > PLAYER2.position.x)           //see if the player can hit them because they're on the ground!!!
+        if(transform.position.x + 7.5f > PLAYER2.position.x)           //see if the player can hit them because they're on the ground!!!
         {
-            CameraControllerScript.StartCoroutine(CameraControllerScript.Shake(15));
+            CameraControllerScript.StartCoroutine(CameraControllerScript.Shake(superDamage));
             Player2Script.Player2TakeDamage(superDamage);
         }
         player1SuperBarFillAmount = 0f;
@@ -202,9 +214,9 @@ public class Player1Scr : MonoBehaviour
     public void PlayerRegularAttackHitAttempt()
     {
         Debug.Log("P1RegAttackHit");
-        if(transform.position.x + 7 > PLAYER2.position.x)               //see if the player can hit them because they're on the ground!!!
+        if(transform.position.x + 7.5f > PLAYER2.position.x)               //see if the player can hit them because they're on the ground!!!
         {
-            CameraControllerScript.StartCoroutine(CameraControllerScript.Shake(15));
+            CameraControllerScript.StartCoroutine(CameraControllerScript.Shake(regularDamage));
             if(player1SuperBarFillAmount >= 1)
             {
                 player1SuperBarFillAmount = 1;

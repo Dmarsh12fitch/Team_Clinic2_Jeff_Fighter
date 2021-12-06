@@ -76,11 +76,11 @@ public class CameraController : MonoBehaviour
         float timeToShake;
         if(Player1Script.regularDamage == damage)
         {
-            intensity = 0.08f;
-            timeToShake = 0.15f;
+            intensity = 0.25f;
+            timeToShake = 0.25f;
         } else
         {
-            intensity = 0.5f;
+            intensity = 1f;
             timeToShake = 0.4f;
         }
 

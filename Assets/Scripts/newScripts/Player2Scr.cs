@@ -6,6 +6,12 @@ public class Player2Scr : MonoBehaviour
 {
     private CameraController CameraControllerScript;
 
+    public AudioClip[] PunchSoundArray;
+
+
+
+
+
     private Animator Player2Animator;
     private Transform PLAYER1;
     private Transform PLAYER2;
@@ -22,9 +28,12 @@ public class Player2Scr : MonoBehaviour
     private float player2SuperBarFillAmount = 0;    //from 0 - 1
     public float player2Moving = 0;
     public bool isBlocking;
+    public bool immune;
 
-    public float regularDamage = 0.5f;
-    public float superDamage = 3f;
+    public float moveDistanceLimit;
+
+    public float regularDamage = 0.02f;
+    public float superDamage = 0.08f;
 
 
 
@@ -132,12 +141,12 @@ public class Player2Scr : MonoBehaviour
 
     public void Player2DetermineSuperHitType()
     {
-        if (transform.position.x + 10 < 25)
+        immune = true;
+        if (transform.position.x + 10 < moveDistanceLimit)
         {
             //inside the range
             P2GotHitSuperTypeA();
             StartCoroutine(Player2FallingBack());
-            //call some function to actually launch the character back!
         }
         else
         {
@@ -164,13 +173,13 @@ public class Player2Scr : MonoBehaviour
 
     private void Player2Move()
     {
-        if (player2Moving == 1 && PLAYER2.position.x + 6.5f < 25)
+        if (player2Moving == 1 && PLAYER2.position.x + 1f < moveDistanceLimit)
         {
             PLAYER2.Translate(0.05f, 0, 0);
         } else if(player2Moving == -1 && PLAYER2.position.x - 6.5f > PLAYER1.position.x)
         {
             PLAYER2.Translate(-0.05f, 0, 0);
-        } else if(player2Moving == 2 && PLAYER2.position.x + 6.5f < 25)
+        } else if(player2Moving == 2 /*&& PLAYER2.position.x + 6.5f < moveDistanceLimit*/)
         {
             PLAYER2.Translate(0.2f, 0, 0);
         }
@@ -180,7 +189,6 @@ public class Player2Scr : MonoBehaviour
     {
         if (transform.position.x - 7.5f < PLAYER1.position.x)      //see if the player can hit them because they're on the ground!!!
         {
-            CameraControllerScript.StartCoroutine(CameraControllerScript.Shake(superDamage));
             //call to damage function of the other player
             Player1Script.Player1TakeDamage(superDamage);
         }
@@ -193,12 +201,11 @@ public class Player2Scr : MonoBehaviour
         Debug.Log("P2RegAttackHit");
         if (transform.position.x - 7.5f < PLAYER1.position.x)       //see if the player can hit them because they're on the ground!!!
         {
-            CameraControllerScript.StartCoroutine(CameraControllerScript.Shake(regularDamage));
             if (player2SuperBarFillAmount >= 1)
             {
                 player2SuperBarFillAmount = 1;
             }
-            else
+            else if(!Player1Script.isBlocking && !Player1Script.immune)
             {
                 player2SuperBarFillAmount += 0.2f;
             }
@@ -209,38 +216,47 @@ public class Player2Scr : MonoBehaviour
 
     public void Player2TakeDamage(float damage)
     {
-        if(damage == superDamage)
+        if (!immune)
         {
-            if (!isBlocking)
+            CameraControllerScript.StartCoroutine(CameraControllerScript.Shake(damage));
+            makeRandomPunchSound();
+            if (damage == superDamage)
             {
-                Player1And2Manager.Instance.Player2SetNextTo(Player1And2Manager.playerActionType.GotHit);
-                player2HealthBarFillAmount -= damage / 100;
-            } else
-            {
-                player2HealthBarFillAmount -= damage / 200;
-                //STUNNED SHOULD BE CATEGORIZED AS GOTHIT (make sure that is set when calling it)
-                //trigger the stunned anim in player2 (THIS SCRIPT!)
+                if (!isBlocking)
+                {
+                    Player1And2Manager.Instance.Player2SetNextTo(Player1And2Manager.playerActionType.GotHit);
+                    player2HealthBarFillAmount -= damage / 100;
+                }
+                else
+                {
+                    player2HealthBarFillAmount -= damage / 200;
+                    //STUNNED SHOULD BE CATEGORIZED AS GOTHIT (make sure that is set when calling it)
+                    //trigger the stunned anim in player2 (THIS SCRIPT!)
+                }
             }
-        } else
-        {
-            if (!isBlocking)
+            else
             {
-                player2HealthBarFillAmount -= damage / 100;
-            } else
-            {
-                Debug.Log("Got here");
-                player2HealthBarFillAmount -= damage / 200;
+                if (!isBlocking)
+                {
+                    player2HealthBarFillAmount -= damage / 100;
+                }
+                else
+                {
+                    Debug.Log("Got here");
+                    player2HealthBarFillAmount -= damage / 200;
+                }
             }
-        }
-        updateHealthBarDisplay();
-        if(player2HealthBarFillAmount <= 0)
-        {
-            P2Dies();
+            updateHealthBarDisplay();
+            if (player2HealthBarFillAmount <= 0)
+            {
+                P2Dies();
+            }
         }
     }
 
     public void PlayerHasFinishedAnim(Player1And2Manager.playerActionType type)
     {
+        immune = false;
         if (!(type.Equals(Player1And2Manager.playerActionType.BlockSTOP) && !Player1And2Manager.Instance.Player2GetCurrent().Equals(Player1And2Manager.playerActionType.BlockSTOP)))
         {
             Player1And2Manager.Instance.DefaultStateChange(2);
@@ -278,6 +294,23 @@ public class Player2Scr : MonoBehaviour
         //update the super display here
         Player2UIController.PlayerSuperChange(player2SuperBarFillAmount);
     }
+
+
+
+
+
+
+
+
+    //SOUNDS !!! SOUNDS !!!
+
+    void makeRandomPunchSound()
+    {
+        int rand = Random.Range(0, PunchSoundArray.Length);
+        gameObject.GetComponent<AudioSource>().clip = PunchSoundArray[rand];
+        gameObject.GetComponent<AudioSource>().Play();
+    }
+
 
 
 

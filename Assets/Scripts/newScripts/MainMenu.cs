@@ -120,7 +120,8 @@ public class MainMenu : MonoBehaviour
         yield return new WaitForSeconds(0.4f);
         if (PlayerisHoveringOver.Equals(HoveringOver.StartButton))
         {
-            SceneManager.LoadScene("FightingRing");
+            //SceneManager.LoadScene("FightingRing");
+            SceneManager.LoadScene("CharacterSelection");
         }
         else if (PlayerisHoveringOver.Equals(HoveringOver.ControlsButton) && !ControlsCanvasUp)
         {

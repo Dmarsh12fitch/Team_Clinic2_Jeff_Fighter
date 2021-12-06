@@ -18,7 +18,7 @@ public class timer : MonoBehaviour
 
     void UpdateTimerDisplay()
     {
-        if(time - 1 >= 0)
+        if(time - 1 >= 0 && !InputManager.Instance.StopFightingInputs)
         {
             time -= 1;
             timer_Text.text = time.ToString();

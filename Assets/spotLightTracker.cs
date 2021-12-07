@@ -42,7 +42,7 @@ public class spotLightTracker : MonoBehaviour
     void TrackTarget()
     {
         //Vector3 newPos = new Vector3(myTarget.position.x + Random.Range(-3, 3), 0, myTarget.position.z + Random.Range(-2, 1));
-        if(Mathf.Abs(offSetThing.position.x - myTarget.position.x) > 2.3f || Mathf.Abs(offSetThing.position.z - myTarget.position.z) > 2.3f)
+        if(Mathf.Abs(offSetThing.position.x - myTarget.position.x) > 2.6f || Mathf.Abs(offSetThing.position.z - myTarget.position.z) > 2.6f)
         {
             if (!tracking)
             {
@@ -55,7 +55,7 @@ public class spotLightTracker : MonoBehaviour
             if (newPosNeeded)
             {
                 newPosNeeded = false;
-                newPos = new Vector3(myTarget.position.x + Random.Range(-2.4f, 2.4f), 0, myTarget.position.z + Random.Range(-2.4f, 2.4f));
+                newPos = new Vector3(myTarget.position.x + Random.Range(-2.7f, 2.7f), 0, myTarget.position.z + Random.Range(-2.7f, 2.7f));
                 speed = Random.Range(0.01f, 0.03f);
             }
             if(Mathf.Abs(offSetThing.position.x - newPos.x) > 0.1f && Mathf.Abs(offSetThing.position.z - newPos.z) > 0.1f)

@@ -186,6 +186,21 @@ public class Player1Scr : MonoBehaviour
         player1Moving = 0;
     }
 
+    IEnumerator PlayerBackToRingSide()
+    {
+        yield return new WaitForSeconds(0.05f);
+        if(transform.position.x < moveDistanceLimit)
+        {
+
+        }
+        player1Moving = -2;
+        yield return new WaitForSeconds(0.25f); //adjust times
+        player1Moving = -1;
+        yield return new WaitForSeconds(0.15f);
+        player1Moving = 0;
+    }
+
+
     public void Player1MoveMeSet(float dir)
     {
         player1Moving = dir;

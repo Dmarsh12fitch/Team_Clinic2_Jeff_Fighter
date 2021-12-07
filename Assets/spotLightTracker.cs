@@ -24,10 +24,9 @@ public class spotLightTracker : MonoBehaviour
     }
 
     
-    void LateUpdate()
+    void FixedUpdate()
     {
         TrackTarget();
-
     }
 
 
@@ -57,7 +56,7 @@ public class spotLightTracker : MonoBehaviour
             {
                 newPosNeeded = false;
                 newPos = new Vector3(myTarget.position.x + Random.Range(-2.4f, 2.4f), 0, myTarget.position.z + Random.Range(-2.4f, 2.4f));
-                speed = Random.Range(0.0005f, 0.002f);
+                speed = Random.Range(0.01f, 0.03f);
             }
             if(Mathf.Abs(offSetThing.position.x - newPos.x) > 0.1f && Mathf.Abs(offSetThing.position.z - newPos.z) > 0.1f)
             {
@@ -76,11 +75,10 @@ public class spotLightTracker : MonoBehaviour
         for(int i = 0; i < 4000; i++)
         {
             offSetThing.LookAt(myTarget);
-            offSetThing.Translate(Vector3.forward * 0.01f);
-            yield return new WaitForSeconds(0.01f);
+            offSetThing.Translate(Vector3.forward * 0.025f);
+            yield return new WaitForSeconds(0.001f);
         }
         tracking = false;
-        
     }
 
     IEnumerator changeSizeRandom()

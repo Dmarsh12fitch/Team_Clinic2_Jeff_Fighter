@@ -195,17 +195,19 @@ public class Player1Scr : MonoBehaviour
     {
         for(int i = 0; i < 100; i++)
         {
-            if (transform.position.x > moveDistanceLimit + 0.5f)
+            if (Player1And2Manager.Instance.Player1GetCurrent().Equals(Player1And2Manager.playerActionType.GotHit))
             {
-                player1Moving = -2;
+                if (transform.position.x > moveDistanceLimit + 0.5f)
+                {
+                    player1Moving = -2;
+                }
+                else
+                {
+                    player1Moving = 0;
+                }
+                yield return new WaitForSeconds(0.05f);
             }
-            else
-            {
-                player1Moving = 0;
-            }
-            yield return new WaitForSeconds(0.05f);
         }
-        player1Moving = 0;
     }
 
     public void Player1MoveMeSet(float dir)
@@ -221,7 +223,7 @@ public class Player1Scr : MonoBehaviour
         }
         else if (player1Moving == -1 && PLAYER1.position.x - 1f > moveDistanceLimit)
         {
-            PLAYER1.Translate(-0.05f, 0, 0);
+            PLAYER1.Translate(-0.1f, 0, 0);
         } else if(player1Moving == -2 /*&& PLAYER1.position.x - 6.5f > moveDistanceLimit*/)
         {
             PLAYER1.Translate(-0.2f, 0, 0);
@@ -274,10 +276,8 @@ public class Player1Scr : MonoBehaviour
                 {
                     //player super hits against block
                     doStunned = true;
-                    player1HealthBarFillAmount -= damage / 200;
+                    player1HealthBarFillAmount -= damage / 400;
                     Player1And2Manager.Instance.Player1SetNextTo(Player1And2Manager.playerActionType.GotHit);
-                    //STUNNED SHOULD BE CATEGORIZED AS GOTHIT (make sure that is set when calling it)
-                    //trigger the stunned anim in player1 (THIS SCRIPT)
                 }
             }
             else
@@ -290,8 +290,9 @@ public class Player1Scr : MonoBehaviour
                 else
                 {
                     //player regular hits against block
-                    player1HealthBarFillAmount -= damage / 200;
-                    //trigger the stunned anim in player1 (other script)
+                    Player2Script.doStunned = true;
+                    player1HealthBarFillAmount -= damage / 400;
+                    Player1And2Manager.Instance.Player2SetNextTo(Player1And2Manager.playerActionType.GotHit);
                 }
             }
             updateHealthBarDisplay();
@@ -304,9 +305,7 @@ public class Player1Scr : MonoBehaviour
 
     public void PlayerHasFinishedAnim(Player1And2Manager.playerActionType type)
     {
-        
         immune = false;
-
         if (!(type.Equals(Player1And2Manager.playerActionType.BlockSTOP) && !Player1And2Manager.Instance.Player1GetCurrent().Equals(Player1And2Manager.playerActionType.BlockSTOP)))
         {
             Player1And2Manager.Instance.DefaultStateChange(1);
@@ -317,6 +316,7 @@ public class Player1Scr : MonoBehaviour
     {
         isBlocking = true;
         Player1Animator.SetBool("BlockState", true);
+        Player1And2Manager.Instance.Player1SetNextTo(Player1And2Manager.playerActionType.Block);
         Player1Animator.SetBool("StartBlockState", false);
     }
 

@@ -21,6 +21,7 @@ public class Player1And2Manager : MonoBehaviour
     //END Making this a singleton _________________________________
 
 
+
     public enum playerActionType
     {
         GotHit,
@@ -55,11 +56,10 @@ public class Player1And2Manager : MonoBehaviour
     }
 
 
-
     private void Update()
     {
 
-        //Debug.Log("player 1 state = " + player1CurrentAction.ToString());
+        Debug.Log("player 2 state = " + player2CurrentAction.ToString());
     }
 
 
@@ -104,8 +104,7 @@ public class Player1And2Manager : MonoBehaviour
             //for player2
 
             //if not about to get hit nor about to block
-            if (!player2NextAction.Equals(playerActionType.GotHit) && !player2CurrentAction.Equals(playerActionType.BlockSTART)
-                && !player1CurrentAction.Equals(playerActionType.Block))
+            if (!player2NextAction.Equals(playerActionType.GotHit) && !player2CurrentAction.Equals(playerActionType.BlockSTART))
             {
                 //it can be set but not run (for all of them at least) before the end of any animation
                 if (player1And2Input.Equals(playerActionType.SuperAttack))
@@ -124,24 +123,13 @@ public class Player1And2Manager : MonoBehaviour
 
                 } else
                 {
+
                     player2NextAction = player1And2Input;
                     TryForceStateChange(2);
                 }                
             }
         }
     }
-
-
-
-
-
-
-
-
-
-
-
-
 
     //is called when a control key is released
     public void ControlKeyUp(int whichPlayer, playerActionType player1And2Input)
@@ -170,7 +158,7 @@ public class Player1And2Manager : MonoBehaviour
                 DefaultStateChange(1);
                 //TryForceStateChange(1);
             }
-            if (player1CurrentAction.Equals(playerActionType.BlockSTART) && player1And2Input.Equals(playerActionType.BlockSTOP))
+            if (player1CurrentAction.Equals(playerActionType.Block) && player1And2Input.Equals(playerActionType.BlockSTOP))
             {
                 player1NextAction = playerActionType.BlockSTOP;
                 DefaultStateChange(1);
@@ -196,14 +184,13 @@ public class Player1And2Manager : MonoBehaviour
                 }
                 DefaultStateChange(2);
             }
-            if (player2CurrentAction.Equals(playerActionType.BlockSTART) && player1And2Input.Equals(playerActionType.BlockSTOP))
+            if (player2CurrentAction.Equals(playerActionType.Block) && player1And2Input.Equals(playerActionType.BlockSTOP))
             {
                 player2NextAction = playerActionType.BlockSTOP;
                 DefaultStateChange(2);
             }
         }
     }
-
 
     //is called when it is requested to force the state to change right now
     public void TryForceStateChange(float whichPlayer)
@@ -220,9 +207,6 @@ public class Player1And2Manager : MonoBehaviour
                 player1NextAction = playerActionType.Idle;
                 CallTheCurrentState(1);
 
-
-
-
                 //if the current state can be replaced (and it isn't GotHit)
             }
             else if ((!player1CurrentAction.Equals(playerActionType.GotHit))
@@ -234,11 +218,7 @@ public class Player1And2Manager : MonoBehaviour
                 player1CurrentAction = player1NextAction;
                 player1NextAction = playerActionType.Idle;
                 CallTheCurrentState(1);
-            } /*else if((player1CurrentAction == playerActionType.Block || player2CurrentAction == playerActionType.BlockSTART)
-                && (player1NextAction == playerActionType.MoveBackwards || player1NextAction == playerActionType.MoveForwards))
-            {
-                Debug.Log("Reee");
-            }*/
+            }
         }
         else
         {
@@ -251,9 +231,6 @@ public class Player1And2Manager : MonoBehaviour
                 player2CurrentAction = player2NextAction;
                 player2NextAction = playerActionType.Idle;
                 CallTheCurrentState(2);
-
-
-
 
                 //if the current state can be replaced (and it isn't GotHit)
             }
@@ -268,8 +245,6 @@ public class Player1And2Manager : MonoBehaviour
             }
         }
     }
-
-
 
     //this is called once the current animation ends and calls the next animation
     public void DefaultStateChange(float whichPlayer)
@@ -306,6 +281,7 @@ public class Player1And2Manager : MonoBehaviour
                 if (Player1Script.doStunned)
                 {
                     Player1Script.P1Stunned();
+                    Debug.Log("reee");
                 } else if(!(Player1Script.GetPlayer1HealthFillAmount() <= 0))
                 {
                     Player1Script.Player1DetermineSuperHitType();
@@ -352,6 +328,7 @@ public class Player1And2Manager : MonoBehaviour
             {
                 if (Player2Script.doStunned)
                 {
+                    Debug.Log("reee2");
                     Player2Script.P2Stunned();
                 } else if(!(Player2Script.GetPlayer2HealthFillAmount() <= 0))
                 {
@@ -393,10 +370,22 @@ public class Player1And2Manager : MonoBehaviour
         }
     }
 
+
+
+
+
+
+    //---Next/current get/sets---
     public void Player1SetNextTo(playerActionType setTo)
     {
-        player1NextAction = setTo;
-        TryForceStateChange(1);
+        if(setTo == playerActionType.Block)
+        {
+            player1CurrentAction = setTo;
+        } else
+        {
+            player1NextAction = setTo;
+            TryForceStateChange(1);
+        }
     }
 
     public playerActionType Player1GetCurrent()
@@ -406,8 +395,14 @@ public class Player1And2Manager : MonoBehaviour
 
     public void Player2SetNextTo(playerActionType setTo)
     {
-        player2NextAction = setTo;
-        TryForceStateChange(2);
+        if(setTo == playerActionType.Block)
+        {
+            player2CurrentAction = setTo;
+        } else
+        {
+            player2NextAction = setTo;
+            TryForceStateChange(2);
+        }
     }
 
     public playerActionType Player2GetCurrent()

@@ -8,7 +8,7 @@ public class spotLightTracker : MonoBehaviour
     public Transform myTarget;
     public Transform offSetThing;
     private Vector3 newPos;
-    private float speed = 10f;
+    private float speed = 15f;
 
     private Light myLight;
 
@@ -46,7 +46,7 @@ public class spotLightTracker : MonoBehaviour
         if((Mathf.Abs(offSetThing.position.x - myTarget.position.x) > 2.8f || Mathf.Abs(offSetThing.position.z - myTarget.position.z) > 2.8f) || tracking)
         {
             tracking = true;
-            speed = 10f;
+            speed = 15f;
             if((Mathf.Abs(offSetThing.position.x - myTarget.position.x) > 0.1f || Mathf.Abs(offSetThing.position.z - myTarget.position.z) > 0.1f))
             {
                 offSetThing.LookAt(myTarget);
@@ -65,8 +65,7 @@ public class spotLightTracker : MonoBehaviour
             {
                 newPosNeeded = false;
                 newPos = new Vector3(myTarget.position.x + Random.Range(-3f, 3f), 0, myTarget.position.z + Random.Range(-3f, 3f));
-                //speed = Random.Range(0.01f, 0.03f);
-                speed = 1f;
+                speed = Random.Range(1.3f, 0.8f);
             }
             if(Mathf.Abs(offSetThing.position.x - newPos.x) > 0.1f && Mathf.Abs(offSetThing.position.z - newPos.z) > 0.1f)
             {

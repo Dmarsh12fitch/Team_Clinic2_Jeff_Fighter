@@ -77,6 +77,7 @@ public class Player2Scr : MonoBehaviour
     public void P2BlockSTOP()
     {
         setAllToFalseBut("EndBlockState");
+        StartCoroutine(JustInCase());
     }
 
     public void P2RegularAttack()
@@ -133,6 +134,23 @@ public class Player2Scr : MonoBehaviour
 
     //Player2 Action Calls STOPP -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
+
+
+
+
+
+
+
+
+
+    IEnumerator JustInCase()
+    {
+        yield return new WaitForSeconds(0.25f);
+        if (Player1And2Manager.Instance.Player2GetCurrent() == Player1And2Manager.playerActionType.BlockSTOP)
+        {
+            Player1And2Manager.Instance.Player2SetNextTo(Player1And2Manager.playerActionType.Idle);
+        }
+    }
 
 
 

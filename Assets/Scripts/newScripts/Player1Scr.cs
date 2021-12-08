@@ -8,9 +8,6 @@ public class Player1Scr : MonoBehaviour
 
     public AudioClip[] PunchSoundArray;
 
-
-
-
     private Animator Player1Animator;
     private Transform PLAYER1;
     private Transform PLAYER2;
@@ -33,7 +30,6 @@ public class Player1Scr : MonoBehaviour
 
     public float regularDamage = 0.02f;
     public float superDamage = 0.08f;
-
 
     // Start is called before the first frame update
     void Start()
@@ -71,6 +67,7 @@ public class Player1Scr : MonoBehaviour
     public void P1BlockSTOP()
     {
         setAllToFalseBut("EndBlockState");
+        StartCoroutine(JustInCase());
     }
 
     public void P1RegularAttack()
@@ -125,13 +122,19 @@ public class Player1Scr : MonoBehaviour
             }
         }
     }
-
     //Player1 Action Calls STOPP -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
 
 
 
-
+    IEnumerator JustInCase()
+    {
+        yield return new WaitForSeconds(0.25f);
+        if(Player1And2Manager.Instance.Player1GetCurrent() == Player1And2Manager.playerActionType.BlockSTOP)
+        {
+            Player1And2Manager.Instance.Player1SetNextTo(Player1And2Manager.playerActionType.Idle);
+        }
+    }
 
 
 
@@ -172,6 +175,7 @@ public class Player1Scr : MonoBehaviour
         {
             //outside the range
             P1GotHitSuperTypeB();
+            StartCoroutine(PlayerBackToRingSide());
             //call some function to actually launch the character to the edge of the wall and then stay there.
         }
     }
@@ -188,18 +192,20 @@ public class Player1Scr : MonoBehaviour
 
     IEnumerator PlayerBackToRingSide()
     {
-        yield return new WaitForSeconds(0.05f);
-        if(transform.position.x < moveDistanceLimit)
+        for(int i = 0; i < 100; i++)
         {
-
+            if (transform.position.x > moveDistanceLimit + 0.5f)
+            {
+                player1Moving = -2;
+            }
+            else
+            {
+                player1Moving = 0;
+            }
+            yield return new WaitForSeconds(0.05f);
         }
-        player1Moving = -2;
-        yield return new WaitForSeconds(0.25f); //adjust times
-        player1Moving = -1;
-        yield return new WaitForSeconds(0.15f);
         player1Moving = 0;
     }
-
 
     public void Player1MoveMeSet(float dir)
     {
@@ -231,7 +237,6 @@ public class Player1Scr : MonoBehaviour
         player1SuperBarFillAmount = 0f;
         updateSuperBarDisplay();
     }
-
 
     public void PlayerRegularAttackHitAttempt()
     {

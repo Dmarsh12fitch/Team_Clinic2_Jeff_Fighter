@@ -8,9 +8,11 @@ public class spotLightTracker : MonoBehaviour
     public Transform myTarget;
     public Transform offSetThing;
     private Vector3 newPos;
-    private float speed;
+    private float speed = 10f;
 
     private Light myLight;
+
+    private float timerTracker = 3f;
 
     private bool changingSize;
     private bool newPosNeeded;
@@ -24,11 +26,10 @@ public class spotLightTracker : MonoBehaviour
     }
 
     
-    void FixedUpdate()
+    void LateUpdate()
     {
         TrackTarget();
     }
-
 
     void RandomThing()
     {
@@ -42,43 +43,41 @@ public class spotLightTracker : MonoBehaviour
     void TrackTarget()
     {
         //Vector3 newPos = new Vector3(myTarget.position.x + Random.Range(-3, 3), 0, myTarget.position.z + Random.Range(-2, 1));
-        if(Mathf.Abs(offSetThing.position.x - myTarget.position.x) > 2.6f || Mathf.Abs(offSetThing.position.z - myTarget.position.z) > 2.6f)
+        if((Mathf.Abs(offSetThing.position.x - myTarget.position.x) > 2.8f || Mathf.Abs(offSetThing.position.z - myTarget.position.z) > 2.8f) || tracking)
         {
-            if (!tracking)
+            tracking = true;
+            speed = 10f;
+            if((Mathf.Abs(offSetThing.position.x - myTarget.position.x) > 0.1f || Mathf.Abs(offSetThing.position.z - myTarget.position.z) > 0.1f))
             {
-                tracking = true;
-                StartCoroutine(trackOffSetThing());
+                offSetThing.LookAt(myTarget);
+                offSetThing.Translate(Vector3.forward * speed * Time.deltaTime);
             }
-            newPosNeeded = true;
+            timerTracker -= Time.deltaTime;
+            if(timerTracker <= 0)
+            {
+                tracking = false;
+                timerTracker = 3;
+                newPosNeeded = true;
+            }
         } else if(!tracking)
         {
             if (newPosNeeded)
             {
                 newPosNeeded = false;
-                newPos = new Vector3(myTarget.position.x + Random.Range(-2.7f, 2.7f), 0, myTarget.position.z + Random.Range(-2.7f, 2.7f));
-                speed = Random.Range(0.01f, 0.03f);
+                newPos = new Vector3(myTarget.position.x + Random.Range(-3f, 3f), 0, myTarget.position.z + Random.Range(-3f, 3f));
+                //speed = Random.Range(0.01f, 0.03f);
+                speed = 1f;
             }
             if(Mathf.Abs(offSetThing.position.x - newPos.x) > 0.1f && Mathf.Abs(offSetThing.position.z - newPos.z) > 0.1f)
             {
                 offSetThing.LookAt(newPos);
-                offSetThing.Translate(Vector3.forward * speed);
+                offSetThing.Translate(Vector3.forward * speed * Time.deltaTime);
             } else
             {
                 newPosNeeded = true;
             }
         }
         transform.LookAt(offSetThing);
-    }
-
-    IEnumerator trackOffSetThing()
-    {
-        for(int i = 0; i < 4000; i++)
-        {
-            offSetThing.LookAt(myTarget);
-            offSetThing.Translate(Vector3.forward * 0.025f);
-            yield return new WaitForSeconds(0.001f);
-        }
-        tracking = false;
     }
 
     IEnumerator changeSizeRandom()

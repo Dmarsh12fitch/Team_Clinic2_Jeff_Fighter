@@ -56,7 +56,10 @@ public class Player1And2Manager : MonoBehaviour
 
 
 
-
+    private void Update()
+    {
+        Debug.Log("state = " + player1CurrentAction.ToString());
+    }
 
 
 
@@ -84,7 +87,13 @@ public class Player1And2Manager : MonoBehaviour
                         TryForceStateChange(1);
                     }
                 }
-                else
+                else if (player1And2Input == playerActionType.BlockSTART && (player1CurrentAction == playerActionType.MoveBackwards
+                    || player1CurrentAction == playerActionType.MoveForwards))
+                {
+                    Debug.Log("NO");
+
+                    
+                } else
                 {
                     player1NextAction = player1And2Input;
                     TryForceStateChange(1);
@@ -95,7 +104,8 @@ public class Player1And2Manager : MonoBehaviour
             //for player2
 
             //if not about to get hit nor about to block
-            if (!player2NextAction.Equals(playerActionType.GotHit) && !player2CurrentAction.Equals(playerActionType.BlockSTART))
+            if (!player2NextAction.Equals(playerActionType.GotHit) && !player2CurrentAction.Equals(playerActionType.BlockSTART)
+                && !player1CurrentAction.Equals(playerActionType.Block))
             {
                 //it can be set but not run (for all of them at least) before the end of any animation
                 if (player1And2Input.Equals(playerActionType.SuperAttack))
@@ -106,7 +116,13 @@ public class Player1And2Manager : MonoBehaviour
                         TryForceStateChange(2);
                     }
                 }
-                else
+                else if (player1And2Input == playerActionType.BlockSTART && (player2CurrentAction == playerActionType.MoveBackwards
+                    || player2CurrentAction == playerActionType.MoveForwards))
+                {
+                    Debug.Log("NO");
+
+
+                } else
                 {
                     player2NextAction = player1And2Input;
                     TryForceStateChange(2);
@@ -137,9 +153,9 @@ public class Player1And2Manager : MonoBehaviour
         {
             //for player1
 
-            if (!player1NextAction.Equals(playerActionType.GotHit) && !player1CurrentAction.Equals(playerActionType.GotHit) && !player1CurrentAction.Equals(playerActionType.SuperAttack)
-                && !player1CurrentAction.Equals(playerActionType.RegularAttack) && !player1CurrentAction.Equals(playerActionType.BlockSTART) && !player1CurrentAction.Equals(playerActionType.Block)
-                    /*&& !player1CurrentAction.Equals(playerActionType.BlockSTOP)*/)
+            if (!player1NextAction.Equals(playerActionType.GotHit) && !player1CurrentAction.Equals(playerActionType.GotHit) 
+                && !player1CurrentAction.Equals(playerActionType.SuperAttack) && !player1CurrentAction.Equals(playerActionType.RegularAttack) 
+                && !player1CurrentAction.Equals(playerActionType.BlockSTART) && !player1CurrentAction.Equals(playerActionType.Block))
             {
                 if (player1And2Input.Equals(playerActionType.BlockSTOP))
                 {
@@ -218,7 +234,11 @@ public class Player1And2Manager : MonoBehaviour
                 player1CurrentAction = player1NextAction;
                 player1NextAction = playerActionType.Idle;
                 CallTheCurrentState(1);
-            }
+            } /*else if((player1CurrentAction == playerActionType.Block || player2CurrentAction == playerActionType.BlockSTART)
+                && (player1NextAction == playerActionType.MoveBackwards || player1NextAction == playerActionType.MoveForwards))
+            {
+                Debug.Log("Reee");
+            }*/
         }
         else
         {

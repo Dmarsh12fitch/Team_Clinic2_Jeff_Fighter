@@ -58,9 +58,9 @@ public class Player1And2Manager : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log("state = " + player1CurrentAction.ToString());
-    }
 
+        //Debug.Log("player 1 state = " + player1CurrentAction.ToString());
+    }
 
 
 
@@ -303,7 +303,10 @@ public class Player1And2Manager : MonoBehaviour
             //call appropriate state for current!
             if (player1CurrentAction.Equals(playerActionType.GotHit))
             {
-              if(!(Player1Script.GetPlayer1HealthFillAmount() <= 0))
+                if (Player1Script.doStunned)
+                {
+                    Player1Script.P1Stunned();
+                } else if(!(Player1Script.GetPlayer1HealthFillAmount() <= 0))
                 {
                     Player1Script.Player1DetermineSuperHitType();
                 } else
@@ -347,7 +350,10 @@ public class Player1And2Manager : MonoBehaviour
             //call appropriate state for current!
             if (player2CurrentAction.Equals(playerActionType.GotHit))
             {
-                if(!(Player2Script.GetPlayer2HealthFillAmount() <= 0))
+                if (Player2Script.doStunned)
+                {
+                    Player2Script.P2Stunned();
+                } else if(!(Player2Script.GetPlayer2HealthFillAmount() <= 0))
                 {
                     Player2Script.Player2DetermineSuperHitType();
                 } else

@@ -11,7 +11,8 @@ public class Player1Scr : MonoBehaviour
     private Animator Player1Animator;
     private Transform PLAYER1;
     private Transform PLAYER2;
-    
+
+    public bool doStunned = false;
 
     private PlayerUIController Player1UIController;
 
@@ -60,7 +61,6 @@ public class Player1Scr : MonoBehaviour
 
     public void P1BlockSTART()
     {
-        isBlocking = true;
         setAllToFalseBut("StartBlockState");
     }
 
@@ -92,6 +92,8 @@ public class Player1Scr : MonoBehaviour
 
     public void P1Stunned()
     {
+        isBlocking = false;
+        doStunned = false;
         setAllToFalseBut("StunnedState");
     }
 
@@ -176,7 +178,6 @@ public class Player1Scr : MonoBehaviour
             //outside the range
             P1GotHitSuperTypeB();
             StartCoroutine(PlayerBackToRingSide());
-            //call some function to actually launch the character to the edge of the wall and then stay there.
         }
     }
 
@@ -216,7 +217,7 @@ public class Player1Scr : MonoBehaviour
     {
         if (player1Moving == 1 && PLAYER1.position.x + 6.5f < PLAYER2.position.x)
         {
-            PLAYER1.Translate(0.05f, 0, 0);
+            PLAYER1.Translate(0.1f, 0, 0);
         }
         else if (player1Moving == -1 && PLAYER1.position.x - 1f > moveDistanceLimit)
         {
@@ -265,12 +266,16 @@ public class Player1Scr : MonoBehaviour
             {
                 if (!isBlocking)
                 {
+                    //player super hits
                     Player1And2Manager.Instance.Player1SetNextTo(Player1And2Manager.playerActionType.GotHit);
                     player1HealthBarFillAmount -= damage / 100;
                 }
                 else
                 {
+                    //player super hits against block
+                    doStunned = true;
                     player1HealthBarFillAmount -= damage / 200;
+                    Player1And2Manager.Instance.Player1SetNextTo(Player1And2Manager.playerActionType.GotHit);
                     //STUNNED SHOULD BE CATEGORIZED AS GOTHIT (make sure that is set when calling it)
                     //trigger the stunned anim in player1 (THIS SCRIPT)
                 }
@@ -279,11 +284,14 @@ public class Player1Scr : MonoBehaviour
             {
                 if (!isBlocking)
                 {
+                    //player regular hit
                     player1HealthBarFillAmount -= damage / 100;
                 }
                 else
                 {
+                    //player regular hits against block
                     player1HealthBarFillAmount -= damage / 200;
+                    //trigger the stunned anim in player1 (other script)
                 }
             }
             updateHealthBarDisplay();
@@ -296,7 +304,9 @@ public class Player1Scr : MonoBehaviour
 
     public void PlayerHasFinishedAnim(Player1And2Manager.playerActionType type)
     {
+        
         immune = false;
+
         if (!(type.Equals(Player1And2Manager.playerActionType.BlockSTOP) && !Player1And2Manager.Instance.Player1GetCurrent().Equals(Player1And2Manager.playerActionType.BlockSTOP)))
         {
             Player1And2Manager.Instance.DefaultStateChange(1);
@@ -305,6 +315,7 @@ public class Player1Scr : MonoBehaviour
 
     public void PlayerFinishedBlockStart()
     {
+        isBlocking = true;
         Player1Animator.SetBool("BlockState", true);
         Player1Animator.SetBool("StartBlockState", false);
     }

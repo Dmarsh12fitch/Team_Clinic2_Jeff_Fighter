@@ -16,12 +16,11 @@ public class CameraController : MonoBehaviour
 
     private Camera cam;
 
-    private float smoothTime = 0.4f;
+    private float smoothTime = 0.3f;
 
-    public float minZoom = 40f;
-    public float maxZoom = 10f;
+    public float minZoom;
+    public float maxZoom;
     public float zoomLimiter = 50f;
-
 
     // Start is called before the first frame update
     void Start()
@@ -40,7 +39,6 @@ public class CameraController : MonoBehaviour
         ZoomCamera();
         
     }
-
 
     void ZoomCamera()
     {
@@ -84,7 +82,7 @@ public class CameraController : MonoBehaviour
             timeToShake = 0.4f;
         }
 
-        Vector3 originalPos = transform.localPosition;
+        Vector3 originalPos = new Vector3(0, 0, 0);
         Quaternion originalRot = transform.localRotation;
 
         float timeElaspled = 0f;

@@ -8,6 +8,9 @@ public class Player1Scr : MonoBehaviour
 
     public AudioClip[] PunchSoundArray;
 
+
+    string currentState = "";
+
     private Animator Player1Animator;
     private Transform PLAYER1;
     private Transform PLAYER2;
@@ -72,12 +75,37 @@ public class Player1Scr : MonoBehaviour
 
     public void P1RegularAttack()
     {
+
+        int parameters = Player1Animator.parameterCount;
+        AnimatorControllerParameter[] thingie;
+        thingie = new AnimatorControllerParameter[parameters];
+        foreach (var state in Player1Animator.parameters)
+        {
+            if (state.type is AnimatorControllerParameterType.Bool)
+            {
+                if (Player1Animator.GetBool(state.name) == true)
+                {
+                    currentState = state.name;
+                }
+            }
+        }
         setAllToFalseBut("RegularAttackState");
+        Player1Animator.SetTrigger("PunchNormTrig");
+        if (currentState.Length != 0)
+        {
+            setAllToFalseBut(currentState);
+        }
+        else
+        {
+            Debug.Log("Ain't got NO state :(");
+        }
+
     }
 
     public void P1SuperAttack()
     {
         setAllToFalseBut("SuperAttackState");
+        Player1Animator.SetTrigger("PunchNormTrig");
     }
 
     public void P1GotHitSuperTypeA()

@@ -281,7 +281,6 @@ public class Player1And2Manager : MonoBehaviour
                 if (Player1Script.doStunned)
                 {
                     Player1Script.P1Stunned();
-                    Debug.Log("reee");
                 } else if(!(Player1Script.GetPlayer1HealthFillAmount() <= 0))
                 {
                     Player1Script.Player1DetermineSuperHitType();

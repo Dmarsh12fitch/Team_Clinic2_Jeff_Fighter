@@ -9,19 +9,24 @@ public class MainMenu : MonoBehaviour
 
     private Text StartGame;
     private Text Controls;
+    private Text Credits;
     private Text Quit;
     private Text BackToMenu;
+    private Text BackToMenu2;
 
     private bool aButtonIsPressed;
 
     private GameObject ControlsCanvas;
+    private GameObject CreditsCanvas;
 
     private bool ControlsCanvasUp;
+    private bool CreditsCanvasUp;
 
     private enum HoveringOver
     {
         StartButton,
         ControlsButton,
+        CreditsButton,
         QuitButton
     }
     private HoveringOver PlayerisHoveringOver;
@@ -31,18 +36,24 @@ public class MainMenu : MonoBehaviour
     {
         StartGame = GameObject.Find("Start_Game_Text").GetComponent<Text>();
         Controls = GameObject.Find("Controls_Text").GetComponent<Text>();
+        Credits = GameObject.Find("Credits_Text").GetComponent<Text>();
         Quit = GameObject.Find("Quit_Text").GetComponent<Text>();
         ControlsCanvas = GameObject.Find("Controls_Canvas");
+        CreditsCanvas = GameObject.Find("Credits_Canvas");
         BackToMenu = GameObject.Find("Back_To_Menu_Text").GetComponent<Text>();
+        BackToMenu2 = GameObject.Find("Back_To_Menu_Text2").GetComponent<Text>();
         ControlsCanvas.gameObject.SetActive(false);
-        PlayerisHoveringOver = HoveringOver.StartButton;
-        StartGame.color = Color.white;
+        CreditsCanvas.gameObject.SetActive(false);
+        //PlayerisHoveringOver = HoveringOver.StartButton;
+        //StartGame.color = Color.white;
+        PlayerisHoveringOver = HoveringOver.ControlsButton;
+        Controls.color = Color.white;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!aButtonIsPressed && !ControlsCanvasUp)
+        if (!aButtonIsPressed && !ControlsCanvasUp && !CreditsCanvasUp)
         {
             if (Input.GetKeyDown(KeyCode.W))
             {
@@ -52,15 +63,11 @@ public class MainMenu : MonoBehaviour
             {
                 ShuffleDown();
             }
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                ButtonPressed();
-            }
-        } else if (Input.GetKeyDown(KeyCode.Space) && ControlsCanvasUp)
+        }
+        if (!aButtonIsPressed && Input.GetKeyDown(KeyCode.Space))
         {
             ButtonPressed();
         }
-        
     }
 
     void ShuffleDown()
@@ -73,6 +80,11 @@ public class MainMenu : MonoBehaviour
         } else if (PlayerisHoveringOver.Equals(HoveringOver.ControlsButton))
         {
             Controls.color = Color.black;
+            Credits.color = Color.white;
+            PlayerisHoveringOver = HoveringOver.CreditsButton;
+        } else if (PlayerisHoveringOver.Equals(HoveringOver.CreditsButton))
+        {
+            Credits.color = Color.black;
             Quit.color = Color.white;
             PlayerisHoveringOver = HoveringOver.QuitButton;
         }
@@ -80,16 +92,23 @@ public class MainMenu : MonoBehaviour
 
     void ShuffleUp()
     {
-        if (PlayerisHoveringOver.Equals(HoveringOver.ControlsButton))
+        if (PlayerisHoveringOver.Equals(HoveringOver.QuitButton))
         {
-            Controls.color = Color.black;
-            StartGame.color = Color.white;
-            PlayerisHoveringOver = HoveringOver.StartButton;
-        } else if (PlayerisHoveringOver.Equals(HoveringOver.QuitButton))
-        {
+            Credits.color = Color.white;
             Quit.color = Color.black;
+            PlayerisHoveringOver = HoveringOver.CreditsButton;
+        }
+        else if (PlayerisHoveringOver.Equals(HoveringOver.CreditsButton))
+        {
             Controls.color = Color.white;
+            Credits.color = Color.black;
             PlayerisHoveringOver = HoveringOver.ControlsButton;
+        }
+        else if (PlayerisHoveringOver.Equals(HoveringOver.ControlsButton))
+        {
+            StartGame.color = Color.white;
+            Controls.color = Color.black;
+            PlayerisHoveringOver = HoveringOver.StartButton;
         }
     }
 
@@ -111,6 +130,12 @@ public class MainMenu : MonoBehaviour
         else if (PlayerisHoveringOver.Equals(HoveringOver.QuitButton))
         {
             Quit.color = Color.grey;
+        } else if (PlayerisHoveringOver.Equals(HoveringOver.CreditsButton) && !CreditsCanvasUp)
+        {
+            Credits.color = Color.grey;
+        } else if(PlayerisHoveringOver.Equals(HoveringOver.CreditsButton) && CreditsCanvasUp)
+        {
+            BackToMenu2.color = Color.grey;
         }
         StartCoroutine(ActivateAction());
     }
@@ -141,6 +166,20 @@ public class MainMenu : MonoBehaviour
         else if (PlayerisHoveringOver.Equals(HoveringOver.QuitButton))
         {
             Application.Quit();
+        } else if (PlayerisHoveringOver.Equals(HoveringOver.CreditsButton) && !CreditsCanvasUp)
+        {
+            CreditsCanvas.gameObject.SetActive(true);
+            Credits.color = Color.black;
+            CreditsCanvasUp = true;
+            aButtonIsPressed = false;
+
+        } else if(PlayerisHoveringOver.Equals(HoveringOver.CreditsButton) && CreditsCanvasUp)
+        {
+            BackToMenu2.color = Color.white;
+            CreditsCanvas.gameObject.SetActive(false);
+            Credits.color = Color.white;
+            CreditsCanvasUp = false;
+            aButtonIsPressed = false;
         }
     }
 

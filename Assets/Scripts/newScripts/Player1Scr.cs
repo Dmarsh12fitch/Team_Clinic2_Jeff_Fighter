@@ -89,17 +89,9 @@ public class Player1Scr : MonoBehaviour
                 }
             }
         }
+        Debug.Log("Got here");
         setAllToFalseBut("RegularAttackState");
         Player1Animator.SetTrigger("PunchNormTrig");
-        if (currentState.Length != 0)
-        {
-            setAllToFalseBut(currentState);
-        }
-        else
-        {
-            Debug.Log("Ain't got NO state :(");
-        }
-
     }
 
     public void P1SuperAttack()
@@ -165,12 +157,6 @@ public class Player1Scr : MonoBehaviour
             Player1And2Manager.Instance.Player1SetNextTo(Player1And2Manager.playerActionType.Idle);
         }
     }
-
-
-
-
-
-
 
 
 
@@ -334,6 +320,14 @@ public class Player1Scr : MonoBehaviour
     public void PlayerHasFinishedAnim(Player1And2Manager.playerActionType type)
     {
         immune = false;
+        if (currentState.Length != 0)
+        {
+            setAllToFalseBut(currentState);
+        }
+        else
+        {
+            Debug.Log("Ain't got NO state :(");
+        }
         if (!(type.Equals(Player1And2Manager.playerActionType.BlockSTOP) && !Player1And2Manager.Instance.Player1GetCurrent().Equals(Player1And2Manager.playerActionType.BlockSTOP)))
         {
             Player1And2Manager.Instance.DefaultStateChange(1);

@@ -41,13 +41,16 @@ public class Player1And2Manager : MonoBehaviour
 
     private playerActionType player1CurrentAction = playerActionType.Idle;
     private playerActionType player1NextAction = playerActionType.Idle;
+    private playerActionType player1LastAction = playerActionType.Idle;
+    private float BackupReset1 = 10;
 
     //Player2 Variables
     private Player2Scr Player2Script;
 
     private playerActionType player2CurrentAction = playerActionType.Idle;
     private playerActionType player2NextAction = playerActionType.Idle;
-
+    private playerActionType player2LastAction = playerActionType.Idle;
+    private float BackupReset2 = 10;
 
     private void Start()
     {
@@ -58,8 +61,30 @@ public class Player1And2Manager : MonoBehaviour
 
     private void Update()
     {
-
-        Debug.Log("player 2 state = " + player2CurrentAction.ToString());
+        if(player1CurrentAction == player1LastAction && player1CurrentAction != playerActionType.Idle)
+        {
+            BackupReset1 -= Time.deltaTime;
+            if(BackupReset1 < 0)
+            {
+                BackupReset1 = 0;
+                Debug.Log("RESET P1!");
+            }
+            //timer ++
+            //player1NextAction = playerActionType.Idle;
+            //DefaultStateChange(1);
+        }
+        if(player2CurrentAction == player2LastAction && player2CurrentAction != playerActionType.Idle)
+        {
+            BackupReset2 -= Time.deltaTime;
+            if (BackupReset2 < 0)
+            {
+                BackupReset2 = 0;
+                Debug.Log("RESET P2!");
+            }
+            //timer ++
+            //player2NextAction = playerActionType.Idle;
+            //DefaultStateChange(2);
+        }
     }
 
 
@@ -121,6 +146,7 @@ public class Player1And2Manager : MonoBehaviour
                 else if (player1And2Input == playerActionType.BlockSTART && (player2CurrentAction == playerActionType.MoveBackwards
                     || player2CurrentAction == playerActionType.MoveForwards))
                 {
+
                     Debug.Log("NO");
 
 
@@ -384,6 +410,11 @@ public class Player1And2Manager : MonoBehaviour
         if(setTo == playerActionType.Block)
         {
             player1CurrentAction = setTo;
+        } else if(setTo == playerActionType.GotHit)
+        {
+            Debug.Log("P1 should be stunned");
+            player1NextAction = setTo;
+            DefaultStateChange(1);
         } else
         {
             player1NextAction = setTo;
@@ -401,6 +432,11 @@ public class Player1And2Manager : MonoBehaviour
         if(setTo == playerActionType.Block)
         {
             player2CurrentAction = setTo;
+        } else if(setTo == playerActionType.GotHit)
+        {
+            Debug.Log("P2 should be stunned");
+            player2NextAction = setTo;
+            DefaultStateChange(2);
         } else
         {
             player2NextAction = setTo;

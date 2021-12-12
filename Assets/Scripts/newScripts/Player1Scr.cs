@@ -65,6 +65,7 @@ public class Player1Scr : MonoBehaviour
     public void P1BlockSTART()
     {
         setAllToFalseBut("StartBlockState");
+        StartCoroutine(JustInCase());
     }
 
     public void P1BlockSTOP()
@@ -151,7 +152,9 @@ public class Player1Scr : MonoBehaviour
     IEnumerator JustInCase()
     {
         yield return new WaitForSeconds(0.25f);
-        if(Player1And2Manager.Instance.Player1GetCurrent() == Player1And2Manager.playerActionType.BlockSTOP)
+        
+        if(Player1And2Manager.Instance.Player1GetCurrent() == Player1And2Manager.playerActionType.BlockSTOP
+            || Player1And2Manager.Instance.Player1GetCurrent() == Player1And2Manager.playerActionType.BlockSTART)
         {
             Player1And2Manager.Instance.Player1SetNextTo(Player1And2Manager.playerActionType.Idle);
         }

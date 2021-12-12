@@ -8,7 +8,7 @@ public class Player2Scr : MonoBehaviour
 
     public AudioClip[] PunchSoundArray;
 
-
+    string currentState = "IdleState";
 
     public bool doStunned = false;
 
@@ -24,8 +24,8 @@ public class Player2Scr : MonoBehaviour
                                         ,"StartBlockState","EndBlockState","BlockState","StunnedState", "IdleState", "DeadState"
                                         ,"GotHitSuperTypeAState","GotHitSuperTypeBState"};
 
-    private float player2HealthBarFillAmount = 1;   //from 0 - 1
-    private float player2SuperBarFillAmount = 0;    //from 0 - 1
+    public float player2HealthBarFillAmount = 1;   //from 0 - 1
+    public float player2SuperBarFillAmount = 0;    //from 0 - 1
     public float player2Moving = 0;
     public bool isBlocking;
     public bool immune;
@@ -81,12 +81,50 @@ public class Player2Scr : MonoBehaviour
 
     public void P2RegularAttack()
     {
+        /*
+        int parameters = Player2Animator.parameterCount;
+        AnimatorControllerParameter[] thingie;
+        thingie = new AnimatorControllerParameter[parameters];
+        foreach (var state in Player2Animator.parameters)
+        {
+            if (state.type is AnimatorControllerParameterType.Bool)
+            {
+                if (Player2Animator.GetBool(state.name) == true)
+                {
+                    currentState = state.name;
+                }
+            }
+        }
+        */
         setAllToFalseBut("RegularAttackState");
+        Player2Animator.SetTrigger("PunchNormTrig");
     }
 
     public void P2SuperAttack()
     {
         setAllToFalseBut("SuperAttackState");
+        Player2Animator.SetTrigger("PunchSuperTrig");
+        /*
+        int parameters = Player2Animator.parameterCount;
+        AnimatorControllerParameter[] thingie;
+        thingie = new AnimatorControllerParameter[parameters];
+        foreach (var state in Player2Animator.parameters)
+        {
+            if (state.type is AnimatorControllerParameterType.Bool)
+            {
+                if (Player2Animator.GetBool(state.name) == true && state.name == "SuperAttack")
+                {
+                    setAllToFalseBut("IdleState");
+                    Player2Animator.ResetTrigger("PunchSuperTrig");
+                }
+                else
+                {
+                    setAllToFalseBut("SuperAttackState");
+                    Player2Animator.SetTrigger("PunchSuperTrig");
+                }
+            }
+        }*/
+
     }
 
     public void P2GotHitSuperTypeA()
@@ -301,6 +339,14 @@ public class Player2Scr : MonoBehaviour
     public void PlayerHasFinishedAnim(Player1And2Manager.playerActionType type)
     {
         immune = false;
+        if (currentState.Length != 0)
+        {
+            setAllToFalseBut(currentState);
+        }
+        else
+        {
+            Debug.Log("Ain't got NO state :(");
+        }
         if (!(type.Equals(Player1And2Manager.playerActionType.BlockSTOP) && !Player1And2Manager.Instance.Player2GetCurrent().Equals(Player1And2Manager.playerActionType.BlockSTOP)))
         {
             Player1And2Manager.Instance.DefaultStateChange(2);

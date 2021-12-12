@@ -9,7 +9,7 @@ public class Player1Scr : MonoBehaviour
     public AudioClip[] PunchSoundArray;
 
 
-    string currentState = "";
+    string currentState = "IdleState";
 
     private Animator Player1Animator;
     private Transform PLAYER1;
@@ -25,8 +25,8 @@ public class Player1Scr : MonoBehaviour
                                         ,"StartBlockState","EndBlockState","BlockState","StunnedState", "IdleState", "DeadState"
                                         ,"GotHitSuperTypeAState","GotHitSuperTypeBState"};
 
-    private float player1HealthBarFillAmount = 1;   //from 0 - 1
-    private float player1SuperBarFillAmount = 0;    //from 0 - 1
+    public float player1HealthBarFillAmount = 1;   //from 0 - 1
+    public float player1SuperBarFillAmount = 0;    //from 0 - 1
     public float player1Moving = 0;
     public bool isBlocking;
     public bool immune;
@@ -75,7 +75,6 @@ public class Player1Scr : MonoBehaviour
 
     public void P1RegularAttack()
     {
-
         int parameters = Player1Animator.parameterCount;
         AnimatorControllerParameter[] thingie;
         thingie = new AnimatorControllerParameter[parameters];
@@ -89,15 +88,15 @@ public class Player1Scr : MonoBehaviour
                 }
             }
         }
-        Debug.Log("Got here");
         setAllToFalseBut("RegularAttackState");
         Player1Animator.SetTrigger("PunchNormTrig");
     }
 
     public void P1SuperAttack()
     {
+        currentState = "IdleState";
         setAllToFalseBut("SuperAttackState");
-        Player1Animator.SetTrigger("PunchNormTrig");
+        Player1Animator.SetTrigger("PunchSuperTrig");
     }
 
     public void P1GotHitSuperTypeA()
@@ -246,12 +245,11 @@ public class Player1Scr : MonoBehaviour
 
     public void PlayerSuperAttackHitAttempt()
     {
-        if(transform.position.x + 7.5f > PLAYER2.position.x)           //see if the player can hit them because they're on the ground!!!
+        if (transform.position.x + 7.5f > PLAYER2.position.x)           //see if the player can hit them because they're on the ground!!!
         {
             CameraControllerScript.StartCoroutine(CameraControllerScript.Shake(superDamage));
             Player2Script.Player2TakeDamage(superDamage);
         }
-        player1SuperBarFillAmount = 0f;
         updateSuperBarDisplay();
     }
 

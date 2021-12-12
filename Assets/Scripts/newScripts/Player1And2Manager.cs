@@ -83,6 +83,8 @@ public class Player1And2Manager : MonoBehaviour
                 {
                     if (Player1Script.GetPlayer1SuperFillAmount() >= 1)
                     {
+                        Player1Script.player1SuperBarFillAmount = 0f;
+                        Debug.Log("Super");
                         player1NextAction = player1And2Input;
                         TryForceStateChange(1);
                     }
@@ -111,6 +113,7 @@ public class Player1And2Manager : MonoBehaviour
                 {
                     if (Player2Script.GetPlayer2SuperFillAmount() >= 1)
                     {
+                        Player2Script.player2SuperBarFillAmount = 0f;
                         player2NextAction = player1And2Input;
                         TryForceStateChange(2);
                     }
@@ -210,11 +213,12 @@ public class Player1And2Manager : MonoBehaviour
                 //if the current state can be replaced (and it isn't GotHit)
             }
             else if ((!player1CurrentAction.Equals(playerActionType.GotHit))
-                && !(player1CurrentAction.Equals(playerActionType.RegularAttack) || player1CurrentAction.Equals(playerActionType.SuperAttack)
-                || player1CurrentAction.Equals(playerActionType.Block) || player1CurrentAction.Equals(playerActionType.BlockSTART)
-                /*|| player1CurrentAction.Equals(playerActionType.BlockSTOP)*/))        //THIS needs to be edited probably
+                && !(player1CurrentAction.Equals(playerActionType.RegularAttack) || player1CurrentAction.Equals(playerActionType.SuperAttack) 
+                || player1CurrentAction.Equals(playerActionType.Block) 
+                || player1CurrentAction.Equals(playerActionType.BlockSTART)))
             {
                 //change current to next state, next state to idle
+                //Debug.Log("PUN CH");
                 player1CurrentAction = player1NextAction;
                 player1NextAction = playerActionType.Idle;
                 CallTheCurrentState(1);

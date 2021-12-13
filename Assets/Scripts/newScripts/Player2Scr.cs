@@ -232,13 +232,14 @@ public class Player2Scr : MonoBehaviour
 
     IEnumerator PlayerBackToRingSide()
     {
+        Debug.Log("Yeee");
         for (int i = 0; i < 100; i++)
         {
             if (Player1And2Manager.Instance.Player2GetCurrent().Equals(Player1And2Manager.playerActionType.GotHit))
             {
-                if (transform.position.x > moveDistanceLimit + 0.5f)
+                if (transform.position.x < moveDistanceLimit - 0.5f)
                 {
-                    player2Moving = -2;
+                    player2Moving = 2;
                 }
                 else
                 {

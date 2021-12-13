@@ -11,7 +11,7 @@ public class Player1Scr : MonoBehaviour
 
     string currentState = "IdleState";
 
-    private Animator Player1Animator;
+    public Animator Player1Animator;
     private Transform PLAYER1;
     private Transform PLAYER2;
 

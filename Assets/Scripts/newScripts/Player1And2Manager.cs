@@ -21,7 +21,8 @@ public class Player1And2Manager : MonoBehaviour
     //END Making this a singleton _________________________________
 
 
-
+    private int p1BlockStartInTime = 0;
+    private int p2BlockStartInTime = 0;
     public enum playerActionType
     {
         GotHit,
@@ -65,7 +66,7 @@ public class Player1And2Manager : MonoBehaviour
         BackupReset1 -= Time.deltaTime;
         if (BackupReset1 < 0)
         {
-            BackupReset1 = 0.25f;
+            BackupReset1 = 0.1f;
             player1SetCorrect();
         }
         //timer ++
@@ -77,7 +78,7 @@ public class Player1And2Manager : MonoBehaviour
         BackupReset2 -= Time.deltaTime;
         if (BackupReset2 < 0)
         {
-            BackupReset2 = 0.25f;
+            BackupReset2 = 0.1f;
             player2SetCorrect();
         }
         //timer ++
@@ -89,7 +90,7 @@ public class Player1And2Manager : MonoBehaviour
 
     void player1SetCorrect()
     {
-        //Debug.Log("RESET P1!");
+        Debug.Log("P1STATE ::::::: = " + player1CurrentAction.ToString());
         string currentState = "";
         foreach (var state in Player1Script.Player1Animator.parameters)
         {
@@ -135,11 +136,26 @@ public class Player1And2Manager : MonoBehaviour
             case "GotHitSuperTypeBState":
                 break;
         }
+        if(Player1Script.Player1Animator.GetBool("RegularAttackState"))
+        {
+            p1BlockStartInTime++;
+            if(p1BlockStartInTime > 5)
+            {
+                p1BlockStartInTime = 0;
+                Debug.Log("lame P1");
+                player1CurrentAction = playerActionType.Idle;
+                DefaultStateChange(1);
+            }
+        } else
+        {
+            p1BlockStartInTime = 0;
+        }
     }
 
 
     void player2SetCorrect()
     {
+        Debug.Log("P2STATE ::::::: = " + player2CurrentAction.ToString());
         string currentState = "";
         foreach (var state in Player2Script.Player2Animator.parameters)
         {
@@ -185,6 +201,22 @@ public class Player1And2Manager : MonoBehaviour
             case "GotHitSuperTypeBState":
                 break;
         }
+        if (Player2Script.Player2Animator.GetBool("RegularAttackState"))
+        {
+            p2BlockStartInTime++;
+            if (p2BlockStartInTime > 5)
+            {
+                p2BlockStartInTime = 0;
+                Debug.Log("lame P2");
+                player2CurrentAction = playerActionType.Idle;
+                DefaultStateChange(2);
+            }
+        }
+        else
+        {
+            p1BlockStartInTime = 0;
+        }
+
     }
 
 

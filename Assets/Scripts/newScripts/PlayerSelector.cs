@@ -6,8 +6,11 @@ using UnityEngine.UI;
 public class PlayerSelector : MonoBehaviour
 {
     public Transform PlayerDisplay;
+    private AudioSource au;
+
+    public AudioClip[] selectedSound;
     public float RotToStopOn;
-    private float selectionWaitToRotate = 2f;
+    private float selectionWaitToRotate = 0.5f;
     public bool lockedIn;
     public int player;
 
@@ -18,6 +21,7 @@ public class PlayerSelector : MonoBehaviour
     void Start()
     {
         PlayerREADY.gameObject.SetActive(false);
+        au = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -52,7 +56,7 @@ public class PlayerSelector : MonoBehaviour
         {
             switchLockedIn();
         }
-        else if(player == 2 && Input.GetKeyDown(KeyCode.Alpha4))
+        else if(player == 2 && (Input.GetKeyDown(KeyCode.Alpha4) || Input.GetKeyDown(KeyCode.RightControl)))
         {
             switchLockedIn();
         }
@@ -63,6 +67,11 @@ public class PlayerSelector : MonoBehaviour
         bool setTo = !lockedIn;
         if (Mathf.Abs(PlayerDisplay.rotation.eulerAngles.y - RotToStopOn) < 0.25f) { selectionWaitToRotate = 2f; }
         lockedIn = setTo;
+        if (lockedIn)
+        {
+            au.clip = selectedSound[0];
+            au.Play();
+        }
         PlayerREADY.gameObject.SetActive(setTo);
     }
 

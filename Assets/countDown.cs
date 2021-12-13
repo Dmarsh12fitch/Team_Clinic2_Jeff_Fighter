@@ -10,6 +10,10 @@ public class countDown : MonoBehaviour
     private PlayerSelector P1;
     private PlayerSelector P2;
     private GameObject StartingInText;
+    public AudioClip beep;
+    public AudioClip endBeep;
+
+    private AudioSource countDownBeep;
 
     private bool CountDownStarted;
     private int numbercurrent = 5;
@@ -22,6 +26,7 @@ public class countDown : MonoBehaviour
         P1 = GameObject.Find("Player1 Selector").GetComponent<PlayerSelector>();
         P2 = GameObject.Find("Player2 Selector").GetComponent<PlayerSelector>();
         StartingInText = GameObject.Find("StartingIn");
+        countDownBeep = GetComponent<AudioSource>();
         StartingInText.gameObject.SetActive(false);
     }
 
@@ -34,6 +39,7 @@ public class countDown : MonoBehaviour
         {
             if(timer > 1 && numbercurrent <= 0)
             {
+                Destroy(GameObject.Find("musicMaker"));
                 SceneManager.LoadScene("FightingRing");
             } else if(timer > 1)
             {
@@ -42,9 +48,16 @@ public class countDown : MonoBehaviour
                 StartingInText.gameObject.SetActive(true);
                 myText.text = numbercurrent.ToString();
                 numbercurrent--;
+                countDownBeep.clip = beep;
+                countDownBeep.Play();
             }
         } else
         {
+            if(numbercurrent != 5)
+            {
+                countDownBeep.clip = endBeep;
+                countDownBeep.Play();
+            }
             numbercurrent = 5;
             CountDownStarted = false;
             StartingInText.gameObject.SetActive(false);

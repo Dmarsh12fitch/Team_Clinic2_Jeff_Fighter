@@ -3,7 +3,12 @@ guid: 278770175dedcb248bae1b354b6cce32
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: BoxingArenaEdgeFixed_pCylinder3Mat
+    second: {fileID: 2100000, guid: 62b69548664419147b65fcc13f926e02, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

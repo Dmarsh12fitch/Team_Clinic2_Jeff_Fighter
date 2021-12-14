@@ -532,6 +532,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae1b7e6af20ab9c40941733a1970e589, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  offset: {x: 0, y: 0, z: 0}
+  minZoom: 0
+  maxZoom: 0
+  zoomLimiter: 50
 --- !u!81 &376403978
 AudioListener:
   m_ObjectHideFlags: 0
@@ -768,8 +772,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b89181eb0527ba94ca6614c4f8dfce99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PunchSoundArray: []
+  doStunned: 0
+  Player2Animator: {fileID: 0}
+  player2HealthBarFillAmount: 1
+  player2SuperBarFillAmount: 0
   player2Moving: 0
   isBlocking: 0
+  immune: 0
+  moveDistanceLimit: 0
   regularDamage: 5
   superDamage: 15
 --- !u!95 &909998256
@@ -1382,8 +1393,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7252ab57e305c5649bbcaff9cd1b83ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PunchSoundArray: []
+  Player1Animator: {fileID: 0}
+  doStunned: 0
+  player1HealthBarFillAmount: 1
+  player1SuperBarFillAmount: 0
   player1Moving: 0
   isBlocking: 0
+  immune: 0
+  moveDistanceLimit: 0
   regularDamage: 5
   superDamage: 15
 --- !u!95 &1343158915

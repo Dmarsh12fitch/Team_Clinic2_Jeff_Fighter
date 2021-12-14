@@ -20,7 +20,7 @@ public class Player2Scr : MonoBehaviour
 
     private PlayerUIController Player2UIController;
 
-    private string[] statesStrings = { "MoveForwardState", "MoveBackwardState","RegularAttackState","SuperAttackState"
+    private string[] statesStrings = {"MoveForwardState", "MoveBackwardState","RegularAttackState","SuperAttackState"
                                         ,"StartBlockState","EndBlockState","BlockState","StunnedState", "IdleState", "DeadState"
                                         ,"GotHitSuperTypeAState","GotHitSuperTypeBState"};
 

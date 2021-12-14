@@ -236,7 +236,7 @@ AnimatorStateMachine:
     m_Position: {x: -300, y: -620, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -2074967065873925342}
-    m_Position: {x: -300, y: 590, z: 0}
+    m_Position: {x: -300, y: 580, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -4485745366756080546}
     m_Position: {x: -700, y: -620, z: 0}
@@ -1159,7 +1159,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: b71b93dc6e26e5c44a09f9d06291f0b6, type: 2}
+  m_Motion: {fileID: 7400000, guid: 679943e4272abed488f10b9245f7f84a, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -1362,7 +1362,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Jeffu_Idle
+  m_Name: Les_Idle
   m_Speed: 1.2
   m_CycleOffset: 0
   m_Transitions:
@@ -1383,7 +1383,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 824a5b595d940474b8a2e07a8c5f59f9, type: 2}
+  m_Motion: {fileID: 7400000, guid: e64def706cd89b34ba0a8fde1e9ff712, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -1479,7 +1479,7 @@ AnimatorController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Jeffu_Anim_Controller
+  m_Name: Les_Animator
   serializedVersion: 5
   m_AnimatorParameters:
   - m_Name: MoveForwardState
@@ -1861,7 +1861,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 05dacefa97d9a064787e2483ff6be2bc, type: 2}
+  m_Motion: {fileID: 7400000, guid: 69739832104988e4480124420cfc001f, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 

@@ -14,24 +14,24 @@ public class CrowdPassive : MonoBehaviour
     void Start()
     {
         au = GetComponent<AudioSource>();
-        au.clip = passiveCrowdArray[Random.Range(0, passiveCrowdArray.Length)];
-        au.Play();
+        //au.clip = passiveCrowdArray[Random.Range(0, passiveCrowdArray.Length)];
+        //au.Play();
+    }
+
+    private void Awake()
+    {
+        //StartCoroutine(waitToPlayNext());
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!au.isPlaying)
+        if(au.time > 3.5f)
         {
+            au.time = 0.5f;
             int rand = Random.Range(0, passiveCrowdArray.Length);
-            while (rand != past)
-            {
-                rand = Random.Range(0, passiveCrowdArray.Length);
-            }
-            past = rand;
             au.clip = passiveCrowdArray[rand];
             au.Play();
         }
     }
-
 }

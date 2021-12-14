@@ -161,7 +161,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8719781}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: e2a7757ed51407349835f59e07983edc, type: 3}
@@ -2488,6 +2488,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18c8be12eed5947498818a9fe9f0d2e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  BooSound: {fileID: 0}
+  YaySound: {fileID: 0}
 --- !u!4 &783551179 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: a7cbfd2d7ce97f2439818e48ff360f02, type: 3}
@@ -2722,6 +2724,7 @@ GameObject:
   m_Component:
   - component: {fileID: 841082267}
   - component: {fileID: 841082266}
+  - component: {fileID: 841082268}
   m_Layer: 0
   m_Name: crowdPassive
   m_TagString: Untagged
@@ -2741,8 +2744,8 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
-  m_Pitch: 1
+  m_Volume: 0.4
+  m_Pitch: 0.7
   Loop: 0
   Mute: 0
   Spatialize: 0
@@ -2839,6 +2842,23 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 18
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &841082268
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 841082265}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6352a3045ec15bb4daf8987380db0edb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  passiveCrowdArray:
+  - {fileID: 8300000, guid: a65f3622832f40f4ba3bf08f4a45aa24, type: 3}
+  - {fileID: 8300000, guid: 19f93630b2b56a8409ba2066f5764a1f, type: 3}
+  - {fileID: 8300000, guid: a1546ddccd58ec94f977e8bbbddc69e9, type: 3}
+  - {fileID: 8300000, guid: 028a5cdc4078e7f479aa9c49f9b0c0c7, type: 3}
 --- !u!4 &842269621 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 278770175dedcb248bae1b354b6cce32, type: 3}
@@ -6452,6 +6472,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: be79abb912c591d4581fa6a4664d6b7b, type: 3}
   - {fileID: 8300000, guid: ed450e2ac31d5b54eab044fb80f854c1, type: 3}
   - {fileID: 8300000, guid: 3fbc43a84cbf8f64f9eea77fc114c488, type: 3}
+  Player1Animator: {fileID: 0}
   doStunned: 0
   player1HealthBarFillAmount: 1
   player1SuperBarFillAmount: 0
@@ -7203,6 +7224,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: ed450e2ac31d5b54eab044fb80f854c1, type: 3}
   - {fileID: 8300000, guid: 3fbc43a84cbf8f64f9eea77fc114c488, type: 3}
   doStunned: 0
+  Player2Animator: {fileID: 0}
   player2HealthBarFillAmount: 1
   player2SuperBarFillAmount: 0
   player2Moving: 0

@@ -84,7 +84,7 @@ public class PlayerSelector : MonoBehaviour
 
     void rotateMe()
     {
-        PlayerDisplay.Rotate(0, 0.02f, 0);
+        PlayerDisplay.Rotate(0, 0.03f, 0);
     }
 
 }

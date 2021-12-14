@@ -27,8 +27,41 @@ public class crowdOcc : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
-
-
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            doCheer();
+        }
     }
+
+    public void randSound()
+    {
+        switch (Random.Range(0, 3))
+        {
+            case 0:
+                doBoo();
+                break;
+            case 1:
+                doCheer();
+                break;
+            case 2:
+                break;
+            default:
+                break;
+        }
+
+        }
+
+
+    public void doBoo()
+    {
+        au.PlayOneShot(BooSound);
+    }
+
+    public void doCheer()
+    {
+        au.PlayOneShot(YaySound);
+    }
+
+
+
 }

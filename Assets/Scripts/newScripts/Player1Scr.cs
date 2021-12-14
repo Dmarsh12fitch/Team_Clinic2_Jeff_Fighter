@@ -8,6 +8,7 @@ public class Player1Scr : MonoBehaviour
 
     public AudioClip[] PunchSoundArray;
 
+    public AudioClip[] BarkSoundArray;
 
     string currentState = "IdleState";
 
@@ -199,6 +200,7 @@ public class Player1Scr : MonoBehaviour
 
     IEnumerator Player1FallingBack()
     {
+        GameObject.Find("crowd").GetComponent<crowdOcc>().randSound();
         yield return new WaitForSeconds(0.05f);
         player1Moving = -2;
         yield return new WaitForSeconds(0.25f);
@@ -209,7 +211,8 @@ public class Player1Scr : MonoBehaviour
 
     IEnumerator PlayerBackToRingSide()
     {
-        for(int i = 0; i < 100; i++)
+        GameObject.Find("crowd").GetComponent<crowdOcc>().randSound();
+        for (int i = 0; i < 100; i++)
         {
             if (Player1And2Manager.Instance.Player1GetCurrent().Equals(Player1And2Manager.playerActionType.GotHit))
             {
@@ -233,7 +236,7 @@ public class Player1Scr : MonoBehaviour
 
     private void Player1Move()
     {
-        if (player1Moving == 1 && PLAYER1.position.x + 6.5f < PLAYER2.position.x)
+        if (player1Moving == 1 && PLAYER1.position.x + 5.3f < PLAYER2.position.x)
         {
             PLAYER1.Translate(0.1f, 0, 0);
         }
@@ -248,8 +251,10 @@ public class Player1Scr : MonoBehaviour
 
     public void PlayerSuperAttackHitAttempt()
     {
-        if (transform.position.x + 7.5f > PLAYER2.position.x)           //see if the player can hit them because they're on the ground!!!
+        StartCoroutine(makeRandomBark());
+        if (transform.position.x + 6f > PLAYER2.position.x)           //see if the player can hit them because they're on the ground!!!
         {
+            GameObject.Find("crowdPassive").GetComponent<CrowdPassive>().changePassiveSound();
             CameraControllerScript.StartCoroutine(CameraControllerScript.Shake(superDamage));
             Player2Script.Player2TakeDamage(superDamage);
         }
@@ -259,7 +264,7 @@ public class Player1Scr : MonoBehaviour
     public void PlayerRegularAttackHitAttempt()
     {
         Debug.Log("P1RegAttackHit");
-        if(transform.position.x + 7.5f > PLAYER2.position.x)               //see if the player can hit them because they're on the ground!!!
+        if(transform.position.x + 6f > PLAYER2.position.x)               //see if the player can hit them because they're on the ground!!!
         {
             if(player1SuperBarFillAmount >= 1)
             {
@@ -384,7 +389,13 @@ public class Player1Scr : MonoBehaviour
         gameObject.GetComponent<AudioSource>().Play();
     }
 
-
+    IEnumerator makeRandomBark()
+    {
+        yield return new WaitForSeconds(0.2f);
+        int rand = Random.Range(0, BarkSoundArray.Length);
+        gameObject.GetComponent<AudioSource>().clip = BarkSoundArray[rand];
+        gameObject.GetComponent<AudioSource>().Play();
+    }
 
 
 }

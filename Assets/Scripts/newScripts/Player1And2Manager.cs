@@ -21,7 +21,8 @@ public class Player1And2Manager : MonoBehaviour
     //END Making this a singleton _________________________________
 
 
-
+    private int p1BlockStartInTime = 0;
+    private int p2BlockStartInTime = 0;
     public enum playerActionType
     {
         GotHit,
@@ -61,32 +62,162 @@ public class Player1And2Manager : MonoBehaviour
 
     private void Update()
     {
-        if(player1CurrentAction == player1LastAction && player1CurrentAction != playerActionType.Idle)
+        //for player1
+        BackupReset1 -= Time.deltaTime;
+        if (BackupReset1 < 0)
         {
-            BackupReset1 -= Time.deltaTime;
-            if(BackupReset1 < 0)
-            {
-                BackupReset1 = 0;
-                Debug.Log("RESET P1!");
-            }
-            //timer ++
-            //player1NextAction = playerActionType.Idle;
-            //DefaultStateChange(1);
+            BackupReset1 = 0.1f;
+            player1SetCorrect();
         }
-        if(player2CurrentAction == player2LastAction && player2CurrentAction != playerActionType.Idle)
+        //timer ++
+        //player1NextAction = playerActionType.Idle;
+        //DefaultStateChange(1);
+
+
+        //for player2
+        BackupReset2 -= Time.deltaTime;
+        if (BackupReset2 < 0)
         {
-            BackupReset2 -= Time.deltaTime;
-            if (BackupReset2 < 0)
+            BackupReset2 = 0.1f;
+            player2SetCorrect();
+        }
+        //timer ++
+        //player2NextAction = playerActionType.Idle;
+        //DefaultStateChange(2);
+
+    }
+
+
+    void player1SetCorrect()
+    {
+        Debug.Log("P1STATE ::::::: = " + player1CurrentAction.ToString());
+        string currentState = "";
+        foreach (var state in Player1Script.Player1Animator.parameters)
+        {
+            if (state.type is AnimatorControllerParameterType.Bool)
             {
-                BackupReset2 = 0;
-                Debug.Log("RESET P2!");
+                if (Player1Script.Player1Animator.GetBool(state.name) == true)
+                {
+                    currentState = state.name;
+                }
             }
-            //timer ++
-            //player2NextAction = playerActionType.Idle;
-            //DefaultStateChange(2);
+        }
+        switch (currentState)
+        {
+            case "MoveForwardState":
+                player1CurrentAction = playerActionType.MoveForwards;
+                break;
+            case "MoveBackwardState":
+                player1CurrentAction = playerActionType.MoveBackwards;
+                break;
+            case "RegularAttackState":
+                player1CurrentAction = playerActionType.RegularAttack;
+                break;
+            case "SuperAttackState":
+                break;
+            case "StartBlockState":
+                player1CurrentAction = playerActionType.BlockSTART;
+                break;
+            case "EndBlockState":
+                player1CurrentAction = playerActionType.BlockSTOP;
+                break;
+            case "BlockState":
+                player1CurrentAction = playerActionType.Block;
+                break;
+            case "StunnedState":
+                break;
+            case "IdleState":
+                player1CurrentAction = playerActionType.Idle;
+                break;
+            case "DeadState":
+                break;
+            case "GotHitSuperTypeAState":
+                break;
+            case "GotHitSuperTypeBState":
+                break;
+        }
+        if(Player1Script.Player1Animator.GetBool("RegularAttackState"))
+        {
+            p1BlockStartInTime++;
+            if(p1BlockStartInTime > 5)
+            {
+                p1BlockStartInTime = 0;
+                Debug.Log("lame P1");
+                player1CurrentAction = playerActionType.Idle;
+                DefaultStateChange(1);
+            }
+        } else
+        {
+            p1BlockStartInTime = 0;
         }
     }
 
+
+    void player2SetCorrect()
+    {
+        Debug.Log("P2STATE ::::::: = " + player2CurrentAction.ToString());
+        string currentState = "";
+        foreach (var state in Player2Script.Player2Animator.parameters)
+        {
+            if (state.type is AnimatorControllerParameterType.Bool)
+            {
+                if (Player2Script.Player2Animator.GetBool(state.name) == true)
+                {
+                    currentState = state.name;
+                }
+            }
+        }
+        switch (currentState)
+        {
+            case "MoveForwardState":
+                player2CurrentAction = playerActionType.MoveForwards;
+                break;
+            case "MoveBackwardState":
+                player2CurrentAction = playerActionType.MoveBackwards;
+                break;
+            case "RegularAttackState":
+                player2CurrentAction = playerActionType.RegularAttack;
+                break;
+            case "SuperAttackState":
+                break;
+            case "StartBlockState":
+                player2CurrentAction = playerActionType.BlockSTART;
+                break;
+            case "EndBlockState":
+                player2CurrentAction = playerActionType.BlockSTOP;
+                break;
+            case "BlockState":
+                player2CurrentAction = playerActionType.Block;
+                break;
+            case "StunnedState":
+                break;
+            case "IdleState":
+                player2CurrentAction = playerActionType.Idle;
+                break;
+            case "DeadState":
+                break;
+            case "GotHitSuperTypeAState":
+                break;
+            case "GotHitSuperTypeBState":
+                break;
+        }
+        if (Player2Script.Player2Animator.GetBool("RegularAttackState"))
+        {
+            p2BlockStartInTime++;
+            if (p2BlockStartInTime > 5)
+            {
+                p2BlockStartInTime = 0;
+                Debug.Log("lame P2");
+                player2CurrentAction = playerActionType.Idle;
+                DefaultStateChange(2);
+            }
+        }
+        else
+        {
+            p1BlockStartInTime = 0;
+        }
+
+    }
 
 
 
@@ -187,7 +318,7 @@ public class Player1And2Manager : MonoBehaviour
                 DefaultStateChange(1);
                 //TryForceStateChange(1);
             }
-            if (player1CurrentAction.Equals(playerActionType.Block) && player1And2Input.Equals(playerActionType.BlockSTOP))
+            if ((player1CurrentAction.Equals(playerActionType.Block) || player1CurrentAction.Equals(playerActionType.BlockSTART)) && player1And2Input.Equals(playerActionType.BlockSTOP))
             {
                 player1NextAction = playerActionType.BlockSTOP;
                 DefaultStateChange(1);
@@ -213,7 +344,7 @@ public class Player1And2Manager : MonoBehaviour
                 }
                 DefaultStateChange(2);
             }
-            if (player2CurrentAction.Equals(playerActionType.Block) && player1And2Input.Equals(playerActionType.BlockSTOP))
+            if ((player2CurrentAction.Equals(playerActionType.Block) || player2CurrentAction.Equals(playerActionType.BlockSTART)) && player1And2Input.Equals(playerActionType.BlockSTOP))
             {
                 player2NextAction = playerActionType.BlockSTOP;
                 DefaultStateChange(2);
@@ -304,6 +435,7 @@ public class Player1And2Manager : MonoBehaviour
         {
             //for Player1
 
+            BackupReset1 = 0.25f;
 
             //call appropriate state for current!
             if (player1CurrentAction.Equals(playerActionType.GotHit))
@@ -351,7 +483,9 @@ public class Player1And2Manager : MonoBehaviour
         } else
         {
             //for Player2
-            
+
+            BackupReset2 = 0.25f;
+
             //call appropriate state for current!
             if (player2CurrentAction.Equals(playerActionType.GotHit))
             {

@@ -12,7 +12,7 @@ public class Player2Scr : MonoBehaviour
 
     public bool doStunned = false;
 
-    private Animator Player2Animator;
+    public Animator Player2Animator;
     private Transform PLAYER1;
     private Transform PLAYER2;
 
@@ -237,7 +237,7 @@ public class Player2Scr : MonoBehaviour
         {
             if (Player1And2Manager.Instance.Player2GetCurrent().Equals(Player1And2Manager.playerActionType.GotHit))
             {
-                if (transform.position.x < moveDistanceLimit - 0.5f)
+                if (transform.position.x < moveDistanceLimit)
                 {
                     player2Moving = 2;
                 }

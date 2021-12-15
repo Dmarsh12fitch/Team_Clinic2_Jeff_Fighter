@@ -398,4 +398,21 @@ public class Player1Scr : MonoBehaviour
     }
 
 
+
+
+    //end game
+    public void LOST()
+    {
+        transform.position = new Vector3(-6, transform.position.x, transform.position.y);
+        Player1Animator.SetBool("Lost", true);
+    }
+
+    public void WON()
+    {
+        transform.position = new Vector3(-6, transform.position.x, transform.position.y);
+        Player1Animator.SetBool("Won", true);
+    }
+
+
+
 }

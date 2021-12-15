@@ -444,6 +444,7 @@ MonoBehaviour:
   player1Score: 0
   player2Score: 0
   troph: {fileID: 2269771215854375426, guid: c7b48cd319eb4b4438a229d72b4a63c6, type: 3}
+  wonText: {fileID: 8839997523734834967, guid: 18ca9190a6b3a0844b2f2ba2e2577c52, type: 3}
   allDone: 0
 --- !u!1 &377106841
 GameObject:

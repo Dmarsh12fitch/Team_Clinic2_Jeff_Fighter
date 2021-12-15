@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class gameScoreTracker : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class gameScoreTracker : MonoBehaviour
     public int player2Score;
 
     public GameObject troph;
+    public GameObject wonText;
 
     public bool allDone;
 
@@ -39,6 +41,7 @@ public class gameScoreTracker : MonoBehaviour
     public void roundEnd()
     {
         //call end round sounds!!!
+
         //make clock big lerp
         if(GameObject.Find("Player1_Display").GetComponent<Player1Scr>().player1HealthBarFillAmount > 
             GameObject.Find("Player2_Display").GetComponent<Player2Scr>().player2HealthBarFillAmount)
@@ -80,10 +83,16 @@ public class gameScoreTracker : MonoBehaviour
             GameObject.Find("Player1_Display").GetComponent<Player1Scr>().LOST();
             GameObject.Find("Player2").transform.position = new Vector3(8, 0, 0);
         }
-        yield return new WaitForSeconds(5f);
-
-        //GameObject.Find("Trophy").GetComponent<Rigidbody>().useGravity = true;
-        
+        yield return new WaitForSeconds(4f);
+        var i = Instantiate(wonText);
+        if (player1Score > player2Score)
+        {
+            GameObject.Find("Ptext").GetComponent<Text>().text = "Player 1 Won!";
+        } else
+        {
+            GameObject.Find("Ptext").GetComponent<Text>().text = "Player 2 Won!";
+        }
+        allDone = true;    
 
     }
 

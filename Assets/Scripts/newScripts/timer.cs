@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class timer : MonoBehaviour
 {
     private int time = 99;
+    private bool ended;
 
     private Text timer_Text;
     public GameObject p1Win1;
@@ -58,8 +59,9 @@ public class timer : MonoBehaviour
         {
             time -= 1;
             timer_Text.text = time.ToString();
-        } else
+        } else if(!ended)
         {
+            ended = true;
             scoreTracker.roundEnd();
         }
         

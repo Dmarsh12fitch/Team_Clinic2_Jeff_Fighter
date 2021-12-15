@@ -54,6 +54,7 @@ public class gameScoreTracker : MonoBehaviour
         if (player1Score >= 3 || player2Score >= 3)
         {
             //load the last scene (champ)
+            Debug.Log("LOAD OTHER SCENE DEPENDING ON WHO WINS");
         } else
         {
             SceneManager.LoadScene("FightingRing");

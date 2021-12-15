@@ -146,7 +146,7 @@ public class MainMenu : MonoBehaviour
         if (PlayerisHoveringOver.Equals(HoveringOver.StartButton))
         {
             //SceneManager.LoadScene("FightingRing");
-            DontDestroyOnLoad(GameObject.Find("musicMaker"));
+            //DontDestroyOnLoad(GameObject.Find("musicMaker"));
             SceneManager.LoadScene("CharacterSelection");
         }
         else if (PlayerisHoveringOver.Equals(HoveringOver.ControlsButton) && !ControlsCanvasUp)

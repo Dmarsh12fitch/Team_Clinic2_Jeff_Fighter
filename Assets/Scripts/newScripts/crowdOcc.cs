@@ -5,61 +5,24 @@ using UnityEngine;
 public class crowdOcc : MonoBehaviour
 {
     private AudioSource au;
-    public AudioClip BooSound;
-    public AudioClip YaySound;
-     
-    //float i
-
-
-
-
-
-
-
-
+    public AudioClip[] louderCheers;
 
     // Start is called before the first frame update
     void Start()
     {
         au = GetComponent<AudioSource>();
+        StartCoroutine(firstOne());
     }
 
-    // Update is called once per frame
-    void Update()
+    IEnumerator firstOne()
     {
-        if (Input.GetKeyDown(KeyCode.I))
-        {
-            doCheer();
-        }
+        yield return new WaitForSeconds(2);
+        au.PlayOneShot(louderCheers[Random.Range(0, louderCheers.Length)]);
     }
 
     public void randSound()
     {
-        switch (Random.Range(0, 3))
-        {
-            case 0:
-                doBoo();
-                break;
-            case 1:
-                doCheer();
-                break;
-            case 2:
-                break;
-            default:
-                break;
-        }
-
-        }
-
-
-    public void doBoo()
-    {
-        au.PlayOneShot(BooSound);
-    }
-
-    public void doCheer()
-    {
-        au.PlayOneShot(YaySound);
+        au.PlayOneShot(louderCheers[Random.Range(0, louderCheers.Length)]);
     }
 
 

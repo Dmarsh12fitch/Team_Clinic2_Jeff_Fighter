@@ -39,7 +39,7 @@ public class countDown : MonoBehaviour
         {
             if(timer > 1 && numbercurrent <= 0)
             {
-                Destroy(GameObject.Find("musicMaker"));
+                //Destroy(GameObject.Find("musicMaker"));
                 SceneManager.LoadScene("FightingRing");
             } else if(timer > 1)
             {

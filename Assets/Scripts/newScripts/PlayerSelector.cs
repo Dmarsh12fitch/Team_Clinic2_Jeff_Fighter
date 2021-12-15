@@ -36,15 +36,22 @@ public class PlayerSelector : MonoBehaviour
         {
             if (!lockedIn)
             {
-                rotateMe();
+                rotateMe(0.05f);
             } else
             {
-                if(Mathf.Abs(PlayerDisplay.rotation.eulerAngles.y - RotToStopOn) < 0.5f)
+                if(Mathf.Abs(PlayerDisplay.rotation.eulerAngles.y - RotToStopOn) < 1f)
                 {
                     if(PlayerDisplay.rotation.eulerAngles.y != RotToStopOn) { PlayerDisplay.rotation = Quaternion.Euler(0, RotToStopOn, 0); }
                 } else
                 {
-                    rotateMe();
+                    if(PlayerDisplay.rotation.eulerAngles.y - RotToStopOn > 0)
+                    {
+                        rotateMe(-2f);
+                    } else
+                    {
+                        rotateMe(2f);
+                    }
+                    
                 }
             }
         }
@@ -71,6 +78,10 @@ public class PlayerSelector : MonoBehaviour
         {
             au.clip = selectedSound[0];
             au.Play();
+        } else
+        {
+            au.clip = selectedSound[1];
+            au.Play();
         }
         PlayerREADY.gameObject.SetActive(setTo);
     }
@@ -82,9 +93,9 @@ public class PlayerSelector : MonoBehaviour
         //more obviously
     }
 
-    void rotateMe()
+    void rotateMe(float speed)
     {
-        PlayerDisplay.Rotate(0, 0.03f, 0);
+        PlayerDisplay.Rotate(0, speed, 0);
     }
 
 }

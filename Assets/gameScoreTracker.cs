@@ -9,6 +9,9 @@ public class gameScoreTracker : MonoBehaviour
     public int player1Score;
     public int player2Score;
 
+    public GameObject troph;
+
+    public bool allDone;
 
     // Start is called before the first frame update
     void Start()
@@ -19,23 +22,18 @@ public class gameScoreTracker : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        /*
-        if(player1Score == 1)
+        if (Input.GetKeyDown(KeyCode.I))
         {
-
-        } else if(player1Score == 2)
-        {
-
+            roundEnd();
         }
-
-        if(player2Score == 1)
+        if (allDone)
         {
-
-        } else if(player2Score == 2)
-        {
-
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                SceneManager.LoadScene("Main Menu");
+                Destroy(gameObject);
+            }
         }
-        */
     }
 
     public void roundEnd()
@@ -52,18 +50,9 @@ public class gameScoreTracker : MonoBehaviour
         }
         Debug.Log("p1 score = " + player1Score);
         Debug.Log("p2 score = " + player2Score);
-        if (player1Score >= 3)
+        if (player1Score >= 3 || player2Score >= 3 || true) //not true later
         {
-            // p1 won
-            
-
-            /*
-            //load the last scene (champ)
-            Debug.Log("LOAD OTHER SCENE DEPENDING ON WHO WINS");
-            */
-        } else if (player2Score >= 3)
-        {
-            //p2 won
+            StartCoroutine(playerWon());
         } else
         {
             SceneManager.LoadScene("FightingRing");
@@ -75,18 +64,25 @@ public class gameScoreTracker : MonoBehaviour
     IEnumerator playerWon()
     {
         yield return new WaitForSeconds(4f);
-        //change camera and track trophy
+        GameObject.Find("Camera Holder").gameObject.SetActive(false);
+        Instantiate(troph);
+        
         if(player1Score > player2Score)
         {
             GameObject.Find("Player1_Display").GetComponent<Player1Scr>().WON();
+            GameObject.Find("Player2").transform.position = new Vector3(8, 0, 0);
             GameObject.Find("Player2_Display").GetComponent<Player2Scr>().LOST();
+            GameObject.Find("Player2").transform.position = new Vector3(8, 0, 0);
         } else
         {
             GameObject.Find("Player2_Display").GetComponent<Player2Scr>().WON();
+            GameObject.Find("Player1").transform.position = new Vector3(-8, 0, 0);
             GameObject.Find("Player1_Display").GetComponent<Player1Scr>().LOST();
+            GameObject.Find("Player2").transform.position = new Vector3(8, 0, 0);
         }
-        yield return new WaitForSeconds(0.5f);
-        //set trophy gravity to true
+        yield return new WaitForSeconds(5f);
+
+        //GameObject.Find("Trophy").GetComponent<Rigidbody>().useGravity = true;
         
 
     }

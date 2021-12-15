@@ -443,6 +443,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player1Score: 0
   player2Score: 0
+  troph: {fileID: 2269771215854375426, guid: c7b48cd319eb4b4438a229d72b4a63c6, type: 3}
+  allDone: 0
 --- !u!1 &377106841
 GameObject:
   m_ObjectHideFlags: 0

@@ -403,6 +403,87 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 232522649}
   m_CullTransparentMesh: 0
+--- !u!1 &265349161 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 02e4bf1a4e0c46141b0784f877f50ee0, type: 3}
+  m_PrefabInstance: {fileID: 406218191}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &265349162
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 265349161}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 25e60de683a152f43beb2238b83dddab, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!1001 &406218191
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 02e4bf1a4e0c46141b0784f877f50ee0, type: 3}
+      propertyPath: m_RootOrder
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 02e4bf1a4e0c46141b0784f877f50ee0, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1.0139419
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 02e4bf1a4e0c46141b0784f877f50ee0, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 02e4bf1a4e0c46141b0784f877f50ee0, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.88105255
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 02e4bf1a4e0c46141b0784f877f50ee0, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.6559094
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 02e4bf1a4e0c46141b0784f877f50ee0, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 02e4bf1a4e0c46141b0784f877f50ee0, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.75483966
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 02e4bf1a4e0c46141b0784f877f50ee0, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 02e4bf1a4e0c46141b0784f877f50ee0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 02e4bf1a4e0c46141b0784f877f50ee0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -98.023
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 02e4bf1a4e0c46141b0784f877f50ee0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 02e4bf1a4e0c46141b0784f877f50ee0, type: 3}
+      propertyPath: m_Name
+      value: DwarfShopkeepIdle
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 02e4bf1a4e0c46141b0784f877f50ee0, type: 3}
 --- !u!1 &531631302
 GameObject:
   m_ObjectHideFlags: 0
@@ -1610,6 +1691,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae1b7e6af20ab9c40941733a1970e589, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  offset: {x: 0, y: 0, z: 0}
+  minZoom: 0
+  maxZoom: 0
+  zoomLimiter: 50
 --- !u!1 &2041467423
 GameObject:
   m_ObjectHideFlags: 0
@@ -1666,15 +1751,16 @@ MonoBehaviour:
   block: 0
   damaged: 0
   currentPosition: -6
-  movementRange: 6
   health: 200
   healthBar: {fileID: 1716995668}
   baseDmg: 5
   superAttackDmg: 20
+  isBlocking: 0
   punchesTillSuperAttackPunch: 7
   superAttackBar: {fileID: 682132395}
   ReadyForSuperAttackImage: {fileID: 1421614293}
   badGuyScript: {fileID: 0}
+  playerNum: 0
 --- !u!1 &2068407572
 GameObject:
   m_ObjectHideFlags: 0

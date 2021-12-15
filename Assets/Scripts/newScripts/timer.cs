@@ -27,7 +27,7 @@ public class timer : MonoBehaviour
         {
             p1Win1.gameObject.SetActive(true);
             p1Win2.gameObject.SetActive(false);
-        } else if(scoreTracker.player2Score >= 2)
+        } else if(scoreTracker.player1Score >= 2)
         {
             p1Win1.gameObject.SetActive(true);
             p1Win2.gameObject.SetActive(true);

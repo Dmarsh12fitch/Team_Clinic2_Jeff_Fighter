@@ -8,11 +8,13 @@ public class timer : MonoBehaviour
     private int time = 99;
 
     private Text timer_Text;
+    private gameScoreTracker scoreTracker;
 
     // Start is called before the first frame update
     void Start()
     {
         timer_Text = GameObject.Find("Timer_Text").GetComponent<Text>();
+        scoreTracker = GameObject.Find("GameScoreTracker").GetComponent<gameScoreTracker>();
         InvokeRepeating("UpdateTimerDisplay", 1, 1);
     }
 
@@ -24,7 +26,7 @@ public class timer : MonoBehaviour
             timer_Text.text = time.ToString();
         } else
         {
-            //end the game
+            scoreTracker.roundEnd();
         }
         
     }

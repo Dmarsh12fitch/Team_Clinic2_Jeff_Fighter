@@ -64,7 +64,7 @@ public class Player1And2Manager : MonoBehaviour
     {
         //for player1
         BackupReset1 -= Time.deltaTime;
-        if (BackupReset1 < 0)
+        if (BackupReset1 < 0 && !InputManager.Instance.StopFightingInputs)
         {
             BackupReset1 = 0.1f;
             player1SetCorrect();
@@ -76,7 +76,7 @@ public class Player1And2Manager : MonoBehaviour
 
         //for player2
         BackupReset2 -= Time.deltaTime;
-        if (BackupReset2 < 0)
+        if (BackupReset2 < 0 && !InputManager.Instance.StopFightingInputs)
         {
             BackupReset2 = 0.1f;
             player2SetCorrect();

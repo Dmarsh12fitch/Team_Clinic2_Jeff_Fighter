@@ -203,7 +203,7 @@ public class Player2Scr : MonoBehaviour
     public void Player2DetermineSuperHitType()
     {
         immune = true;
-        if (transform.position.x + 10 < moveDistanceLimit)
+        if (transform.position.x + 13 < moveDistanceLimit)
         {
             //inside the range
             P2GotHitSuperTypeA();
@@ -240,7 +240,7 @@ public class Player2Scr : MonoBehaviour
         {
             if (Player1And2Manager.Instance.Player2GetCurrent().Equals(Player1And2Manager.playerActionType.GotHit))
             {
-                if (transform.position.x < moveDistanceLimit)
+                if (transform.position.x < moveDistanceLimit - 0.7f)
                 {
                     player2Moving = 2;
                 }
@@ -407,6 +407,8 @@ public class Player2Scr : MonoBehaviour
 
     void makeRandomPunchSound()
     {
+        gameObject.GetComponent<AudioSource>().volume = 1;
+        gameObject.GetComponent<AudioSource>().bypassReverbZones = true;
         int rand = Random.Range(0, PunchSoundArray.Length);
         gameObject.GetComponent<AudioSource>().clip = PunchSoundArray[rand];
         gameObject.GetComponent<AudioSource>().Play();
@@ -416,6 +418,8 @@ public class Player2Scr : MonoBehaviour
     IEnumerator makeRandomBark()
     {
         yield return new WaitForSeconds(0.2f);
+        gameObject.GetComponent<AudioSource>().volume = 0.6f;
+        gameObject.GetComponent<AudioSource>().bypassReverbZones = false;
         int rand = Random.Range(0, BarkSoundArray.Length);
         gameObject.GetComponent<AudioSource>().clip = BarkSoundArray[rand];
         gameObject.GetComponent<AudioSource>().Play();

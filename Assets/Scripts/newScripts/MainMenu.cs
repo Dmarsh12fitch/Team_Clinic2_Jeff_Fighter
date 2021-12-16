@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
+    private AudioSource au;
 
     private Text StartGame;
     private Text Controls;
@@ -40,6 +41,7 @@ public class MainMenu : MonoBehaviour
         Quit = GameObject.Find("Quit_Text").GetComponent<Text>();
         ControlsCanvas = GameObject.Find("Controls_Canvas");
         CreditsCanvas = GameObject.Find("Credits_Canvas");
+        au = GetComponent<AudioSource>();
         BackToMenu = GameObject.Find("Back_To_Menu_Text").GetComponent<Text>();
         BackToMenu2 = GameObject.Find("Back_To_Menu_Text2").GetComponent<Text>();
         ControlsCanvas.gameObject.SetActive(false);
@@ -53,20 +55,31 @@ public class MainMenu : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
+
         if (!aButtonIsPressed && !ControlsCanvasUp && !CreditsCanvasUp)
         {
             if (Input.GetKeyDown(KeyCode.W))
             {
                 ShuffleUp();
+                au.pitch = 3;
+                au.Play();
             }
             else if (Input.GetKeyDown(KeyCode.S))
             {
                 ShuffleDown();
+                au.pitch = 3;
+                au.Play();
             }
         }
         if (!aButtonIsPressed && Input.GetKeyDown(KeyCode.Space))
         {
             ButtonPressed();
+            au.pitch = 1.7f;
+            au.Play();
         }
     }
 

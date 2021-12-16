@@ -33,6 +33,11 @@ public class countDown : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
+
         timer += Time.deltaTime;
 
         if(P1.lockedIn && P2.lockedIn)

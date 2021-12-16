@@ -320,9 +320,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Main Character Modeler
+  m_Text: 'Lead 3D Modeler
 
-    Main Character Animator
+    Lead 3D Animator
 
     Sound Editor'
 --- !u!222 &174955869
@@ -450,7 +450,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 200, y: -40}
+  m_AnchoredPosition: {x: -100, y: -70}
   m_SizeDelta: {x: 1000, y: 600}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &480955005
@@ -490,7 +490,10 @@ MonoBehaviour:
 
     Jeff Warmouth (Chef Jeff Barks)
 
-'
+    Tobey-Julian
+    Joseph (Sound Design)
+
+    Delton Hulbert (Technical Art)'
 --- !u!222 &480955006
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1278,13 +1281,14 @@ RectTransform:
   m_LocalScale: {x: 0.5613375, y: 0.5613375, z: 0.5613375}
   m_Children:
   - {fileID: 480955004}
+  - {fileID: 1191655056}
   m_Father: {fileID: 540874202}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.5}
-  m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 150, y: -240}
-  m_SizeDelta: {x: 400, y: 600}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -250}
+  m_SizeDelta: {x: 600, y: 600}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &777695721
 MonoBehaviour:
@@ -1308,11 +1312,11 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 3c9a62397912d9445956fd5d0d844d09, type: 3}
-    m_FontSize: 40
+    m_FontSize: 60
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
-    m_MaxSize: 40
+    m_MaxSize: 60
     m_Alignment: 1
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -1398,9 +1402,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Sound FX
-
-'
+  m_Text: Sound Artist
 --- !u!222 &897943734
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1727,11 +1729,16 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Background Modeler
+  m_Text: '3D Modeler
 
-    Background Rigger
+    Rigger
 
-    UV + Texturer'
+    3D Animator
+
+    Technical Artist
+
+    UV
+    + Texturer'
 --- !u!222 &1191370904
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1739,6 +1746,92 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1191370901}
+  m_CullTransparentMesh: 1
+--- !u!1 &1191655055
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1191655056}
+  - component: {fileID: 1191655058}
+  - component: {fileID: 1191655057}
+  m_Layer: 5
+  m_Name: 'And To:'
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1191655056
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1191655055}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 777695720}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 1, y: 0.5}
+  m_AnchorMax: {x: 1, y: 0.5}
+  m_AnchoredPosition: {x: 100, y: -70}
+  m_SizeDelta: {x: 1000, y: 600}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1191655057
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1191655055}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: 3c9a62397912d9445956fd5d0d844d09, type: 3}
+    m_FontSize: 30
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 0
+    m_MaxSize: 40
+    m_Alignment: 1
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: 'Team Rubbble Town Rubble (Cameo)
+
+    Team Bottle Man (Cameo)
+
+    Team
+    Cyber Dyme (Cameo)
+
+    Team Drunken Kaiju (Cameo)'
+--- !u!222 &1191655058
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1191655055}
   m_CullTransparentMesh: 1
 --- !u!1 &1338998658
 GameObject:
@@ -1885,7 +1978,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: UI Artist
+  m_Text: 'Lead UI Artist
+
+    Background Artist'
 --- !u!222 &1354770070
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2712,7 +2807,7 @@ MonoBehaviour:
     m_LineSpacing: 1
   m_Text: 'Musician
 
-    Boxing Ring Modeler
+    3D Modeler
 
     UI Artist'
 --- !u!222 &1960570479
@@ -2797,9 +2892,9 @@ MonoBehaviour:
 
     Programmer
 
-    Main Character Rigger
+    Lead Rigger
 
-    Technical Artist
+    Lead Technical Artist
 
     Sound
     Designer
